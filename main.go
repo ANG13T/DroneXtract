@@ -45,7 +45,7 @@ func DisplayOption(x int) {
 		fmt.Println(color.Ize(color.Blue, " Farewell and fly high!"))
 		os.Exit(1)
 	} else if (x == 1) {
-		forensics.DataDisplay()
+		forensics.DATParser()
 		Banner()
 		Option()
 	} else if (x == 2) {
