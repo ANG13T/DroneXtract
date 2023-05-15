@@ -1,5 +1,11 @@
 package forensics
 
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+)
+
 func DataDisplay() {
 
 }
@@ -13,5 +19,5 @@ func CSVFlightReport() {
 }
 
 func DJIOsint() {
-	
+
 }
