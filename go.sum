@@ -1,0 +1,10 @@
+github.com/TwiN/go-color v1.4.0 h1:fNbOwOrvup5oj934UragnW0B1WKaAkkB85q19Y7h4ng=
+github.com/TwiN/go-color v1.4.0/go.mod h1:0QTVEPlu+AoCyTrho7bXbVkrCkVpdQr7YF7PYWEtSxM=
+github.com/iskaa02/qalam v0.3.0 h1:yA7+MXkXbkP0HRDpkODC3bgQG0e5mjsYOsawwYP2v5k=
+github.com/iskaa02/qalam v0.3.0/go.mod h1:BRa4ht8cMjl27tNzhtuach90dBTma5seOzjpMGA5MY4=
+github.com/lucasb-eyer/go-colorful v1.0.3 h1:QIbQXiugsb+q10B+MI+7DI1oQLdmnep86tWFlaaUAac=
+github.com/lucasb-eyer/go-colorful v1.0.3/go.mod h1:R4dSotOR9KMtayYi1e77YzuveK+i7ruzyGqttikkLy0=
+github.com/mazznoer/colorgrad v0.8.1 h1:Bw/ks+KujOOg9E6YQvPqSqTLryiFnwliAH5VMZarSTI=
+github.com/mazznoer/colorgrad v0.8.1/go.mod h1:xCjvoNkXHJIAPOUMSMrXkFdxTGQqk8zMYS3e5hSLghA=
+github.com/mazznoer/csscolorparser v0.1.0 h1:xUf1uzU1r24JleIIb2Kz3bl7vATStxy53gm67yuPP+c=
+github.com/mazznoer/csscolorparser v0.1.0/go.mod h1:Aj22+L/rYN/Y6bj3bYqO3N6g1dtdHtGfQ32xZ5PJQic=
