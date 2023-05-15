@@ -1,10 +1,11 @@
 package forensics
 
-// import (
-// 	"fmt"
-// 	"io/ioutil"
-// 	"log"
-// )
+import (
+	"fmt"	
+	"os"
+	"github.com/TwiN/go-color"
+	"strconv"
+)
 
 func DataDisplay() {
 
@@ -32,7 +33,7 @@ func Option(min int, max int) int {
 		return Option(min, max)
     } else {
 		if (num == min) {
-			fmt.Println(color.Ize(color.Blue, " Escaping Orbit..."))
+			fmt.Println(color.Ize(color.Blue, " Farewell and fly high!"))
 			os.Exit(1)
 			return 0
 		} else if (num > min  && num < max + 1) {

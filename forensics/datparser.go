@@ -9,7 +9,7 @@ import (
 func DATParser() {
 	options, _ := ioutil.ReadFile("txt/dat.txt")
 	opt,_:=gradient.NewGradient("#1179ef", "cyan")
-	opt.Print("\n" + string(options))
+	opt.Print("\n" + string(options) + "\n")
 	var selection int = Option(0, 4)
 
 	if (selection == 1){
