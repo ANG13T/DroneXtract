@@ -7,22 +7,6 @@ import (
 	"strconv"
 )
 
-func DataDisplay() {
-
-}
-
-func DATFileParsing() {
-
-}
-
-func CSVFlightReport() {
-
-}
-
-func DJIOsint() {
-
-}
-
 func Option(min int, max int) int {
 	fmt.Print("\n ENTER INPUT > ")
 	var selection string

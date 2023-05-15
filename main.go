@@ -53,11 +53,11 @@ func DisplayOption(x int) {
 		Banner()
 		Option()
 	} else if (x == 3) {
-		forensics.CSVFlightReport()
+		forensics.DATParser()
 		Banner()
 		Option()
 	}else if (x == 4) {
-		forensics.DJIOsint()
+		forensics.DATParser()
 		Banner()
 		Option()
 	}
