@@ -17,7 +17,7 @@ func Banner() {
 	info, _ := ioutil.ReadFile("txt/info.txt")
 	options, _ := ioutil.ReadFile("txt/options.txt")
 	g,_:=gradient.NewGradient("#1179ef", "cyan")	
-	g.Print(string(banner))
+	g.Print("\n" + string(banner))
 	fmt.Println(color.Ize(color.Cyan, string(info)))
 	fmt.Println(color.Ize(color.Cyan, "\n" + string(options) + "\n"))
 }
@@ -63,8 +63,7 @@ func DisplayOption(x int) {
 	}
 }
 
-func main() {
-	fmt.Println("\n")
+func main() {	
 	Banner()
 	Option()
 }
