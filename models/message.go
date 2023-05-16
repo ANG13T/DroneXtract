@@ -17,7 +17,7 @@ type Message struct {
 	pointCnt      int
 }
 
-func (m *Message) Init(meta os.FileInfo, kmlFile *os.File, kmlScale int) {
+func (m *Message) NewMessage(meta os.FileInfo, kmlFile *os.File, kmlScale int) {
 	m.fieldnames = []string{
 		"messageid", "offsetTime", "logDateTime", "time(millisecond)",
     "latitude", "longitude", "satnum", "gpsHealth", "altitude", "baroAlt", 

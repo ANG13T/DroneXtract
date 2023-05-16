@@ -7,9 +7,11 @@ import (
 	"os"
 	"io"
 	// "bufio"
+	"path/filepath"
 	"unsafe"
 	"log"
 	"encoding/csv"
+	"github.com/ANG13T/DroneXtract/models"
 )
 
 
@@ -70,7 +72,61 @@ func ParseDatToCSV() {
 		}
 	}
 
+	fieldnames := {
+		"messageid", "offsetTime", "logDateTime", "time(millisecond)",
+    "latitude", "longitude", "satnum", "gpsHealth", "altitude", "baroAlt", 
+    "height", "accelX", "accelY", "accelZ", "accel", "gyroX", "gyroY", "gyroZ", "gyro", "errorX", "errorY", "errorZ", "error", "magX", "magY", "magZ", "magMod", 
+    "velN", "velE", "velD", "vel", "velH", 
+    "quatW", "quatX", "quatY", "quatZ", "roll", "pitch", "yaw", "yaw360", 
+    "magYawX", "thrustAngle", "latitudeHP", "longitudeHP", 
+    "imuTemp", "flyc_state", "flycStateStr", "nonGPSError", "nonGPSErrStr", 
+    "DWflyCState", "connectedToRC", "current", "volt1", "volt2", "volt3", "volt4", "volt5", "volt6", "totalVolts", "voltSpread", "Watts", "batteryTemp(C)", "ratedCapacity", 
+    "remainingCapacity", "percentageCapacity", "batteryUsefulTime", "voltagePercent", "batteryCycleCount", "batteryLifePercentage", "batteryBarCode", "minCurrent", "maxCurrent", 
+    "avgCurrent", "minVolts", "maxVolts", "avgVolts", "minWatts", "maxWatts", "avgWatts", "Gimbal:roll", "Gimbal:pitch", "Gimbal:yaw", "Gimbal:Xroll", "Gimbal:Xpitch", "Gimbal:Xyaw", 
+    "rFront", "lFront", "lBack", "rBack", 
+    "rFrontSpeed", "lFrontSpeed", "lBackSpeed", "rBackSpeed", "rFrontLoad", "lFrontLoad", "lBackLoad", "rBackLoad", 
+    "aileron", "elevator", "throttle", "rudder", "modeSwitch", "latitudeTablet", "longitudeTablet", "droneModel"
+	}
+
 	writer := csv.NewDictWriter(outFn)
+	writer.Comma = ','
+    writer.UseCRLF = false
+	writer.Write(fieldnames)
+
+	alternateStructure := false
+
+	var b [1]byte
+    _, err = path.Read(b[:])
+    if err != nil {
+        if err != io.EOF {
+            panic(err)
+        }
+    }
+
+    if b[0] != 0x55 {
+        alternateStructure := true
+        fmt.Println(alternateStructure)
+    }
+
+	kmlScale := 1
+	kmlFile := path
+	splPath := filepath.Split(inArg)
+	fileName := splPath[len(splPath)-1]
+	fileName = strings.Split(fileName, ".")[0]
+	kmlFile = fileName + "-Map.kml"
+
+	meta, err := os.Stat(inFn)
+    if err != nil {
+        panic(err)
+    }
+
+	message := models.NewMessage(meta, kmlFile, kmlScale)
+	corruptPackets := 0
+    unknownPackets := 0
+    startIssue := true
+
+	fmt.Println("done", message)
+
 
 	// outFile, err := os.OpenFile(outFn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	// if err != nil {
