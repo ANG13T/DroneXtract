@@ -51,3 +51,4 @@ func (m *Message) Init(meta os.FileInfo, kmlFile *os.File, kmlScale int) {
 
 	m.startUNIXTime = meta.Sys().(*syscall.Stat_t).Ctim.Unix()
 }
+
