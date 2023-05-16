@@ -1,3 +1,9 @@
+package forensics
+
+import (
+	"fmt"
+)
+
 type NotDATFileError struct {
 	filename string
 }

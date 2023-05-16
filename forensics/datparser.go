@@ -2,14 +2,14 @@ package forensics
 
 import (
 	"io/ioutil"
-	"github.com/iskaa02/qalam/gradient"
+	"github.com/TwiN/go-color"
+	"fmt"
 )
 
 
 func DATParser() {
-	options, _ := ioutil.ReadFile("txt/dat.txt")
-	opt,_:=gradient.NewGradient("#1179ef", "cyan")
-	opt.Print("\n" + string(options) + "\n")
+	options, _ := ioutil.ReadFile("txt/dat.txt")	
+	fmt.Println(color.Ize(color.Cyan, "\n" + string(options) + "\n"))
 	var selection int = Option(0, 4)
 
 	if (selection == 1){
