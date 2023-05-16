@@ -9,6 +9,7 @@ import (
 	// "bufio"
 	"unsafe"
 	"log"
+	"encoding/csv"
 )
 
 
@@ -35,7 +36,7 @@ func ParseDatToCSV() {
 	_, err := os.Open(path)
 	// TODO: change this
 	force := false
-	//outFn := "../output/output.csv"
+	outFn := "../output/output.csv"
  
 	if err != nil {
 		fmt.Println(color.Ize(color.Red, "  [!] INVALID DAT FILE"))
@@ -68,6 +69,8 @@ func ParseDatToCSV() {
 			}
 		}
 	}
+
+	writer := csv.NewDictWriter(outFn)
 
 	// outFile, err := os.OpenFile(outFn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	// if err != nil {
