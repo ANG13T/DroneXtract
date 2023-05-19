@@ -66,12 +66,13 @@ func (g *GPSPayload) parse() {
 	data["quatY"] = math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[56:60]))
 	data["quatZ"] = math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[60:64]))
 
-	q := NewQuaternion(data["quatX"].(float32), data["quatY"].(float32), data["quatZ"].(float32), data["quatW"].(float32))
+	q := NewQuaternion(data["quatX"].(float64), data["quatY"].(float64), data["quatZ"].(float64), data["quatW"].(float64))
 	eAngs := q.ToEuler()
 	data["pitch"] = g.convertpos(float64(eAngs[0]))
 	data["roll"] = g.convertpos(float64(eAngs[1]))
 	data["yaw"] = g.convertpos(float64(eAngs[2]))
-	data["yaw360"] = (data["yaw"].(float64) + 360.0) % 360.0
+	yaw_temp := (data["yaw"].(float64) + 360.0)
+	data["yaw360"] =  math.Mod(yaw_temp, 360.0)
 
 	data["errorX"] = math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[64:68]))
 	data["errorY"] = math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[68:72]))
@@ -84,17 +85,17 @@ func (g *GPSPayload) parse() {
 	data["vel"] = float32(math.Sqrt(float64(data["velN"].(float32))*float64(data["velN"].(float32)) + float64(data["velE"].(float32))*float64(data["velE"].(float32)) + float64(data["velD"].(float32))*float64(data["velD"].(float32))))
 	data["velH"] = float32(math.Sqrt(float64(data["velN"].(float32))*float64(data["velN"].(float32)) + float64(data["velE"].(float32))*float64(data["velE"].(float32))))
 
-	x4 := math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[88:92]))
-	x5 := math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[92:96]))
-	x6 := math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[96:100]))
+	// x4 := math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[88:92]))
+	// x5 := math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[92:96]))
+	// x6 := math.Float32frombits(binary.LittleEndian.Uint32(g.Payload[96:100]))
 
 	data["magX"] = int16(binary.LittleEndian.Uint16(g.Payload[100:102]))
 	data["magY"] = int16(binary.LittleEndian.Uint16(g.Payload[102:104]))
 	data["magZ"] = int16(binary.LittleEndian.Uint16(g.Payload[104:106]))
 	data["magMod"] = float32(math.Sqrt(float64(data["magX"].(int16))*float64(data["magX"].(int16)) + float64(data["magY"].(int16))*float64(data["magY"].(int16)) + float64(data["magZ"].(int16))*float64(data["magZ"].(int16))))
 
-	qAcc := NewQuaternion(eAngs[0].(float32), eAngs[1].(float32), 0.0, 0.0)
-	qMag := NewQuaternion(data["magX"].(float32), data["magY"].(float32), data["magZ"].(float32), 0.0)
+	qAcc := NewQuaternion(float64(eAngs[0]), float64(eAngs[1]), 0.0, 0.0)
+	qMag := NewQuaternion(float64(data["magX"].(int16)), float64(data["magY"].(int16)), float64(data["magZ"].(int16)), 0.0)
 	magXYPlane := qAcc.Times(qMag).Times(qAcc.Conjugate())
 	x := magXYPlane.X
 	y := magXYPlane.Y
@@ -102,10 +103,10 @@ func (g *GPSPayload) parse() {
 
 	data["imuTemp"] = int16(binary.LittleEndian.Uint16(g.Payload[106:108]))
 
-	i2 := int16(binary.LittleEndian.Uint16(g.Payload[108:110]))
-	i3 := int16(binary.LittleEndian.Uint16(g.Payload[110:112]))
-	i4 := int16(binary.LittleEndian.Uint16(g.Payload[112:114]))
-	i5 := int16(binary.LittleEndian.Uint16(g.Payload[114:116]))
+	// i2 := int16(binary.LittleEndian.Uint16(g.Payload[108:110]))
+	// i3 := int16(binary.LittleEndian.Uint16(g.Payload[110:112]))
+	// i4 := int16(binary.LittleEndian.Uint16(g.Payload[112:114]))
+	// i5 := int16(binary.LittleEndian.Uint16(g.Payload[114:116]))
 
 	data["satnum"] = g.Payload[116]
 
@@ -117,5 +118,3 @@ func (g *GPSPayload) parse() {
 
 	g.Data = data
 }
-
-

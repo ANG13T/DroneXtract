@@ -20,7 +20,7 @@ func NewQuaternion(x, y, z, scalar float64) *Quaternion {
 	}
 }
 
-func (q *Quaternion) toEuler() []float64 {
+func (q *Quaternion) ToEuler() []float64 {
 	sqw := math.Pow(q.Scalar, 2)
 	sqx := math.Pow(q.X, 2)
 	sqy := math.Pow(q.Y, 2)
@@ -54,7 +54,7 @@ func (q *Quaternion) toEuler() []float64 {
 	return retv
 }
 
-func (q *Quaternion) conjugate() *Quaternion {
+func (q *Quaternion) Conjugate() *Quaternion {
 	return &Quaternion{
 		X:      -q.X,
 		Y:      -q.Y,
@@ -63,7 +63,7 @@ func (q *Quaternion) conjugate() *Quaternion {
 	}
 }
 
-func (q *Quaternion) times(b *Quaternion) *Quaternion {
+func (q *Quaternion) Times(b *Quaternion) *Quaternion {
 	y0 := q.Scalar*b.Scalar - q.X*b.X - q.Y*b.Y - q.Z*b.Z
 	y1 := q.Scalar*b.X + q.X*b.Scalar + q.Y*b.Z - q.Z*b.Y
 	y2 := q.Scalar*b.Y - q.X*b.Z + q.Y*b.Scalar + q.Z*b.X
