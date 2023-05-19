@@ -43,7 +43,7 @@ func (mp *MotorPayload) parse() {
 	rblfdiff := data["rBackSpeed"].(int16) - data["lFrontSpeed"].(int16)
 
 	thrust1 := math.Atan2(float64(lbrfdiff), float64(rblfdiff))
-	thrust2 := (math.Mod(math.Degrees(thrust1)+315.0, 360.0))
+	thrust2 := (math.Mod(convert_rad_to_degrees(thrust1)+315.0, 360.0))
 	data["thrustAngle"] = thrust2
 	if thrust2 > 180.0 {
 		data["thrustAngle"] = thrust2 - 360.0
