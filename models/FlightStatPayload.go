@@ -10,7 +10,7 @@ type FlightStatPayload struct {
 	fields           []string
 	NGPEErrs         map[byte]string
 	FLCSStates       map[byte]string
-	flyc_to_dw       map[byte]byte
+	flyc_to_dw       map[byte]uint16
 	_type            byte
 	_subtype         byte
 	_length          byte
@@ -23,7 +23,7 @@ func NewFlightStatPayload(payload []byte) *FlightStatPayload {
 		fields:     []string{"FSlongitude", "FSlatitude", "height", "FSpitch", "FSroll", "FSyaw", "flyc_state", "flycStateStr", "connectedToRC", "failure", "nonGPSError", "nonGPSErrStr", "time(millisecond)", "DWflyCState"},
 		NGPEErrs:   map[byte]string{1: "FORBIN", 2: "GPSNUM_NONENOUGH", 3: "GPS_HDOP_LARGE", 4: "GPS_POSITION_NON_MATCH", 5: "SPEED_ERROR_LARGE", 6: "YAW_ERROR_LARGE", 7: "COMPASS_ERROR_LARGE"},
 		FLCSStates: map[byte]string{0: "MANUAL", 1: "ATTI", 2: "ATTI_CL", 3: "ATTI_HOVER", 4: "HOVER", 5: "GSP_BLAKE", 6: "GPS_ATTI", 7: "GPS_CL", 8: "GPS_HOME_LOCK", 9: "GPS_HOT_POINT", 10: "ASSISTED_TAKEOFF", 11: "AUTO_TAKEOFF", 12: "AUTO_LANDING", 13: "ATTI_LANDING", 14: "NAVI_GO", 15: "GO_HOME", 16: "CLICK_GO", 17: "JOYSTICK", 23: "ATTI_LIMITED", 24: "GPS_ATTI_LIMITED", 25: "FOLLOW_ME", 100: "OTHER"},
-		flyc_to_dw: map[byte]byte{0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 20, 10: 30, 11: 40, 12: 50, 13: 60, 14: 70, 15: 80, 16: 90, 17: 200, 23: 300, 24: 400},
+		flyc_to_dw: map[byte]uint16{0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 20, 10: 30, 11: 40, 12: 50, 13: 60, 14: 70, 15: 80, 16: 90, 17: 200, 23: 300, 24: 400},
 		_type:      0x2A,
 		_subtype:   0x0C,
 		_length:    0x3E,
@@ -71,6 +71,8 @@ func (p *FlightStatPayload) parse() {
 
 func (p *FlightStatPayload) convertpos(pos uint64) float64 {
 	// Convert position from radians to degrees
-	return math.degrees(float64(pos))
+	val := float64(pos)
+	degrees := val * 180
+	return degrees
 }
 

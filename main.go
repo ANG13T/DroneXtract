@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"github.com/ANG13T/DroneXtract/forensics"
 	"os"
+	"github.com/twpayne/go-kml/v3"
 )
 
 func Banner() {

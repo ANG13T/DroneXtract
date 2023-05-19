@@ -1,5 +1,10 @@
 package models
 
+import (
+	"os"
+	"github.com/twpayne/go-kml/v3"
+)
+
 type Message struct {
 	fieldnames    []string
 	tickNo        *uint32
@@ -12,7 +17,7 @@ type Message struct {
 	startUNIXTime int64
 	gpsFrDict     map[uint32][]interface{}
 	kmlFile       *os.File
-	kmlWriter     *simplekml.Kml
+	kmlWriter     *kml.KMLElement
 	kmlRes        int
 	pointCnt      int
 }
@@ -31,8 +36,7 @@ func (m *Message) NewMessage(meta os.FileInfo, kmlFile *os.File, kmlScale int) {
     "avgCurrent", "minVolts", "maxVolts", "avgVolts", "minWatts", "maxWatts", "avgWatts", "Gimbal:roll", "Gimbal:pitch", "Gimbal:yaw", "Gimbal:Xroll", "Gimbal:Xpitch", "Gimbal:Xyaw", 
     "rFront", "lFront", "lBack", "rBack", 
     "rFrontSpeed", "lFrontSpeed", "lBackSpeed", "rBackSpeed", "rFrontLoad", "lFrontLoad", "lBackLoad", "rBackLoad", 
-    "aileron", "elevator", "throttle", "rudder", "modeSwitch", "latitudeTablet", "longitudeTablet", "droneModel"
-	}
+    "aileron", "elevator", "throttle", "rudder", "modeSwitch", "latitudeTablet", "longitudeTablet", "droneModel"}
 	m.tickNo = nil
 	m.tickOffset = 0
 	m.rowOut = make(map[string]interface{})
@@ -45,8 +49,8 @@ func (m *Message) NewMessage(meta os.FileInfo, kmlFile *os.File, kmlScale int) {
 	m.kmlFile = kmlFile
 	m.kmlWriter = nil
 	if m.kmlFile != nil {
-		m.kmlWriter = simplekml.NewKml()
-		m.kmlRes = kmlScale
+		m.kmlWriter = kml.KML()
+		// m.kmlRes = kmlScale
 	}
 
 	m.startUNIXTime = meta.Sys().(*syscall.Stat_t).Ctim.Unix()

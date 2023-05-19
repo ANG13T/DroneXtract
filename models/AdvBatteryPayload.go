@@ -36,7 +36,7 @@ func (p *AdvBatteryPayload) parse() {
 	data["ratedCapacity"] = int16(binary.LittleEndian.Uint16(payload[2:4]))
 	data["remainingCapacity"] = int16(binary.LittleEndian.Uint16(payload[4:6]))
 	data["totalVolts"] = float32(int16(binary.LittleEndian.Uint16(payload[6:8]))) / 1000.0
-	data["current"] = -float32(binary.LittleEndian.Uint16(payload[8:10])-65536) / 1000.0
+	data["current"] = -float32(binary.LittleEndian.Uint32(payload[8:10])-65536) / 1000.0
 	data["percentageCapacity"] = payload[11]
 	data["batteryTemp(C)"] = payload[12]
 	data["volt1"] = float32(int16(binary.LittleEndian.Uint16(payload[18:20]))) / 1000.0
