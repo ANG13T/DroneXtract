@@ -37,76 +37,75 @@ func (pkt *Packet) decode(payload []byte) []byte {
 
 func (pkt *Packet) processPayload(payload []byte) interface{} {
     if pkt.pkttype == 0xcf && pkt.pktsubtype == 0x01 { // GPS Packet
-        label := "GPS"
+        pkt.label = "GPS"
         // fmt.Println(fmt.Sprintf("%d - GPS pkt len: %d", tickNo, pktlen))
         payload = pkt.decode(payload)
         pldObj := NewGPSPayload(payload)
         if len(pldObj.Data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == MotorPayloadType && pkt.pktsubtype == MotorPayloadSubtype { // Motor Packet
-        label := "MOTOR"
+    } else if pkt.pkttype == 0xda && pkt.pktsubtype == 0xf1 { // Motor Packet
+        pkt.label = "MOTOR"
         // fmt.Println(fmt.Sprintf("%d - Motor pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewMotorPayload(payload)
         if len(pldObj.Data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == HPPayloadType && pkt.pktsubtype == HPPayloadSubtype { // Home Point Packet
-        label := "HP"
+    } else if pkt.pkttype == 0xc6 && pkt.pktsubtype == 0x0d { // Home Point Packet
+        pkt.label = "HP"
         // fmt.Println(fmt.Sprintf("%d - HP pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewHPPayload(payload)
         if len(pldObj.Data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == RCPayloadType && pkt.pktsubtype == RCPayloadSubtype { // Remote Control Packet
-        label := "RC"
+    } else if pkt.pkttype == 0x98 && pkt.pktsubtype == 0x00 { // Remote Control Packet
+        pkt.label = "RC"
         // fmt.Println(fmt.Sprintf("%d - RC pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewRCPayload(payload)
-        if len(pldObj.Data) > 0 {
+        if len(pldObj.data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == TabletLocPayloadType && pkt.pktsubtype == TabletLocPayloadSubtype { // Tablet Location Packet
-        label := "TABLET"
+    } else if pkt.pkttype == 0xc1 && pkt.pktsubtype == 0x2b { // Tablet Location Packet
+        pkt.label = "TABLET"
         // fmt.Println(fmt.Sprintf("%d - TABLET pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewTabletLocPayload(payload)
-        if len(pldObj.Data) > 0 {
+        if len(pldObj.data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == BatteryPayloadType && pkt.pktsubtype == BatteryPayloadSubtype { // Battery Packet
-        label := "BATTERY"
+    } else if pkt.pkttype == 0x1e && pkt.pktsubtype == 0x12 { // Battery Packet
+        pkt.label = "BATTERY"
         // fmt.Println(fmt.Sprintf("%d - BATTERY pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewBatteryPayload(payload)
-        if len(pldObj.Data) > 0 {
+        if len(pldObj.data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == GimbalPayloadType && pkt.pktsubtype == GimbalPayloadSubtype { // Gimbal Packet
-        label := "GIMBAL"
+    } else if pkt.pkttype == 0x2c && pkt.pktsubtype == 0x34 { // Gimbal Packet
+        pkt.label = "GIMBAL"
         // fmt.Println(fmt.Sprintf("%d - GIMBAL pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewGimbalPayload(payload)
         if len(pldObj.Data) > 0 {
             return pldObj
         }
-    } else if pkt.pkttype == FlightStatPayloadType && pkt.pktsubtype == FlightStatPayloadSubtype { // Flight Status Packet
-        label := "FLIGHT STAT"
+    } else if pkt.pkttype == 0x2A && pkt.pktsubtype == 0x0C { // Flight Status Packet
+        pkt.label = "FLIGHT STAT"
         // fmt.Println(fmt.Sprintf("%d - FLIGHT STAT pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewFlightStatPayload(payload)
-        if len(pldObj.Data) > 0 {
-            return
-            pldObj
+        if len(pldObj.data) > 0 {
+            return pldObj
         }
-    } else if pkt.pkttype == AdvBatteryPayloadType && pkt.pktsubtype == AdvBatteryPayloadSubtype { // Advanced Battery Packet
-        label := "ADV BATTERY"
+    } else if pkt.pkttype == 0x44 && pkt.pktsubtype == 0x11 { // Advanced Battery Packet
+        pkt.label = "ADV BATTERY"
         // fmt.Println(fmt.Sprintf("%d - ADV BATTERY pkt len: %d", tickNo, pktlen))
-        payload = decode(payload)
+        payload = pkt.decode(payload)
         pldObj := NewAdvBatteryPayload(payload)
-        if len(pldObj.Data) > 0 {
+        if len(pldObj.data) > 0 {
             return pldObj
         }
     }
