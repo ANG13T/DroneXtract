@@ -3,6 +3,8 @@ package models
 import (
 	"os"
 	"github.com/twpayne/go-kml/v3"
+	"syscall"
+	"time"
 )
 
 type Message struct {
@@ -49,10 +51,14 @@ func (m *Message) NewMessage(meta os.FileInfo, kmlFile *os.File, kmlScale int) {
 	m.kmlFile = kmlFile
 	m.kmlWriter = nil
 	if m.kmlFile != nil {
-		m.kmlWriter = kml.KML()
+		m.kmlWriter = kml.KML(kml.Placemark(
+            kml.Name("Simple placemark"),
+            kml.Description("Attached to the ground. Intelligently places itself at the height of the underlying terrain."),
+
+        ))
 		// m.kmlRes = kmlScale
 	}
 
-	m.startUNIXTime = meta.Sys().(*syscall.Stat_t).Ctim.Unix()
+	m.startUNIXTime = time.Now().Unix()
 }
 
