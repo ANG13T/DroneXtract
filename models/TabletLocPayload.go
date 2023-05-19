@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/binary"
+	"math"
 )
 
 type TabletLocPayload struct {
@@ -30,7 +31,7 @@ func (t *TabletLocPayload) parse() {
 	data["longitudeTablet"] = binary.LittleEndian.Uint64(t.payload[155:163])
 	data["latitudeTablet"] = binary.LittleEndian.Uint64(t.payload[163:171])
 
-	if data["latitudeTablet"] == 0 || data["longitudeTablet"] == 0 || abs(data["latitudeTablet"].(float64)) <= 0.0175 || abs(data["longitudeTablet"].(float64)) <= 0.0175 || abs(data["latitudeTablet"].(float64)) >= 181.0 || abs(data["longitudeTablet"].(float64)) >= 181.0 {
+	if data["latitudeTablet"] == 0 || data["longitudeTablet"] == 0 || math.Abs(data["latitudeTablet"].(float64)) <= 0.0175 || math.Abs(data["longitudeTablet"].(float64)) <= 0.0175 || math.Abs(data["latitudeTablet"].(float64)) >= 181.0 || math.Abs(data["longitudeTablet"].(float64)) >= 181.0 {
 		data["longitudeTablet"] = ""
 		data["latitudeTablet"] = ""
 	}

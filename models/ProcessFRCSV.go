@@ -146,7 +146,7 @@ func findIndex(fields []string, field string) int {
 
 func (p *ProcessFRCSV) sortOut(ftGPSDict map[string]map[string][]string) ([]string, [][]string) {
 	ftList := make([]string, 0, len(ftGPSDict))
-	gpsList := make([][]string, 0, len(ftGPSDict))
+	gpsList := make([]map[string][]string, 0, len(ftGPSDict))
 
 	for d := range ftGPSDict {
 		ftList = append(ftList, d)
