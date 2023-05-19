@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strconv"
 )
 
 type NotCSVFileError struct {
@@ -45,7 +44,7 @@ func (p *ProcessFRCSV) ProcessPath(path string) {
 
 			if !fileInfo.IsDir() && p.isFRFile(filePath) {
 				fmt.Println(filePath)
-				p.csvData[filePath] = make(map[string][]string)
+				p.CsvData[filePath] = make(map[string][]string)
 				p.getData(filePath)
 			}
 
@@ -53,7 +52,7 @@ func (p *ProcessFRCSV) ProcessPath(path string) {
 		})
 	} else if p.isFRFile(path) {
 		fmt.Println(path)
-		p.csvData[path] = make(map[string][]string)
+		p.CsvData[path] = make(map[string][]string)
 		p.getData(path)
 	} else {
 		fmt.Println(path + " was not processed because it was not recognized as a file or directory")
@@ -131,7 +130,7 @@ func (p *ProcessFRCSV) getData(filePath string) {
 		volt := record[voltIndex]
 		flyc := record[flycIndex]
 		if lat != "" && lon != "" && time != "" {
-			p.csvData[filePath][time] = []string{lat, lon, alt, sat, volt, flyc}
+			p.CsvData[filePath][time] = []string{lat, lon, alt, sat, volt, flyc}
 		}
 	}
 }
@@ -163,7 +162,7 @@ func (p *ProcessFRCSV) sortOut(ftGPSDict map[string]map[string][]string) ([]stri
 }
 
 func (p *ProcessFRCSV) outToFiles() {
-	for f := range p.csvData {
+	for f := range p.CsvData {
 		outputFilePath := f + "-output.txt"
 		outputFile, err := os.Create(outputFilePath)
 		if err != nil {
@@ -171,7 +170,7 @@ func (p *ProcessFRCSV) outToFiles() {
 			continue
 		}
 
-		ftList, gpsList := p.sortOut(p.csvData[f])
+		ftList, gpsList := p.sortOut(p.CsvData[f])
 
 		for d := range ftList {
 			outputFile.WriteString(ftList[d] + "," + gpsList[d][0] + "," + gpsList[d][1] + "\r\n")

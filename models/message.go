@@ -3,7 +3,6 @@ package models
 import (
 	"os"
 	"github.com/twpayne/go-kml/v3"
-	"syscall"
 	"time"
 )
 

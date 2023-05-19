@@ -1,9 +1,7 @@
 package models
 
 import (
-	"fmt"
 	"encoding/binary"
-	"math"
 )
 
 type FlightStatPayload struct {

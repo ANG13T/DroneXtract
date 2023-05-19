@@ -2,7 +2,6 @@ package models
 
 import (
 	"encoding/binary"
-	"fmt"
 	"math"
 )
 
