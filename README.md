@@ -11,3 +11,5 @@
 github.com/TwiN/go-color 
 go get github.com/twpayne/go-kml/v3
 
+
+https://exiftool.org/install.html

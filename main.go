@@ -8,8 +8,9 @@ import (
 	"github.com/iskaa02/qalam/gradient"
 	"github.com/TwiN/go-color"
 	"strconv"
-	"github.com/ANG13T/DroneXtract/forensics"
+	// "github.com/ANG13T/DroneXtract/forensics"
 	"os"
+	"github.com/ANG13T/DroneXtract/steganographics"
 	// "github.com/twpayne/go-kml/v3"
 )
 
@@ -47,7 +48,8 @@ func DisplayOption(x int) {
 		os.Exit(1)
 	} else if (x == 1) {
 		Banner()
-		Option()
+		// Option()
+		steganographics.ExampleExiftool_Read()
 	} else if (x == 2) {
 		Banner()
 		Option()
