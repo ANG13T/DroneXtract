@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"github.com/ANG13T/DroneXtract/forensics"
 	"os"
-	"github.com/twpayne/go-kml/v3"
+	// "github.com/twpayne/go-kml/v3"
 )
 
 func Banner() {
@@ -46,19 +46,15 @@ func DisplayOption(x int) {
 		fmt.Println(color.Ize(color.Blue, " Farewell and fly high!"))
 		os.Exit(1)
 	} else if (x == 1) {
-		forensics.DATParser()
 		Banner()
 		Option()
 	} else if (x == 2) {
-		forensics.DATParser()
 		Banner()
 		Option()
 	} else if (x == 3) {
-		forensics.DATParser()
 		Banner()
 		Option()
 	}else if (x == 4) {
-		forensics.DATParser()
 		Banner()
 		Option()
 	}

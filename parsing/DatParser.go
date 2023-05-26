@@ -1,4 +1,4 @@
-package forensics
+package parsing
 
 import (
 	"io/ioutil"
