@@ -5,7 +5,7 @@
 - Dat file parser
 - duml parser
 - visualize dat, txt, csv, duml
-- drone osint
+- exif tools
 
 "github.com/iskaa02/qalam/gradient"
 github.com/TwiN/go-color 
