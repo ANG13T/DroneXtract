@@ -52,7 +52,8 @@ func DisplayOption(x int) {
 		steganographics.ExampleExiftool_Read()
 	} else if (x == 2) {
 		Banner()
-		Option()
+	
+		steganographics.DNGtoPNG()
 	} else if (x == 3) {
 		Banner()
 		Option()
