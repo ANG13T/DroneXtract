@@ -1,0 +1,5 @@
+package tests
+
+func RunTests() {
+	
+}
