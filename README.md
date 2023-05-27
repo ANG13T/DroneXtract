@@ -13,3 +13,9 @@ go get github.com/twpayne/go-kml/v3
 
 
 https://exiftool.org/install.html
+
+
+
+# steganographics
+- exif (txt and display)
+- srt

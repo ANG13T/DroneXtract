@@ -2,6 +2,7 @@ package steganographics
 
 import (
 	"github.com/barasher/go-exiftool"
+	"github.com/ANG13T/DroneXtract/forensics"
 	"fmt"
 )
 
@@ -22,8 +23,11 @@ func ExampleExiftool_Read() {
 			continue
 		}
 
+		forensics.GenTableHeader("EXIF Analysis");
 		for k, v := range fileInfo.Fields {
-			fmt.Printf("[%v] %v\n", k, v)
+			formattedValue := fmt.Sprintf("%v", v)
+			forensics.GenRowString(k, formattedValue)
 		}
+		forensics.GenTableFooter();
 	}
 }
