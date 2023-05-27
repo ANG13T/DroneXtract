@@ -115,8 +115,53 @@ func (p *DJI_SRT_Parser) srtToObject(srt string) []map[string]interface{} {
 	}
 	return converted
 }
+
+func (p *DJI_SRT_Parser) millisecondsPerSample(metadata map[string]interface{}, milliseconds int) []map[string]interface{} {
+	newArr := metadata["packets"].([]map[string]interface{})
+
+	millisecondsPerSampleTIMECODE := func(amount int) []map[string]interface{} {
+		lastTimecode := 0
+		newResArr := make([]map[string]interface{}, 0)
+
+		getMilliseconds := func(timecode string) int {
+			m := strings.Split(timecode, ",")
+			t := strings.Split(m[0], ":")
+
+			hours, _ := strconv.Atoi(t[0])
+			minutes, _ := strconv.Atoi(t[1])
+			seconds, _ := strconv.Atoi(t[2])
+			milliseconds, _ := strconv.Atoi(m[1])
+
+			totalMilliseconds := (hours*60*60 + minutes*60 + seconds) * 1000
+			return totalMilliseconds + milliseconds
+		}
+
+		for i := 0; i < len(newArr); i++ {
+			millisecondsFromTimecode := getMilliseconds(newArr[i]["TIMECODE"].(string))
+
+			if millisecondsFromTimecode < lastTimecode {
+				continue
+			}
+
+			newResArr = append(newResArr, newArr[i])
+			lastTimecode = millisecondsFromTimecode + amount
+		}
+
+		return newResArr
+	}
+
+	if len(newArr) > 0 && newArr[0]["TIMECODE"] != nil {
+		if milliseconds != 0 {
+			newArr = millisecondsPerSampleTIMECODE(milliseconds)
+		}
+		p.millisecondsSample = milliseconds
+	}
+
+	return newArr
+}
+
 	
-func isNum(s string) bool {
-	_, err := strconv.ParseFloat(s, 64)
-	return err == nil
+func isNum(val string) bool {
+	match, _ := regexp.MatchString(`^[-+\d.,]+$`, val)
+	return match
 }
