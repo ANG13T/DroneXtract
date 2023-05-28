@@ -31,7 +31,7 @@ type SRT_Packet struct {
 	altitude 	string
 }
 
-func (parser *DJI_SRT_Parser) SRTToObject(srt string) {
+func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	maybeParseNumbers := func(d string) interface{} {
 		if isNum(d) {
 			num, _ := strconv.ParseFloat(d, 64)
@@ -120,6 +120,8 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) {
 			}
 		}
 	}
+
+	return converted
 }
 
 // Helpers
