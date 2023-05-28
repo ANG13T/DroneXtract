@@ -23,7 +23,9 @@ func TestSRTToObject(t *testing.T) {
 
 	result := suite.SRTToObject(string_content)
 
-	fmt.Println(result)
+	if len(result) > 0 {
+		fmt.Println("PASS")
+	}
 }
 
 func RunSteganographics(){

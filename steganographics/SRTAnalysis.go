@@ -84,23 +84,36 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 		var match []string
 		matched := packetRegEx.MatchString(line)
 
+
 		if matched {
 			// new packet
 			converted = append(converted, SRT_Packet{})
+			fmt.Println("LINE 1: ", line)
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
 			converted[len(converted)-1].timeCode = match[1]
+			fmt.Println("LINE 2: ", line)
 		} else {
+			// <font size="36">FrameCnt : 7097 DiffTime : 17ms
+			// [iso : 100] [shutter : 1/500.0] [fnum : 380] [ev : 0] [ct : 5349] [color_md : default] [focal_len : 480] [latitude : 31.450438] [longtitude : 74.398905] [altitude: 264.553986] </font>
+			// 2020-04-02 15:21:57,005,255
+
 			for _, match := range arrayRegEx.FindAllStringSubmatch(line, -1) {
 				values := strings.Split(match[2], ",")
 				converted[len(converted)-1].mapMatch = convertValues(values)
+				fmt.Println("LINE 3: ", converted[len(converted)-1].mapMatch)
 			}
+
+			//matches := valueRegEx.FindAllStringSubmatch(line, -1)
+
+			
+			matches := valueRegEx.FindStringSubmatch(line)
 			for _, match := range valueRegEx.FindStringSubmatch(line) {
-				// if match != "" {
-				// 	match = valueRegEx.FindStringSubmatch(line)
-				// 	converted[len(converted)-1].mapMatch[0] = maybeParseNumbers(match[2])
-				// }
-				fmt.Println(match)
-				// TODO
+				if match != "" {
+					fmt.Println("LINE 3+:", match, maybeParseNumbers(matches[2]))
+					inVal := []interface{}{maybeParseNumbers(matches[2])}
+					converted[len(converted)-1].mapMatch = inVal
+				}
+				
 			}
 			if match = isoDateRegex.FindStringSubmatch(line); match != nil {
 				converted[len(converted)-1].dateStamp = line
@@ -119,6 +132,11 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 				
 			}
 		}
+	}
+
+	if len(converted) < 1 {
+		fmt.Println("ERROR")
+		return nil
 	}
 
 	return converted
