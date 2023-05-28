@@ -94,8 +94,13 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) {
 				values := strings.Split(match[2], ",")
 				converted[len(converted)-1].mapMatch = convertValues(values)
 			}
-			for _, match = valueRegEx.FindStringSubmatch(line); match != nil; match = valueRegEx.FindStringSubmatch(line) {
-				converted[len(converted)-1].mapMatch = maybeParseNumbers(match[2])
+			for _, match := range valueRegEx.FindStringSubmatch(line) {
+				// if match != "" {
+				// 	match = valueRegEx.FindStringSubmatch(line)
+				// 	converted[len(converted)-1].mapMatch[0] = maybeParseNumbers(match[2])
+				// }
+				fmt.Println(match)
+				// TODO
 			}
 			if match = isoDateRegex.FindStringSubmatch(line); match != nil {
 				converted[len(converted)-1].dateStamp = line
@@ -108,7 +113,10 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) {
 			} else if isDJIFPV && regexp.MustCompile(`\[altitude: \d.*\]`).MatchString(line) {
 				// Correct altitude divided by 10 problem in DJI FPV drone
 				altitude := converted[len(converted)-1].altitude
-				converted[len(converted)-1].altitude = strconv.Itoa(maybeParseNumbers(altitude)*10)
+				if num, ok := maybeParseNumbers(altitude).(int); ok {
+					converted[len(converted)-1].altitude = strconv.Itoa(num*10)
+				}
+				
 			}
 		}
 	}
