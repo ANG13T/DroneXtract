@@ -11,7 +11,7 @@ func GenTableHeader(name string) {
 	fmt.Println(color.Ize(color.Blue, "\n    ╔══════════════════════════════════════════════════════════════════════════════╗"))
 	var amount = (78 - len(name)) / 2
 	var extraPadding = 1
-	if len(name) % 2 == 1 {
+	if len(name) % 2 == 0 {
 		extraPadding = 0
 	}
 	fmt.Println(color.Ize(color.Blue, "    ║" +  strings.Repeat(" ", amount) + name + strings.Repeat(" ", amount + extraPadding) + "║"))

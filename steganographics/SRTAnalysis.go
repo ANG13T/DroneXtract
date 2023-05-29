@@ -46,6 +46,7 @@ type SRT_Packet struct {
 	altitude	string
 	date 		string
 	time_stamp	string
+	barometer 	string
 }
 
 func (packet *SRT_Packet) printSRTPacket() {
@@ -65,12 +66,14 @@ func (packet *SRT_Packet) printSRTPacket() {
 	GenRowString("Altitude", checkEmptyField(packet.altitude))
 	GenRowString("Date", checkEmptyField(packet.date))
 	GenRowString("Time Stamp", checkEmptyField(packet.time_stamp))
+	GenRowString("Barometer", checkEmptyField(packet.barometer))
 	GenTableFooter()
 }
 
 func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	converted := make([]SRT_Packet, 0)
 	test_regex := regexp.MustCompile(`\[(\w+)\s*:\s*([^]]+)\]`)
+	test_regex_2 := regexp.MustCompile(`([A-Za-z]+):([-.\w/]+)`)
 	diffTimeRegex := regexp.MustCompile(`\bDiffTime\s*:\s*([^ ]+)`)
 	timecodeRegEx := regexp.MustCompile(`(\d{2}:\d{2}:\d{2},\d{3})\s-->\s`)
 	packetRegEx := regexp.MustCompile(`^\d+$`)
@@ -138,8 +141,16 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 
 			matches_2 := test_regex.FindAllStringSubmatch(line, -1)
 
+			matches_3 := test_regex_2.FindAllStringSubmatch(line, -1)
+
 			properties := make(map[string]string)
-			for _, match := range matches_2 {
+			selectedArr := matches_2
+
+			if len(selectedArr) == 0 {
+				selectedArr = matches_3
+			}
+
+			for _, match := range selectedArr {
 				if len(match) == 3 {
 					key := match[1]
 					value := match[2]
@@ -192,7 +203,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			} else if match = accurateDateRegex2.FindStringSubmatch(line); match != nil {
 				converted[len(converted)-1].date = match[1] + "." + match[2]
 			} else if match = dateRegEx.FindStringSubmatch(line); match != nil {
-				converted[len(converted)-1].date = strings.ReplaceAll(match[0], ":"+match[2]+match[3]+"$", "."+match[2])
+				converted[len(converted)-1].date = match[0]
 			}
 		}
 	}
