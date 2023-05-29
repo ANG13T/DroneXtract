@@ -4,6 +4,7 @@ import (
 	"github.com/TwiN/go-color"
 	"fmt"
 	"strings"
+	"log"
 )
 
 func GenTableHeader(name string) {
@@ -25,4 +26,13 @@ func GenRowString(intro string, input string) {
 
 func GenTableFooter() {
 	fmt.Println(color.Ize(color.Blue, "    ╚══════════════════════════════════════════════════════════════════════════════╝"))
+}
+
+func PrintError(message string) {
+	fmt.Println(color.Ize(color.Red, "[ERROR] " + message))
+}
+
+func PrintErrorLog(message string, err error) {
+	fmt.Println(color.Ize(color.Red, message))
+	log.Println(color.Ize(color.Red, "[ERROR]"), err)
 }

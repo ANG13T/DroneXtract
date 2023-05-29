@@ -197,7 +197,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	}
 
 	if len(converted) < 1 {
-		fmt.Println("ERROR")
+		PrintError("ERROR PARSING SRT FILE")
 		return nil
 	}
 
@@ -209,7 +209,7 @@ func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
 	content, err := ioutil.ReadFile(path)
 
 	if err != nil {
-		fmt.Println("[!] INVALID FILE PATH", err)
+		PrintErrorLog("INVALID FILE PATH", err)
 	}
 
 	string_content := string(content)
@@ -280,7 +280,7 @@ func checkEmptyField(s string) string{
 
 func checkValidFileContents(fileContent string) bool {
 	if len(fileContent) == 0 {
-		fmt.Println("[!] INVALID FILE CONTENT IS EMPTY")
+		PrintError("INVALID FILE CONTENT IS EMPTY")
 		return false
 	}
 
