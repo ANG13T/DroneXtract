@@ -10,9 +10,10 @@ import (
 func TestSRTToObject(t *testing.T) {
 	suite := DJI_SRT_Parser{}
 
-	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\SRT-Files\broken_empty.SRT`
+	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\SRT-Files\broken_empty2.SRT`
 
 	suite.GeneratePackets(filename)
+	suite.PrintAllPackets()
 }
 
 func RunSteganographics(){
@@ -28,6 +29,12 @@ func RunSRTAnalysis() {
 
 	content, _ := ioutil.ReadFile(filename)
 	fmt.Println(content)
+
+	// Test empty
+	// broken_empty
+	// Test incomplete
+	// Test all formats
+	// - m2zoom
 
 	// conversion
 }

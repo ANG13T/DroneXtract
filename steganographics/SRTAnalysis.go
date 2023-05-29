@@ -8,6 +8,7 @@ package steganographics
 // 4 - toMGJSON
 // 5 - subtitle extractor
 // 6 - display metadata about SRT file
+// 7 - comments
 
 import (
 	"fmt"
@@ -196,7 +197,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 		}
 	}
 
-	if len(converted) < 1 {
+	if len(converted) < 1 || (len(converted) == 1 && checkNullPacket(converted[0])) {
 		PrintError("ERROR PARSING SRT FILE")
 		return nil
 	}
@@ -215,7 +216,7 @@ func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
 	string_content := string(content)
 
 	if checkValidFileContents(string_content) {
-		parser.SRTToObject(string_content)
+		parser.packets = parser.SRTToObject(string_content)
 	} 
 }
 
@@ -285,4 +286,8 @@ func checkValidFileContents(fileContent string) bool {
 	}
 
 	return true
+}
+
+func checkNullPacket(packet SRT_Packet) bool {
+	return (packet.diff_time == "" && packet.iso == "" && packet.shutter == "" && packet.fnum == "" && packet.ev == "" && packet.ct == "" && packet.color_md == "" && packet.focal_len == "" && packet.latitude == "" && packet.longtitude == "" && packet.altitude == "" && packet.date == "" && packet.time_stamp == "")
 }

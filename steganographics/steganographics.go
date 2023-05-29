@@ -10,7 +10,11 @@ import (
 func GenTableHeader(name string) {
 	fmt.Println(color.Ize(color.Blue, "\n    ╔══════════════════════════════════════════════════════════════════════════════╗"))
 	var amount = (78 - len(name)) / 2
-	fmt.Println(color.Ize(color.Blue, "    ║" +  strings.Repeat(" ", amount) + name + strings.Repeat(" ", amount + 1) + "║"))
+	var extraPadding = 1
+	if len(name) % 2 == 1 {
+		extraPadding = 0
+	}
+	fmt.Println(color.Ize(color.Blue, "    ║" +  strings.Repeat(" ", amount) + name + strings.Repeat(" ", amount + extraPadding) + "║"))
 	fmt.Println(color.Ize(color.Blue, "    ╠══════════════════════════════════════════════════════════════════════════════╣"))
 }
 
