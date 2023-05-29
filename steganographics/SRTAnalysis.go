@@ -1,6 +1,7 @@
 package steganographics
 
 // TODO -
+// 0 - fix everything
 // 1 - Finish Table Display
 // 2 - toGeoJSON
 // 3 - toCSV
@@ -213,7 +214,9 @@ func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
 
 	string_content := string(content)
 
-	parser.SRTToObject(string_content)
+	if checkValidFileContents(string_content) {
+		parser.SRTToObject(string_content)
+	} 
 }
 
 func (parser *DJI_SRT_Parser) PrintAllPackets() {
@@ -273,4 +276,13 @@ func checkEmptyField(s string) string{
 	} else {
 		return s
 	}
+}
+
+func checkValidFileContents(fileContent string) bool {
+	if len(fileContent) == 0 {
+		fmt.Println("[!] INVALID FILE CONTENT IS EMPTY")
+		return false
+	}
+
+	return true
 }
