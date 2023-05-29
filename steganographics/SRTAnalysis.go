@@ -51,10 +51,12 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	}
 
 	converted := make([]SRT_Packet, 0)
+	test_regex := regexp.MustCompile(`\[(\w+)\s*:\s*([^]]+)\]`)
+	diffTimeRegex := regexp.MustCompile(`\bDiffTime\s*:\s*([^ ]+)`)
 	timecodeRegEx := regexp.MustCompile(`(\d{2}:\d{2}:\d{2},\d{3})\s-->\s`)
 	packetRegEx := regexp.MustCompile(`^\d+$`)
 	arrayRegEx := regexp.MustCompile(`\b([A-Z_a-z]+)\(([-\+\w.,/]+)\)`)
-	valueRegEx := regexp.MustCompile(`\b([A-Z_a-z]+)\s?:[\s\[a-z_A-Z\]]?([-\+\d./]+)\w{0,3}\b`)
+	//valueRegEx := regexp.MustCompile(`\b([A-Z_a-z]+)\s?:[\s\[a-z_A-Z\]]?([-\+\d./]+)\w{0,3}\b`)
 	dateRegEx := regexp.MustCompile(`\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2,}`)
 	accurateDateRegex := regexp.MustCompile(`(\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2}),(\w{3}),(\w{3})`)
 	accurateDateRegex2 := regexp.MustCompile(`(\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2})[,.](\w{3})`)
@@ -99,6 +101,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			// new packet
 			converted = append(converted, SRT_Packet{})
 			fmt.Println("LINE 1: ", line)
+			converted[len(converted)-1].frame_count = line
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
 			converted[len(converted)-1].time_stamp = match[1]
 			fmt.Println("LINE 2: ", line)
@@ -115,18 +118,28 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 				fmt.Println("MATCHES: ", match)
 			}
 			
-			matches := valueRegEx.FindStringSubmatch(line)
-			for _, match := range valueRegEx.FindStringSubmatch(line) {
-				if match != "" {
-					inVal := []interface{}{maybeParseNumbers(matches[2])}
-					str, _ := inVal[0].(string)
-					if matches[1] == "iso" {
-						converted[len(converted)-1].iso = string(str)
-					} else if matches[1] == "FrameCnt" {
-						converted[len(converted)-1].frame_count = string(str)
-					}
+			fmt.Println("LINE 4: ", line)
+
+			matches_2 := test_regex.FindAllStringSubmatch(line, -1)
+
+			properties := make(map[string]string)
+			for _, match := range matches_2 {
+				if len(match) == 3 {
+					key := match[1]
+					value := match[2]
+					properties[key] = value
 				}
-				
+			}
+
+			// Print the extracted property-value pairs
+			for key, value := range properties {
+				fmt.Printf("Key: %s, Value: %s\n", key, value)
+			}
+
+			diff_match := diffTimeRegex.FindStringSubmatch(line)
+
+			if len(diff_match) == 2 {
+				converted[len(converted)-1].diff_time = diff_match[1]
 			}
 
 			if match = isoDateRegex.FindStringSubmatch(line); match != nil {
