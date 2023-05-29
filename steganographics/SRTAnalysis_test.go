@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"fmt"
 	"testing"
-	"log"
 )
 
 func TestSRTToObject(t *testing.T) {
@@ -13,19 +12,7 @@ func TestSRTToObject(t *testing.T) {
 
 	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\SRT-Files\m2zoom.SRT`
 
-	content, err := ioutil.ReadFile(filename)
-
-	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
-	}
-
-	string_content := string(content)
-
-	result := suite.SRTToObject(string_content)
-
-	if len(result) > 0 {
-		fmt.Println("PASS")
-	}
+	suite.GeneratePackets(filename)
 }
 
 func RunSteganographics(){

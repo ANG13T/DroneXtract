@@ -1,13 +1,19 @@
 package steganographics
 
-// subtitle extratoir
-// SRT Viewer
+// TODO -
+// 1 - Finish Table Display
+// 2 - toGeoJSON
+// 3 - toCSV
+// 4 - toMGJSON
+// 5 - subtitle extractor
+// 6 - display metadata about SRT file
 
 import (
 	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
+	"io/ioutil"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)
@@ -20,7 +26,7 @@ type DJI_SRT_Parser struct {
 	millisecondsSample int
 	loaded          bool
 	isMultiple      bool
-	customProperties map[string]interface{}
+	packets			[]SRT_Packet
 }
 
 type SRT_Packet struct {
@@ -38,6 +44,26 @@ type SRT_Packet struct {
 	altitude	string
 	date 		string
 	time_stamp	string
+}
+
+func (packet *SRT_Packet) printSRTPacket() {
+	title := "Frame " + checkEmptyField(packet.frame_count)
+	GenTableHeader(title)
+	GenRowString("Frame Count", checkEmptyField(packet.frame_count))
+	GenRowString("Diff Time", checkEmptyField(packet.diff_time))
+	GenRowString("ISO", checkEmptyField(packet.iso))
+	GenRowString("Shutter", checkEmptyField(packet.shutter))
+	GenRowString("FNUM", checkEmptyField(packet.fnum))
+	GenRowString("EV", checkEmptyField(packet.ev))
+	GenRowString("CT", checkEmptyField(packet.ct))
+	GenRowString("Color MD", checkEmptyField(packet.color_md))
+	GenRowString("Focal Len", checkEmptyField(packet.focal_len))
+	GenRowString("Latitude", checkEmptyField(packet.latitude))
+	GenRowString("Longitude", checkEmptyField(packet.longtitude))
+	GenRowString("Altitude", checkEmptyField(packet.altitude))
+	GenRowString("Date", checkEmptyField(packet.date))
+	GenRowString("Time Stamp", checkEmptyField(packet.time_stamp))
+	GenTableFooter()
 }
 
 func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
@@ -94,13 +120,10 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			converted[len(converted)-1].frame_count = line
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
 			fmt.Println("timestamp", match[1])
-			converted[len(converted)-1].time_stamp = match[1]
+			values := strings.Split(match[1], ",")
+			converted[len(converted)-1].time_stamp = values[0]
 			fmt.Println("LINE 2: ", line)
 		} else {
-			// <font size="36">FrameCnt : 7097 DiffTime : 17ms
-			// [iso : 100] [shutter : 1/500.0] [fnum : 380] [ev : 0] [ct : 5349] [color_md : default] [focal_len : 480] [latitude : 31.450438] [longtitude : 74.398905] [altitude: 264.553986] </font>
-			// 2020-04-02 15:21:57,005,255
-
 			for _, match := range arrayRegEx.FindStringSubmatch(line) {
 				//values := strings.Split(match[2], ",")
 				// converted[len(converted)-1].mapMatch = convertValues(values)
@@ -163,21 +186,12 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			}
 
 			if match = accurateDateRegex.FindStringSubmatch(line); match != nil {
-				display := match[1] + ":" + match[2] + "." + match[3]
-				fmt.Println("case 1", line, display)
 				converted[len(converted)-1].date = match[1] + ":" + match[2] + "." + match[3]
 			} else if match = accurateDateRegex2.FindStringSubmatch(line); match != nil {
-				display := match[1] + "." + match[2]
-				fmt.Println("case 2", line, display)
 				converted[len(converted)-1].date = match[1] + "." + match[2]
 			} else if match = dateRegEx.FindStringSubmatch(line); match != nil {
-				display := strings.ReplaceAll(match[0], ":"+match[2]+match[3]+"$", "."+match[2])
-				fmt.Println("case 3", line, display)
 				converted[len(converted)-1].date = strings.ReplaceAll(match[0], ":"+match[2]+match[3]+"$", "."+match[2])
 			}
-
-			// fmt.Println("LINE 3 DONE: ", converted[len(converted)-1])
-			converted[len(converted)-1].printSRTPacket()
 		}
 	}
 
@@ -189,27 +203,26 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	return converted
 }
 
-// Helpers
+func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
+	// Check if Valid File Path
+	content, err := ioutil.ReadFile(path)
 
-func (packet *SRT_Packet) printSRTPacket() {
-	title := "Frame " + packet.frame_count
-	GenTableHeader(title)
-	GenRowString("Frame Count", packet.frame_count)
-	GenRowString("Diff Time", packet.diff_time)
-	GenRowString("ISO", packet.iso)
-	GenRowString("Shutter", packet.shutter)
-	GenRowString("FNUM", packet.fnum)
-	GenRowString("EV", packet.ev)
-	GenRowString("CT", packet.ct)
-	GenRowString("Color MD", packet.color_md)
-	GenRowString("Focal Len", packet.focal_len)
-	GenRowString("Latitude", packet.latitude)
-	GenRowString("Longitude", packet.longtitude)
-	GenRowString("Altitude", packet.altitude)
-	GenRowString("Date", packet.date)
-	GenRowString("Time Stamp", packet.time_stamp)
-	GenTableFooter()
+	if err != nil {
+		fmt.Println("[!] INVALID FILE PATH", err)
+	}
+
+	string_content := string(content)
+
+	parser.SRTToObject(string_content)
 }
+
+func (parser *DJI_SRT_Parser) PrintAllPackets() {
+	for _, packet := range parser.packets {
+		packet.printSRTPacket()
+	}
+}
+
+// Helpers
 
 func isNum(d string) bool {
 	_, err := strconv.ParseFloat(d, 64)
@@ -252,4 +265,12 @@ func isElementExist(s []string, str string) bool {
 	  }
 	}
 	return false
-  }
+}
+
+func checkEmptyField(s string) string{
+	if len(s) == 0 {
+		return "UNSPECIFIED"
+	} else {
+		return s
+	}
+}
