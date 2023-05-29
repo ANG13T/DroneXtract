@@ -24,11 +24,21 @@ type DJI_SRT_Parser struct {
 }
 
 type SRT_Packet struct {
-	date		string
-	mapMatch	[]interface{}
-	timeCode 	string
-	dateStamp 	string
-	altitude 	string
+	frame_count string
+	diff_time    string
+	iso 		string
+	shutter 	string
+	fnum 		string
+	ev 			string
+	ct			string
+	color_md	string
+	focal_len 	string
+	latitude 	string
+	longtitude	string
+	altitude	string
+	date 		string
+	time_stamp	string
+	frames		string
 }
 
 func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
@@ -90,47 +100,52 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			converted = append(converted, SRT_Packet{})
 			fmt.Println("LINE 1: ", line)
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
-			converted[len(converted)-1].timeCode = match[1]
+			converted[len(converted)-1].time_stamp = match[1]
 			fmt.Println("LINE 2: ", line)
 		} else {
 			// <font size="36">FrameCnt : 7097 DiffTime : 17ms
 			// [iso : 100] [shutter : 1/500.0] [fnum : 380] [ev : 0] [ct : 5349] [color_md : default] [focal_len : 480] [latitude : 31.450438] [longtitude : 74.398905] [altitude: 264.553986] </font>
 			// 2020-04-02 15:21:57,005,255
 
-			for _, match := range arrayRegEx.FindAllStringSubmatch(line, -1) {
-				values := strings.Split(match[2], ",")
-				converted[len(converted)-1].mapMatch = convertValues(values)
-				fmt.Println("LINE 3: ", converted[len(converted)-1].mapMatch)
+			for _, match := range arrayRegEx.FindStringSubmatch(line) {
+				//values := strings.Split(match[2], ",")
+				// converted[len(converted)-1].mapMatch = convertValues(values)
+				// fmt.Println("LINE 3: ", converted[len(converted)-1].mapMatch)
+				//fmt.Println("LINE 33: ", values)
+				fmt.Println("MATCHES: ", match)
 			}
-
-			//matches := valueRegEx.FindAllStringSubmatch(line, -1)
-
 			
 			matches := valueRegEx.FindStringSubmatch(line)
 			for _, match := range valueRegEx.FindStringSubmatch(line) {
 				if match != "" {
-					fmt.Println("LINE 3+:", match, maybeParseNumbers(matches[2]))
 					inVal := []interface{}{maybeParseNumbers(matches[2])}
-					converted[len(converted)-1].mapMatch = inVal
+					str, _ := inVal[0].(string)
+					if matches[1] == "iso" {
+						converted[len(converted)-1].iso = string(str)
+					} else if matches[1] == "FrameCnt" {
+						converted[len(converted)-1].frame_count = string(str)
+					}
 				}
 				
 			}
+
 			if match = isoDateRegex.FindStringSubmatch(line); match != nil {
-				converted[len(converted)-1].dateStamp = line
+				converted[len(converted)-1].date = line
 			} else if match = accurateDateRegex.FindStringSubmatch(line); match != nil {
-				converted[len(converted)-1].dateStamp = match[1] + ":" + match[2] + "." + match[3]
+				converted[len(converted)-1].date = match[1] + ":" + match[2] + "." + match[3]
 			} else if match = accurateDateRegex2.FindStringSubmatch(line); match != nil {
-				converted[len(converted)-1].dateStamp = match[1] + "." + match[2]
+				converted[len(converted)-1].date = match[1] + "." + match[2]
 			} else if match = dateRegEx.FindStringSubmatch(line); match != nil {
-				converted[len(converted)-1].dateStamp = strings.ReplaceAll(match[0], ":"+match[2]+match[3]+"$", "."+match[2])
+				converted[len(converted)-1].date = strings.ReplaceAll(match[0], ":"+match[2]+match[3]+"$", "."+match[2])
 			} else if isDJIFPV && regexp.MustCompile(`\[altitude: \d.*\]`).MatchString(line) {
 				// Correct altitude divided by 10 problem in DJI FPV drone
 				altitude := converted[len(converted)-1].altitude
 				if num, ok := maybeParseNumbers(altitude).(int); ok {
 					converted[len(converted)-1].altitude = strconv.Itoa(num*10)
 				}
-				
 			}
+
+			fmt.Println("LINE 3 DONE: ", converted[len(converted)-1])
 		}
 	}
 
@@ -177,3 +192,12 @@ func convertValues(values []string) []interface{} {
 	}
 	return converted
 }
+
+func isElementExist(s []string, str string) bool {
+	for _, v := range s {
+	  if v == str {
+		return true
+	  }
+	}
+	return false
+  }
