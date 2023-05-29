@@ -77,6 +77,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	diffTimeRegex := regexp.MustCompile(`\bDiffTime\s*:\s*([^ ]+)`)
 	timecodeRegEx := regexp.MustCompile(`(\d{2}:\d{2}:\d{2},\d{3})\s-->\s`)
 	packetRegEx := regexp.MustCompile(`^\d+$`)
+	GPSRegEx := regexp.MustCompile(`GPS\(([-.\d]+,[-.\d]+,[-.\d]+)\)`)
 	arrayRegEx := regexp.MustCompile(`\b([A-Z_a-z]+)\(([-\+\w.,/]+)\)`)
 	dateRegEx := regexp.MustCompile(`\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2,}`)
 	accurateDateRegex := regexp.MustCompile(`(\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2}),(\w{3}),(\w{3})`)
@@ -162,7 +163,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			for key, value := range properties {
 				fmt.Printf("Key: %s, Value: %s\n", key, value)
 
-				switch key {
+				switch strings.ToLower(key) {
 				case "iso":
 					converted[len(converted)-1].iso = value
 				case "shutter":
@@ -181,6 +182,8 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 					converted[len(converted)-1].latitude = value
 				case "longtitude":
 					converted[len(converted)-1].longtitude = value
+				case "barometer":
+					converted[len(converted)-1].barometer = value
 				case "altitude":
 					// Correct altitude divided by 10 problem in DJI FPV drone
 					if isDJIFPV {
@@ -204,6 +207,16 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 				converted[len(converted)-1].date = match[1] + "." + match[2]
 			} else if match = dateRegEx.FindStringSubmatch(line); match != nil {
 				converted[len(converted)-1].date = match[0]
+			}
+
+			match := GPSRegEx.FindStringSubmatch(line)
+
+			if len(match) > 1 {
+				gpsValue := match[1]
+				gpsVals := strings.Split(gpsValue, ",")
+				converted[len(converted)-1].latitude = gpsVals[0]
+				converted[len(converted)-1].longtitude = gpsVals[1]
+				converted[len(converted)-1].altitude = gpsVals[2]
 			}
 		}
 	}

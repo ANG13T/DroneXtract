@@ -19,6 +19,9 @@ func GenTableHeader(name string) {
 }
 
 func GenRowString(intro string, input string) {
+	if input == "UNSPECIFIED" {
+		return
+	}
 	var totalCount int = 4 + len(intro) + len(input) + 2
 	var useCount = 80 - totalCount
 	if useCount < 0 { 
