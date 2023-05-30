@@ -12,6 +12,9 @@ import (
 // DNG - 2 tests
 
 func TestSRTAnalysis(t *testing.T) {
+	t.Logf("Running Steganographics Test Unit - SRT Files")
+	fmt.Println(color.Ize(color.Cyan, "Running Steganographics Test Unit - SRT Files"))
+
 	// Testing Parsing
 	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\SRT-Files\mavic_air.SRT`
 
