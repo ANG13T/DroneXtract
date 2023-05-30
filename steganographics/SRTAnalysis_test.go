@@ -10,7 +10,7 @@ import (
 func TestSRTToObject(t *testing.T) {
 	suite := DJI_SRT_Parser{}
 
-	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\SRT-Files\mavic_pro_buggy.SRT`
+	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\SRT-Files\mavic_air.SRT`
 
 	suite.GeneratePackets(filename)
 	suite.PrintAllPackets()

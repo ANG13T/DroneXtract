@@ -2,13 +2,14 @@ package steganographics
 
 // TODO -
 
-// 1 - Finish Table Display + display metadata about SRT file
+// 1 - display metadata about SRT file
 // 2 - toGeoJSON + toCSV + toMGJSON
 
 
 // 0 - support all files
 // 5 - subtitle extractor
 // 7 - comments
+// 8 - test suite
 
 import (
 	"fmt"
@@ -16,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 	"io/ioutil"
+	"os"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)
@@ -49,9 +51,14 @@ type SRT_Packet struct {
 	barometer 	string
 }
 
-func (packet *SRT_Packet) printSRTPacket() {
+func (packet *SRT_Packet) printSRTPacket(length string) {
 	title := "Frame " + checkEmptyField(packet.frame_count)
-	GenTableHeader(title)
+	if packet.frame_count == "1" {
+		GenTableHeader(title, true)
+	} else {
+		GenTableHeaderModified(title)
+	}
+	
 	GenRowString("Frame Count", checkEmptyField(packet.frame_count))
 	GenRowString("Diff Time", checkEmptyField(packet.diff_time))
 	GenRowString("ISO", checkEmptyField(packet.iso))
@@ -67,7 +74,11 @@ func (packet *SRT_Packet) printSRTPacket() {
 	GenRowString("Date", checkEmptyField(packet.date))
 	GenRowString("Time Stamp", checkEmptyField(packet.time_stamp))
 	GenRowString("Barometer", checkEmptyField(packet.barometer))
-	GenTableFooter()
+	
+	if packet.frame_count == length { 
+		GenTableFooter()
+	} 
+
 }
 
 func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
@@ -122,16 +133,11 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 		if matched || len(line) < 5{
 			// new packet
 			converted = append(converted, SRT_Packet{})
-			fmt.Println("LINE 1: ", line)
 			converted[len(converted)-1].frame_count = line
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
-			fmt.Println("timestamp", match[1])
 			values := strings.Split(match[1], ",")
 			converted[len(converted)-1].time_stamp = values[0]
-			fmt.Println("LINE 2: ", line, values)
 		} else {
-			fmt.Println("LINE 4: ", line)
-
 			matches_2 := test_regex.FindAllStringSubmatch(line, -1)
 
 			matches_3 := test_regex_2.FindAllStringSubmatch(line, -1)
@@ -153,8 +159,6 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 
 			// Print the extracted property-value pairs
 			for key, value := range properties {
-				fmt.Printf("Key: %s, Value: %s\n", key, value)
-
 				switch strings.ToLower(key) {
 				case "iso":
 					converted[len(converted)-1].iso = value
@@ -237,6 +241,7 @@ func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
 		PrintErrorLog("INVALID FILE PATH", err)
 	}
 
+	parser.fileName = path
 	string_content := string(content)
 
 	if checkValidFileContents(string_content) {
@@ -246,8 +251,34 @@ func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
 
 func (parser *DJI_SRT_Parser) PrintAllPackets() {
 	for _, packet := range parser.packets {
-		packet.printSRTPacket()
+		amount := len(parser.packets) 
+		packet.printSRTPacket(strconv.Itoa(amount))
 	}
+}
+
+func (parser *DJI_SRT_Parser) PrintFileMetadata() {
+	file, err := os.Open(parser.fileName)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	defer file.Close()
+
+	// Get file information
+	fileInfo, err := file.Stat()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	fileName := fileInfo.Name()
+	fileSize := fileInfo.Size()
+	modTime := fileInfo.ModTime()
+
+	// Print metadata
+	fmt.Println("File Name:", fileName)
+	fmt.Println("File Size (bytes):", fileSize)
+	fmt.Println("Last Modified Time:", modTime)
 }
 
 // Helpers
