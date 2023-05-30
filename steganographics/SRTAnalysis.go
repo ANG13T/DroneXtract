@@ -1,13 +1,13 @@
 package steganographics
 
 // TODO -
-// 0 - fix everything
-// 1 - Finish Table Display
-// 2 - toGeoJSON
-// 3 - toCSV
-// 4 - toMGJSON
+
+// 1 - Finish Table Display + display metadata about SRT file
+// 2 - toGeoJSON + toCSV + toMGJSON
+
+
+// 0 - support all files
 // 5 - subtitle extractor
-// 6 - display metadata about SRT file
 // 7 - comments
 
 import (
@@ -78,7 +78,8 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	timecodeRegEx := regexp.MustCompile(`(\d{2}:\d{2}:\d{2},\d{3})\s-->\s`)
 	packetRegEx := regexp.MustCompile(`^\d+$`)
 	GPSRegEx := regexp.MustCompile(`GPS\(([-.\d]+,[-.\d]+,[-.\d]+)\)`)
-	arrayRegEx := regexp.MustCompile(`\b([A-Z_a-z]+)\(([-\+\w.,/]+)\)`)
+	GPSRegEx2 := regexp.MustCompile(`GPS\((-?\d+\.\d+),(-?\d+\.\d+),(-?\d+\.\d+)M\)`)
+	//arrayRegEx := regexp.MustCompile(`\b([A-Z_a-z]+)\(([-\+\w.,/]+)\)`)
 	dateRegEx := regexp.MustCompile(`\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2,}`)
 	accurateDateRegex := regexp.MustCompile(`(\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2}),(\w{3}),(\w{3})`)
 	accurateDateRegex2 := regexp.MustCompile(`(\d{4}[-.]\d{1,2}[-.]\d{1,2} \d{1,2}:\d{2}:\d{2})[,.](\w{3})`)
@@ -112,17 +113,13 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 		lines[i] = regexp.MustCompile(`([a-zA-Z])\/(\d)`).ReplaceAllString(lines[i], "$1:$2")
 	}
 
-	lines = filterEmptyLines(lines) //maybe
+	lines = filterEmptyLines(lines) 
 
 	for _, line := range lines {
 		var match []string
-		matched := packetRegEx.MatchString(line)
-		
+		matched := packetRegEx.MatchString(fmt.Sprintf("%s", line))
 
-		fmt.Println("AUDIT", "*" + line + ":)", len(line))
-		fmt.Printf("ADIT2: %T", line)
-
-		if matched {
+		if matched || len(line) < 5{
 			// new packet
 			converted = append(converted, SRT_Packet{})
 			fmt.Println("LINE 1: ", line)
@@ -130,17 +127,9 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
 			fmt.Println("timestamp", match[1])
 			values := strings.Split(match[1], ",")
-			//converted[len(converted)-1].time_stamp = values[0]
+			converted[len(converted)-1].time_stamp = values[0]
 			fmt.Println("LINE 2: ", line, values)
 		} else {
-			for _, match := range arrayRegEx.FindStringSubmatch(line) {
-				//values := strings.Split(match[2], ",")
-				// converted[len(converted)-1].mapMatch = convertValues(values)
-				// fmt.Println("LINE 3: ", converted[len(converted)-1].mapMatch)
-				//fmt.Println("LINE 33: ", values)
-				fmt.Println("MATCHES: ", match)
-			}
-			
 			fmt.Println("LINE 4: ", line)
 
 			matches_2 := test_regex.FindAllStringSubmatch(line, -1)
@@ -201,11 +190,11 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			diff_match := diffTimeRegex.FindStringSubmatch(line)
 
 			if len(diff_match) == 2 {
-				// converted[len(converted)-1].diff_time = diff_match[1]
+				converted[len(converted)-1].diff_time = diff_match[1]
 			}
 
 			if match = accurateDateRegex.FindStringSubmatch(line); match != nil {
-				// converted[len(converted)-1].date = match[1] + ":" + match[2] + "." + match[3]
+				converted[len(converted)-1].date = match[1] + ":" + match[2] + "." + match[3]
 			} else if match = accurateDateRegex2.FindStringSubmatch(line); match != nil {
 				converted[len(converted)-1].date = match[1] + "." + match[2]
 			} else if match = dateRegEx.FindStringSubmatch(line); match != nil {
@@ -214,12 +203,20 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 
 			match := GPSRegEx.FindStringSubmatch(line)
 
+			match2 := GPSRegEx2.FindStringSubmatch(line)
+
 			if len(match) > 1 {
 				gpsValue := match[1]
 				gpsVals := strings.Split(gpsValue, ",")
 				converted[len(converted)-1].latitude = gpsVals[0]
 				converted[len(converted)-1].longtitude = gpsVals[1]
 				converted[len(converted)-1].altitude = gpsVals[2]
+			}
+
+			if len(match2) > 1 {
+				converted[len(converted)-1].latitude = match2[1]
+				converted[len(converted)-1].longtitude = match2[2]
+				converted[len(converted)-1].altitude = match2[3]
 			}
 		}
 	}
