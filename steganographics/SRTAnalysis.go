@@ -2,12 +2,11 @@ package steganographics
 
 // TODO -
 
-// 1 - display metadata about SRT file
 // 2 - toGeoJSON + toCSV + toMGJSON
 
 
 // 0 - support all files
-// 5 - subtitle extractor
+// 5 - subtitle extractor from videos (MP4 to SRT)
 // 7 - comments
 // 8 - test suite
 
