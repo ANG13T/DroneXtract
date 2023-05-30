@@ -117,7 +117,10 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	for _, line := range lines {
 		var match []string
 		matched := packetRegEx.MatchString(line)
+		
 
+		fmt.Println("AUDIT", "*" + line + ":)", len(line))
+		fmt.Printf("ADIT2: %T", line)
 
 		if matched {
 			// new packet
@@ -127,8 +130,8 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 		} else if match = timecodeRegEx.FindStringSubmatch(line); match != nil {
 			fmt.Println("timestamp", match[1])
 			values := strings.Split(match[1], ",")
-			converted[len(converted)-1].time_stamp = values[0]
-			fmt.Println("LINE 2: ", line)
+			//converted[len(converted)-1].time_stamp = values[0]
+			fmt.Println("LINE 2: ", line, values)
 		} else {
 			for _, match := range arrayRegEx.FindStringSubmatch(line) {
 				//values := strings.Split(match[2], ",")
@@ -198,11 +201,11 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 			diff_match := diffTimeRegex.FindStringSubmatch(line)
 
 			if len(diff_match) == 2 {
-				converted[len(converted)-1].diff_time = diff_match[1]
+				// converted[len(converted)-1].diff_time = diff_match[1]
 			}
 
 			if match = accurateDateRegex.FindStringSubmatch(line); match != nil {
-				converted[len(converted)-1].date = match[1] + ":" + match[2] + "." + match[3]
+				// converted[len(converted)-1].date = match[1] + ":" + match[2] + "." + match[3]
 			} else if match = accurateDateRegex2.FindStringSubmatch(line); match != nil {
 				converted[len(converted)-1].date = match[1] + "." + match[2]
 			} else if match = dateRegEx.FindStringSubmatch(line); match != nil {
