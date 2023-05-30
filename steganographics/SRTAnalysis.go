@@ -33,6 +33,21 @@ type DJI_SRT_Parser struct {
 	packets			[]SRT_Packet
 }
 
+func NewDJI_SRT_Parser(fileName string) *DJI_SRT_Parser {
+	parser := DJI_SRT_Parser{
+		fileName: fileName,
+		metadata:           make(map[string]interface{}),
+		rawMetadata:        make([]interface{}, 0),
+		smoothened:         0,
+		millisecondsSample: 0,
+		loaded:             false,
+		isMultiple:         false,
+		packets:            make([]SRT_Packet, 0),
+	}
+	return &parser
+}
+
+
 type SRT_Packet struct {
 	frame_count string
 	diff_time    string
@@ -233,15 +248,14 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	return converted
 }
 
-func (parser *DJI_SRT_Parser) GeneratePackets(path string) {
+func (parser *DJI_SRT_Parser) GeneratePackets() {
 	// Check if Valid File Path
-	content, err := ioutil.ReadFile(path)
+	content, err := ioutil.ReadFile(parser.fileName)
 
 	if err != nil {
 		PrintErrorLog("INVALID FILE PATH", err)
 	}
 
-	parser.fileName = path
 	string_content := string(content)
 
 	if checkValidFileContents(string_content) {
@@ -259,7 +273,7 @@ func (parser *DJI_SRT_Parser) PrintAllPackets() {
 func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	file, err := os.Open(parser.fileName)
 	if err != nil {
-		fmt.Println("Error:", err)
+		PrintErrorLog("INVALID FILE", err)
 		return
 	}
 	defer file.Close()
@@ -267,7 +281,7 @@ func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	// Get file information
 	fileInfo, err := file.Stat()
 	if err != nil {
-		fmt.Println("Error:", err)
+		PrintErrorLog("UNABLE TO OBTAIN FILE METADATA", err)
 		return
 	}
 
@@ -275,10 +289,14 @@ func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	fileSize := fileInfo.Size()
 	modTime := fileInfo.ModTime()
 
+	GenTableHeader("Parsing SRT Job", true)
+
 	// Print metadata
-	fmt.Println("File Name:", fileName)
-	fmt.Println("File Size (bytes):", fileSize)
-	fmt.Println("Last Modified Time:", modTime)
+	GenRowString("File Name", fileName)
+	GenRowString("File Size (bytes)", strconv.FormatInt(fileSize, 10))
+	GenRowString("Last Modified Time", modTime.Format("2006-01-02 15:04:05"))
+
+	GenTableFooter()
 }
 
 // Helpers
