@@ -16,6 +16,6 @@ https://exiftool.org/install.html
 
 
 
-# steganographics
+# steganography
 - exif (txt)
 - srt

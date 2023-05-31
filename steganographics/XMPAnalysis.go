@@ -1,1 +1,1 @@
-package steganographics
+package steganography

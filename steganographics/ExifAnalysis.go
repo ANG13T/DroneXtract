@@ -1,4 +1,4 @@
-package steganographics
+package steganography
 
 import (
 	"github.com/barasher/go-exiftool"

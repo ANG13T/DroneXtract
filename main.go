@@ -10,7 +10,7 @@ import (
 	"strconv"
 	// "github.com/ANG13T/DroneXtract/forensics"
 	"os"
-	"github.com/ANG13T/DroneXtract/steganographics"
+	"github.com/ANG13T/DroneXtract/steganography"
 	// "github.com/twpayne/go-kml/v3"
 )
 
@@ -49,11 +49,11 @@ func DisplayOption(x int) {
 	} else if (x == 1) {
 		Banner()
 		// Option()
-		steganographics.ExampleExiftool_Read()
+		steganography.ExampleExiftool_Read()
 	} else if (x == 2) {
 		Banner()
 	
-		steganographics.DNGtoPNG()
+		steganography.DNGtoPNG()
 	} else if (x == 3) {
 		Banner()
 		Option()
