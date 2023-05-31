@@ -19,3 +19,8 @@ https://exiftool.org/install.html
 # steganography
 - exif (txt)
 - srt
+
+
+# fuck this shit
+- preProcess
+- GeoJSONExtract
