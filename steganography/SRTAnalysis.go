@@ -65,6 +65,18 @@ type SRT_Packet struct {
 	barometer 	string
 }
 
+type GeoJSONResult struct {
+	Type       string                 `json:"type"`
+	Geometry   Geometry               `json:"geometry"`
+	Properties map[string]interface{} `json:"properties"`
+}
+
+type Geometry struct {
+	Type        string    `json:"type"`
+	Coordinates []float64 `json:"coordinates"`
+}
+
+
 func (packet *SRT_Packet) printSRTPacket(length string) {
 	title := "Frame " + checkEmptyField(packet.frame_count)
 	if packet.frame_count == "1" {
@@ -247,6 +259,23 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	return converted
 }
 
+func (parser *DJI_SRT_Parser) GeoJSONExtract(raw []SRT_Packet) {
+
+}
+
+func (parser *DJI_SRT_Parser) CreateGeoJSON(raw []SRT_Packet, waypoints bool) {
+	// elevationOffset := 0
+	// result := GeoJSONResult{
+	// 	Type: "Feature",
+	// 	Geometry: Geometry{
+	// 		Type:        "Point",
+	// 		Coordinates: []float64{},
+	// 	},
+	// 	Properties: make(map[string]interface{}),
+	// }
+}
+
+
 func (parser *DJI_SRT_Parser) GeneratePackets() {
 	// Check if Valid File Path
 	content, err := ioutil.ReadFile(parser.fileName)
@@ -268,6 +297,8 @@ func (parser *DJI_SRT_Parser) PrintAllPackets() {
 		packet.printSRTPacket(strconv.Itoa(amount))
 	}
 }
+
+
 
 func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	file, err := os.Open(parser.fileName)
@@ -362,4 +393,166 @@ func checkValidFileContents(fileContent string) bool {
 
 func checkNullPacket(packet SRT_Packet) bool {
 	return (packet.diff_time == "" && packet.iso == "" && packet.shutter == "" && packet.fnum == "" && packet.ev == "" && packet.ct == "" && packet.color_md == "" && packet.focal_len == "" && packet.latitude == "" && packet.longtitude == "" && packet.altitude == "" && packet.date == "" && packet.time_stamp == "")
+}
+
+// toGeoJSON Helpers
+func extractProps(childObj map[string]interface{}, pre string) []map[string]interface{} {
+	var results []map[string]interface{}
+	for child, value := range childObj {
+		if childValue, ok := value.(map[string]interface{}); ok && childValue != nil {
+			children := extractProps(childValue, pre+"_"+child)
+			for _, child := range children {
+				results = append(results, child)
+			}
+		} else {
+			results = append(results, map[string]interface{}{"name": pre + "_" + child, "value": value})
+		}
+	}
+	return results
+}
+
+// func GeoJSONExtract(obj map[string]interface{}, raw bool) GeoJSONResult {
+// 	result := map[string]interface{}{
+// 		"type": "Feature",
+// 		"properties": map[string]interface{}{
+// 			"source":    "dji-srt-parser",
+// 			"timestamp": []interface{}{},
+// 			"name":      cleanFileName("test"),
+// 		},
+// 		"geometry": map[string]interface{}{
+// 			"type":        "Point",
+// 			"coordinates": []interface{}{},
+// 		},
+// 	}
+
+// 	for key, value := range obj {
+// 		// if key == "DATE" {
+// 		// 	result.properties["timestamp"] = value
+// 		// } else if key == "GPS" {
+// 		// 	result.Geometry.Coordinates = extractCoordinates(value, raw)
+// 		// } else if subObj, ok := value.(map[string]interface{}); ok && subObj != nil {
+// 		// 	children := extractProps(subObj, key)
+// 		// 	for _, child := range children {
+// 		// 		// result.Properties[child.Name] = child.Value
+// 		// 		// TODO
+// 		// 		fmt.Println(child)
+// 		// 	}
+// 		// } else {
+// 		// 	result.Properties[key] = value
+// 		// }
+// 	}
+
+// 	return result
+// }
+
+func createLinestring(features []map[string]interface{}, fileName string, customProperties map[string]interface{}) map[string]interface{} {
+	result := map[string]interface{}{
+		"type": "Feature",
+		"properties": map[string]interface{}{
+			"source":    "dji-srt-parser",
+			"timestamp": []interface{}{},
+			"name":      cleanFileName(fileName),
+		},
+		"geometry": map[string]interface{}{
+			"type":        "LineString",
+			"coordinates": []interface{}{},
+		},
+	}
+
+	props := features[0]["properties"].(map[string]interface{})
+	for prop, value := range props {
+		if !containsString([]string{
+			"DATE",
+			"TIMECODE",
+			"GPS",
+			"timestamp",
+			"BAROMETER",
+			"DISTANCE",
+			"SPEED_THREED",
+			"SPEED_TWOD",
+			"SPEED_VERTICAL",
+			"HB",
+		}, prop) {
+			result["properties"].(map[string]interface{})[prop] = value
+		}
+	}
+
+	for _, feature := range features {
+		result["geometry"].(map[string]interface{})["coordinates"] = append(result["geometry"].(map[string]interface{})["coordinates"].([]interface{}), feature["geometry"].(map[string]interface{})["coordinates"])
+		result["properties"].(map[string]interface{})["timestamp"] = append(result["properties"].(map[string]interface{})["timestamp"].([]interface{}), feature["properties"].(map[string]interface{})["timestamp"])
+	}
+
+	return result
+}
+
+func containsString(slice []string, str string) bool {
+	for _, item := range slice {
+		if item == str {
+			return true
+		}
+	}
+	return false
+}
+
+func cleanFileName(fileName string) string {
+	re := regexp.MustCompile(`\.[^/.]+$`) // Regular expression to match file extension
+	return re.ReplaceAllString(fileName, "") // Remove file extension
+}
+
+func notReady() interface{} {
+	fmt.Println("Data not ready")
+	return nil
+}
+
+func extractCoordinates(coordsObj map[string]interface{}, raw bool) []float64 {
+	coordResult := make([]float64, 3)
+	if raw {
+		if gps, ok := coordsObj["GPS"].([]interface{}); ok && len(gps) >= 2 {
+			if val, ok := gps[0].(float64); ok {
+				coordResult[0] = val
+			}
+			if val, ok := gps[1].(float64); ok {
+				coordResult[1] = val
+			}
+		}
+	} else {
+		if gps, ok := coordsObj["GPS"].(map[string]interface{}); ok {
+			if val, ok := gps["LONGITUDE"].(float64); ok {
+				coordResult[0] = val
+			}
+			if val, ok := gps["LATITUDE"].(float64); ok {
+				coordResult[1] = val
+			}
+			if elevation := getElevation(coordsObj); elevation != nil {
+				coordResult[2] = *elevation
+			}
+		}
+	}
+	return coordResult
+}
+
+func getElevationKey(src map[string]interface{}) string {
+	if _, ok := src["ALTITUDE"]; ok {
+		return "ALTITUDE"
+	} else if _, ok := src["BAROMETER"]; ok {
+		return "BAROMETER"
+	} else if _, ok := src["HB"]; ok {
+		return "HB"
+	}
+	return "ALTITUDE"
+}
+
+func getElevation(src map[string]interface{}) *float64 {
+	if val, ok := src["ALTITUDE"].(float64); ok {
+		return &val
+	} else if val, ok := src["BAROMETER"].(float64); ok {
+		return &val
+	} else if val, ok := src["HB"].(float64); ok {
+		return &val
+	}
+	return nil
+}
+
+func preProcess(array []SRT_Packet, fileName string) {
+	
 }

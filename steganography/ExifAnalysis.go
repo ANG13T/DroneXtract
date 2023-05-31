@@ -6,11 +6,30 @@ import (
 	"fmt"
 )
 
+type DJI_EXIF_Parser struct {
+	fileName        string
+}
 
-func ExampleExiftool_Read() {
+
+func NewDJI_EXIF_Parser(fileName string) *DJI_EXIF_Parser {
+	parser := DJI_EXIF_Parser{
+		fileName: fileName,
+	}
+	return &parser
+}
+
+func (parser *DJI_EXIF_Parser) Read() {
+
+}
+
+
+func (parser *DJI_EXIF_Parser) ExampleExiftool_Read() {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
 		fmt.Printf("Error when intializing: %v\n", err)
+		if err == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
+			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+		}
 		return
 	}
 	defer et.Close()
