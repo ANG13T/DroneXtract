@@ -51,9 +51,18 @@ func TestEXIFAnalysis(t *testing.T) {
 	// conversion to txt, csv, and json
 }
 
-func RunXMPAnalysis() {
-	// to text
+func RunXMPAnalysis(t *testing.T) {
+	t.Logf("Running Steganography  Test Unit - XMP Files")
+	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - XMP Files"))
+
+	// TODO
+	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\JPG-Files\DJI_0001.jpg`
+	suite := NewDJI_XMP_Parser(filename)
+
 	// parsing
+	suite.Read()
+
+	// conversion to txt, csv, and json
 }
 
 func RunDNGAnalysis(t *testing.T) {
