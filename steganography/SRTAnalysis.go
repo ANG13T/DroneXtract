@@ -33,6 +33,12 @@ type DJI_SRT_Parser struct {
 }
 
 func NewDJI_SRT_Parser(fileName string) *DJI_SRT_Parser {
+	check := CheckFileFormat(fileName, "srt")
+	if check == false {
+		PrintError("INVALID FILE FORMAT. MUST BE SRT FILE")
+		return nil
+	}
+
 	parser := DJI_SRT_Parser{
 		fileName: fileName,
 		metadata:           make(map[string]interface{}),

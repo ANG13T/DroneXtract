@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"log"
+	"path/filepath"
 )
 
 func GenTableHeader(name string, containBreak bool) {
@@ -58,4 +59,9 @@ func PrintError(message string) {
 func PrintErrorLog(message string, err error) {
 	fmt.Println(color.Ize(color.Red, message))
 	log.Println(color.Ize(color.Red, "[ERROR]"), err)
+}
+
+func CheckFileFormat(path string, exten string) bool {
+	extension := strings.ToLower(filepath.Ext(path))
+	return (extension == exten)
 }
