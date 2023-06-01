@@ -42,13 +42,13 @@ func TestEXIFAnalysis(t *testing.T) {
 	t.Logf("Running Steganography  Test Unit - EXIF Files")
 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - SRT Files"))
 
-	filename := `/Users/angelinatsuboi/Desktop/DJI-Forensics/dataset/DJI_0001.jpg`
+	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\JPG-Files\DJI_0001.jpg`
 	suite := NewDJI_EXIF_Parser(filename)
 
-	suite.ExampleExiftool_Read()
-
-	// to to txt, csv, and json
 	// parsing
+	suite.Read()
+
+	// conversion to txt, csv, and json
 }
 
 func RunXMPAnalysis() {
@@ -56,8 +56,19 @@ func RunXMPAnalysis() {
 	// parsing
 }
 
-func RunDNGAnalysis() {
-	// to text
+func RunDNGAnalysis(t *testing.T) {
+	t.Logf("Running Steganography  Test Unit - DNG Files")
+	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - DNG Files"))
+
+	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\DNG-Files\DJI_0234.dng`
+	suite := NewDJI_DNG_Parser(filename)
+
 	// parsing
+	suite.Read()
+
 	// to png
+	output := `C:\Users\AT\Desktop\DroneXtract\output\DJI_0234.png`
+	suite.DNGtoPNG(output)
+
+	// conversion to txt, csv, and json
 }

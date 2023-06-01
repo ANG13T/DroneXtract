@@ -18,13 +18,9 @@ func NewDJI_EXIF_Parser(fileName string) *DJI_EXIF_Parser {
 	return &parser
 }
 
-func (parser *DJI_EXIF_Parser) Read() {
-
-}
-
 // export to txt, csv, and json
 
-func (parser *DJI_EXIF_Parser) ExampleExiftool_Read() {
+func (parser *DJI_EXIF_Parser) Read() {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
 		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
@@ -36,7 +32,6 @@ func (parser *DJI_EXIF_Parser) ExampleExiftool_Read() {
 	}
 	defer et.Close()
 
-	fmt.Println(parser.fileName)
 
 	fileInfos := et.ExtractMetadata(parser.fileName)
 

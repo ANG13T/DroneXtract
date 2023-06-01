@@ -8,27 +8,41 @@ import (
 	_ "github.com/mdouchement/dng"
 )
 
-var (
-	input  = "/Users/angelinatsuboi/Desktop/DJI-Forensics/dataset/DJI_0234.dng"
-	output = "/Users/angelinatsuboi/Desktop/DJI-Forensics/dataset/output.png"
-)
+type DJI_DNG_Parser struct {
+	fileName        string
+}
 
-func DNGtoPNG() {
-	fi, err := os.Open(input)
-	check(err)
+
+func NewDJI_DNG_Parser(fileName string) *DJI_DNG_Parser {
+	parser := DJI_DNG_Parser{
+		fileName: fileName,
+	}
+	return &parser
+}
+
+func (parser *DJI_DNG_Parser) Read() { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.Read()
+}
+
+func (parser *DJI_DNG_Parser) DNGtoPNG(outputFileName string) {
+	fi, err := os.Open(parser.fileName)
+	check("COULD NOT READ FILE", err)
 	defer fi.Close()
 
 	m, _, err := image.Decode(fi)
-	check(err)
+	check("CORRUPT IMAGE FILE", err)
 
-	fo, err := os.Create(output)
-	check(err)
+	fo, err := os.Create(outputFileName)
+	check("INVALID OUTPUT FILE", err)
 
 	png.Encode(fo, m)
 }
 
-func check(err error) {
+// helper functions
+
+func check(errorName string, err error) {
 	if err != nil {
-		panic(err)
+		PrintErrorLog(errorName, err)
 	}
 }
