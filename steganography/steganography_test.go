@@ -47,7 +47,7 @@ func TestEXIFAnalysis(t *testing.T) {
 
 	suite.ExampleExiftool_Read()
 
-	// to text
+	// to to txt, csv, and json
 	// parsing
 }
 

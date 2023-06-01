@@ -22,23 +22,27 @@ func (parser *DJI_EXIF_Parser) Read() {
 
 }
 
+// export to txt, csv, and json
 
 func (parser *DJI_EXIF_Parser) ExampleExiftool_Read() {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
-		fmt.Printf("Error when intializing: %v\n", err)
-		if err == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
+		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
 			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+		} else {
+			PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
 		}
 		return
 	}
 	defer et.Close()
 
-	fileInfos := et.ExtractMetadata("/Users/angelinatsuboi/Desktop/DJI-Forensics/dataset/DJI_0001.jpg")
+	fmt.Println(parser.fileName)
+
+	fileInfos := et.ExtractMetadata(parser.fileName)
 
 	for _, fileInfo := range fileInfos {
 		if fileInfo.Err != nil {
-			fmt.Printf("Error concerning %v: %v\n", fileInfo.File, fileInfo.Err)
+			PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
 			continue
 		}
 
