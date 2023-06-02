@@ -6,11 +6,6 @@ import (
 	"fmt"
 )
 
-// SRT - 2 tests
-// XMP - 2 tests
-// EXIF - 2 tests
-// DNG - 2 tests
-
 // func TestSRTAnalysis(t *testing.T) {
 // 	t.Logf("Running Steganography  Test Unit - SRT Files")
 // 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - SRT Files"))
@@ -65,14 +60,23 @@ func RunXMPAnalysis(t *testing.T) {
 	t.Logf("Running Steganography  Test Unit - XMP Files")
 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - XMP Files"))
 
-	// TODO
 	filename := `..\test-data\JPG-Files\DJI_0001.jpg`
 	suite := NewDJI_XMP_Parser(filename)
 
-	// parsing
+	// Parsing
 	suite.Read()
 
-	// conversion to txt, csv, and json
+	// Conversion to TXT
+	outputTXTFileName := `..\output\DJI_JPG_XMP_OUTPUT.txt`
+	suite.ExportToTXT(outputTXTFileName)
+
+	// Conversion to CSV
+	outputCSVFileName := `..\output\DJI_JPG_XMP_OUTPUT.csv`
+	suite.ExportToCSV(outputCSVFileName)
+
+	// Conversion to JSON
+	outputJSONFileName := `..\output\DJI_JPG_XMP_OUTPUT.json`
+	suite.ExportToJSON(outputJSONFileName)
 }
 
 func RunDNGAnalysis(t *testing.T) {
@@ -82,12 +86,22 @@ func RunDNGAnalysis(t *testing.T) {
 	filename := `..\test-data\DNG-Files\DJI_0234.dng`
 	suite := NewDJI_DNG_Parser(filename)
 
-	// parsing
+	// Parsing
 	suite.Read()
 
-	// to png
+	// Conversion to PNG
 	output := `..\output\DJI_0234.png`
 	suite.DNGtoPNG(output)
 
-	// conversion to txt, csv, and json
+	// Conversion to TXT
+	outputTXTFileName := `..\output\DJI_JPG_DNG_OUTPUT.txt`
+	suite.ExportToTXT(outputTXTFileName)
+
+	// Conversion to CSV
+	outputCSVFileName := `..\output\DJI_JPG_DNG_OUTPUT.csv`
+	suite.ExportToCSV(outputCSVFileName)
+
+	// Conversion to JSON
+	outputJSONFileName := `..\output\DJI_JPG_DNG_OUTPUT.json`
+	suite.ExportToJSON(outputJSONFileName)
 }

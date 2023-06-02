@@ -12,7 +12,6 @@ type DJI_DNG_Parser struct {
 	fileName        string
 }
 
-
 func NewDJI_DNG_Parser(fileName string) *DJI_DNG_Parser {
 	check := CheckFileFormat(fileName, "dng")
 	if check == false {
@@ -44,6 +43,22 @@ func (parser *DJI_DNG_Parser) DNGtoPNG(outputFileName string) {
 
 	png.Encode(fo, m)
 }
+
+func (parser *DJI_DNG_Parser) ExportToTXT(outputPath string) { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.ExportToTXT(outputPath)
+}
+
+func (parser *DJI_DNG_Parser) ExportToCSV(outputPath string) { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.ExportToCSV(outputPath)
+}
+
+func (parser *DJI_DNG_Parser) ExportToJSON(outputPath string) { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.ExportToJSON(outputPath)
+}
+
 
 // helper functions
 

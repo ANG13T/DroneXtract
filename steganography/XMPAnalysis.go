@@ -22,3 +22,18 @@ func (parser *DJI_XMP_Parser) Read() {
 	exif := NewDJI_EXIF_Parser(parser.fileName)
 	exif.Read()
 }
+
+func (parser *DJI_XMP_Parser) ExportToTXT(outputPath string) { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.ExportToTXT(outputPath)
+}
+
+func (parser *DJI_XMP_Parser) ExportToCSV(outputPath string) { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.ExportToCSV(outputPath)
+}
+
+func (parser *DJI_XMP_Parser) ExportToJSON(outputPath string) { 
+	exif := NewDJI_EXIF_Parser(parser.fileName)
+	exif.ExportToJSON(outputPath)
+}
