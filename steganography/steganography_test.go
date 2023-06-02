@@ -45,10 +45,16 @@ func TestEXIFAnalysis(t *testing.T) {
 	filename := `C:\Users\AT\Desktop\DroneXtract\test-data\JPG-Files\DJI_0001.jpg`
 	suite := NewDJI_EXIF_Parser(filename)
 
-	// parsing
+	// Parsing
 	suite.Read()
 
-	// conversion to txt, csv, and json
+	// Conversion to TXT
+	outputFileName := `C:\Users\AT\Desktop\DroneXtract\output\DJI_JPG_EXIF_OUTPUT.txt`
+	suite.ExportToTXT(outputFileName)
+
+	// Conversion to CSV
+
+	// Conversion to JSON
 }
 
 func RunXMPAnalysis(t *testing.T) {

@@ -1,0 +1,128 @@
+FileName:DJI_0001.jpg
+ExifImageWidth:4000
+SceneType:Directly photographed
+FlightRollDegree:-2.6
+DateTimeOriginal:2021:10:09 17:33:50
+FlightYawDegree:-48.1
+HasSettings:false
+AlreadyApplied:false
+ModifyDate:2021:10:09 17:33:50
+ExifVersion:0230
+MaxApertureValue:2.8
+XPComment:Type=N, Mode=P, DE=None
+TotalFrames:1
+FNumber:2.8
+FileSource:Digital Camera
+MPImageType:Large Thumbnail (VGA equivalent)
+ResolutionUnit:inches
+ExifImageHeight:2250
+NumberOfImages:2
+GPSLongitude:118 deg 22' 16.14" W
+ZoneIdentifier:Exists
+Make:DJI
+FlashpixVersion:0100
+GainControl:None
+Megapixels:9
+ScaleFactor35efl:5.3
+ExposureProgram:Program AE
+CompressedBitsPerPixel:3.687878222
+ExposureMode:Auto
+RelativeAltitude:+2.40
+GimbalPitchDegree:+0.00
+FileTypeExtension:jpg
+ComponentsConfiguration:Y, Cb, Cr, -
+DigitalZoomRatio:1
+Version:7
+FileAccessDate:2023:06:01 22:01:16-07:00
+MIMEType:image/jpeg
+Software:v01.43.0039
+GimbalYawDegree:+0.00
+HasCrop:false
+DependentImage1EntryNumber:0
+ImageDescription:DCIM\100MEDIA\DJI_0001.JPG
+SpeedX:+0.00
+ExposureIndex:undef
+FlightPitchDegree:-1.2
+SubjectDistanceRange:Unknown
+GPSAltitudeRef:Above Sea Level
+GPSLatitude:33 deg 52' 56.44" N
+ApertureValue:2.8
+ColorComponents:3
+SubjectDistance:0 m
+Flash:No flash function
+Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
+FocalLengthIn35mmFormat:24 mm
+SceneCaptureType:Standard
+GPSLatitudeRef:North
+Format:image/jpg
+HyperfocalDistance:1.28 m
+ExposureTime:1/800
+MPFVersion:0010
+CircleOfConfusion:0.006 mm
+ExposureCompensation:0
+LightSource:Fluorescent
+CustomRendered:Normal
+AbsoluteAltitude:+3.26
+MPImageFormat:JPEG
+FileModifyDate:2023:06:01 02:48:46-07:00
+Orientation:Horizontal (normal)
+Contrast:Normal
+SerialNumber:1SFOJ6G0AB02U2
+ImageSize:4000x2250
+ExifToolVersion:12.62
+ImageHeight:2250
+Directory:C:/Users/AT/Desktop/DroneXtract/test-data/JPG-Files
+YResolution:72
+Yaw:-48.1
+InteropVersion:0100
+WhiteBalance:Auto
+MPImageStart:4.187666e+06
+DependentImage2EntryNumber:0
+FileType:JPEG
+MeteringMode:Center-weighted average
+SpeedZ:+0.00
+Pitch:-1.2
+ShutterSpeed:1/800
+PreviewImage:(Binary data 299523 bytes, use -b option to extract)
+FilePermissions:-rw-rw-rw-
+Saturation:Normal
+Sharpness:Normal
+Compression:JPEG (old-style)
+Roll:-2.6
+ThumbnailOffset:18432
+ImageWidth:4000
+EncodingProcess:Baseline DCT, Huffman coding
+XResolution:72
+GPSVersionID:2.3.0.0
+MPImageFlags:Dependent child image
+ImageUIDList:(Binary data 66 bytes, use -b option to extract)
+Aperture:2.8
+FileSize:4.5 MB
+FileCreateDate:2023:06:01 02:50:57-07:00
+ShutterSpeedValue:1/800
+InteropIndex:R98 - DCF basic file (sRGB)
+ThumbnailLength:12035
+GimbalRollDegree:+0.00
+SourceFile:C:/Users/AT/Desktop/DroneXtract/test-data/JPG-Files/DJI_0001.jpg
+SpeedY:+0.00
+GimbalReverse:0
+YCbCrSubSampling:YCbCr4:2:2 (2 1)
+GPSAltitude:3.2 m Above Sea Level
+ThumbnailImage:(Binary data 12035 bytes, use -b option to extract)
+YCbCrPositioning:Centered
+About:DJI Meta Data
+GPSPosition:33 deg 52' 56.44" N, 118 deg 22' 16.14" W
+ISO:100
+XPKeywords:v01.43.0039;0.0.1;v1.0.0
+FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
+ExifByteOrder:Little-endian (Intel, II)
+Model:FC7303
+CreateDate:2021:10:09 17:33:50
+ColorSpace:sRGB
+CamReverse:0
+BitsPerSample:8
+FocalLength:4.5 mm
+GPSLongitudeRef:West
+MPImageLength:299523
+FOV:73.7 deg
+LightValue:12.6
