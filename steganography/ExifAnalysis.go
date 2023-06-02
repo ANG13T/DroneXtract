@@ -56,6 +56,12 @@ func (parser *DJI_EXIF_Parser) ExportToTXT(outputPath string) {
 		outputPath = "../output/exif-analysis.txt"
 	}
 
+	check := CheckFileFormat(outputPath, "txt")
+	if check == false {
+		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE TXT FILE")
+		return
+	}
+
 	file, err := os.Create(outputPath)
 	if err != nil {
 		PrintErrorLog("FAILED TO CREATE TXT FILE", err)
