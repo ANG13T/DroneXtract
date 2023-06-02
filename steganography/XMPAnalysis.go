@@ -5,7 +5,7 @@ type DJI_XMP_Parser struct {
 }
 
 func NewDJI_XMP_Parser(fileName string) *DJI_XMP_Parser {
-	check := CheckFileFormat(fileName, "xmp")
+	check := CheckFileFormat(fileName, ".xmp")
 	if check == false {
 		PrintError("INVALID FILE FORMAT. MUST BE XMP FILE")
 		return nil

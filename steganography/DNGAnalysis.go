@@ -13,7 +13,7 @@ type DJI_DNG_Parser struct {
 }
 
 func NewDJI_DNG_Parser(fileName string) *DJI_DNG_Parser {
-	check := CheckFileFormat(fileName, "dng")
+	check := CheckFileFormat(fileName, ".dng")
 	if check == false {
 		PrintError("INVALID FILE FORMAT. MUST BE DNG FILE")
 		return nil
