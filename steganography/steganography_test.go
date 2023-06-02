@@ -49,10 +49,12 @@ func TestEXIFAnalysis(t *testing.T) {
 	suite.Read()
 
 	// Conversion to TXT
-	outputFileName := `..\output\DJI_JPG_EXIF_OUTPUT.txt`
-	suite.ExportToTXT(outputFileName)
+	outputTXTFileName := `..\output\DJI_JPG_EXIF_OUTPUT.txt`
+	suite.ExportToTXT(outputTXTFileName)
 
 	// Conversion to CSV
+	outputCSVFileName := `..\output\DJI_JPG_EXIF_OUTPUT.csv`
+	suite.ExportToCSV(outputCSVFileName)
 
 	// Conversion to JSON
 }

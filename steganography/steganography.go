@@ -63,5 +63,6 @@ func PrintErrorLog(message string, err error) {
 
 func CheckFileFormat(path string, exten string) bool {
 	extension := strings.ToLower(filepath.Ext(path))
+	fmt.Println(extension, exten)
 	return (extension == exten)
 }
