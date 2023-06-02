@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"encoding/csv"
+	"encoding/json"
 )
 
 type DJI_EXIF_Parser struct {
@@ -161,7 +162,42 @@ func (parser *DJI_EXIF_Parser) ExportToCSV(outputPath string) {
 }
 
 func (parser *DJI_EXIF_Parser) ExportToJSON(outputPath string) {
+	if len(outputPath) == 0 {
+		outputPath = "../output/exif-analysis.json"
+	}
 
+	check := CheckFileFormat(outputPath, ".json")
+	if check == false {
+		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE JSON FILE")
+		return
+	}
+
+	file, err := os.Create(outputPath)
+	if err != nil {
+		PrintErrorLog("FAILED TO CREATE JSON FILE", err)
+		return
+	}
+	defer file.Close()
+
+	et, err := exiftool.NewExiftool()
+	if err != nil {
+		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
+			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+		} else {
+			PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
+		}
+		return
+	}
+	defer et.Close()
+
+	fileInfos := et.ExtractMetadata(parser.fileName)
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(fileInfos[0])
+
+	if err != nil {
+		PrintErrorLog("FAILED TO ENCODE JSON", err)
+		return
+	}
 }
-
-// export to csv, json

@@ -1,128 +1,128 @@
-PreviewImage:(Binary data 299523 bytes, use -b option to extract)
-FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
-MPImageType:Large Thumbnail (VGA equivalent)
-FileModifyDate:2023:06:01 02:48:46-07:00
-FileType:JPEG
-FocalLengthIn35mmFormat:24 mm
-GimbalPitchDegree:+0.00
-FileName:DJI_0001.jpg
-Roll:-2.6
-ColorSpace:sRGB
-ExifImageWidth:4000
-SpeedY:+0.00
-Yaw:-48.1
-ExifImageHeight:2250
-Flash:No flash function
 MIMEType:image/jpeg
-SubjectDistance:0 m
-SerialNumber:1SFOJ6G0AB02U2
-ColorComponents:3
-ShutterSpeed:1/800
-HyperfocalDistance:1.28 m
-FileSize:4.5 MB
-GimbalYawDegree:+0.00
-CamReverse:0
-Aperture:2.8
-SpeedX:+0.00
-MeteringMode:Center-weighted average
-FileTypeExtension:jpg
-GPSVersionID:2.3.0.0
-GimbalReverse:0
-NumberOfImages:2
-FileAccessDate:2023:06:01 22:19:05-07:00
-DigitalZoomRatio:1
-Directory:../test-data/JPG-Files
-ThumbnailOffset:18432
-Make:DJI
-ExposureCompensation:0
-SceneType:Directly photographed
-ThumbnailLength:12035
-RelativeAltitude:+2.40
-ImageSize:4000x2250
-ExifByteOrder:Little-endian (Intel, II)
-FNumber:2.8
-LightSource:Fluorescent
-SpeedZ:+0.00
-ExposureIndex:undef
-Version:7
-TotalFrames:1
-ImageWidth:4000
-SourceFile:../test-data/JPG-Files/DJI_0001.jpg
-CircleOfConfusion:0.006 mm
-Megapixels:9
-AlreadyApplied:false
-DependentImage2EntryNumber:0
+ExifImageHeight:2250
 EncodingProcess:Baseline DCT, Huffman coding
-GPSLatitude:33 deg 52' 56.44" N
-ImageDescription:DCIM\100MEDIA\DJI_0001.JPG
-FlightYawDegree:-48.1
-FocalLength:4.5 mm
-GainControl:None
-GPSLongitudeRef:West
-MPFVersion:0010
-MPImageStart:4.187666e+06
-GPSPosition:33 deg 52' 56.44" N, 118 deg 22' 16.14" W
-ExposureProgram:Program AE
+ThumbnailImage:(Binary data 12035 bytes, use -b option to extract)
 ExifVersion:0230
 CreateDate:2021:10:09 17:33:50
-MaxApertureValue:2.8
-Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
-Contrast:Normal
-ResolutionUnit:inches
-Pitch:-1.2
-XPComment:Type=N, Mode=P, DE=None
-Compression:JPEG (old-style)
-FileCreateDate:2023:06:01 02:50:57-07:00
-InteropIndex:R98 - DCF basic file (sRGB)
-ScaleFactor35efl:5.3
-ApertureValue:2.8
-FileSource:Digital Camera
-XPKeywords:v01.43.0039;0.0.1;v1.0.0
-MPImageFormat:JPEG
-BitsPerSample:8
-Orientation:Horizontal (normal)
-ComponentsConfiguration:Y, Cb, Cr, -
-ExposureMode:Auto
-LightValue:12.6
-DateTimeOriginal:2021:10:09 17:33:50
-FlightPitchDegree:-1.2
-Sharpness:Normal
-GPSLatitudeRef:North
-GPSAltitude:3.2 m Above Sea Level
-YCbCrPositioning:Centered
-GPSAltitudeRef:Above Sea Level
-About:DJI Meta Data
-Model:FC7303
-WhiteBalance:Auto
-XResolution:72
-GimbalRollDegree:+0.00
 HasCrop:false
-MPImageLength:299523
-FOV:73.7 deg
-ExposureTime:1/800
-CompressedBitsPerPixel:3.687878222
-CustomRendered:Normal
-SceneCaptureType:Standard
-HasSettings:false
-DependentImage1EntryNumber:0
-YCbCrSubSampling:YCbCr4:2:2 (2 1)
-GPSLongitude:118 deg 22' 16.14" W
-Software:v01.43.0039
-FilePermissions:-rw-rw-rw-
 YResolution:72
-ThumbnailImage:(Binary data 12035 bytes, use -b option to extract)
+ExposureIndex:undef
+GPSLatitudeRef:North
+Orientation:Horizontal (normal)
+FNumber:2.8
+SceneCaptureType:Standard
+XPKeywords:v01.43.0039;0.0.1;v1.0.0
+GimbalRollDegree:+0.00
+MPImageFlags:Dependent child image
+BitsPerSample:8
+Directory:../test-data/JPG-Files
+MaxApertureValue:2.8
+FocalLength:4.5 mm
+InteropVersion:0100
+Aperture:2.8
+FilePermissions:-rw-rw-rw-
+ExposureProgram:Program AE
+ExposureCompensation:0
+SpeedZ:+0.00
+ThumbnailOffset:18432
+FlightRollDegree:-2.6
+GPSLatitude:33 deg 52' 56.44" N
+SpeedX:+0.00
+Sharpness:Normal
+DependentImage2EntryNumber:0
+CircleOfConfusion:0.006 mm
 ZoneIdentifier:Exists
-ISO:100
-Format:image/jpg
+GPSAltitudeRef:Above Sea Level
+CamReverse:0
+ShutterSpeed:1/800
+Model:FC7303
+ColorSpace:sRGB
+WhiteBalance:Auto
 AbsoluteAltitude:+3.26
-ImageHeight:2250
+ColorComponents:3
+Megapixels:9
+HyperfocalDistance:1.28 m
 ModifyDate:2021:10:09 17:33:50
+DateTimeOriginal:2021:10:09 17:33:50
+SubjectDistance:0 m
+MeteringMode:Center-weighted average
+TotalFrames:1
+Pitch:-1.2
+Contrast:Normal
+ImageUIDList:(Binary data 66 bytes, use -b option to extract)
+ExifImageWidth:4000
+Compression:JPEG (old-style)
+MPImageStart:4.187666e+06
+FileType:JPEG
+SubjectDistanceRange:Unknown
+NumberOfImages:2
+PreviewImage:(Binary data 299523 bytes, use -b option to extract)
+FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
+Yaw:-48.1
+RelativeAltitude:+2.40
+FlightPitchDegree:-1.2
+ImageWidth:4000
+FileSize:4.5 MB
+FileModifyDate:2023:06:01 02:48:46-07:00
+InteropIndex:R98 - DCF basic file (sRGB)
+DigitalZoomRatio:1
+About:DJI Meta Data
+YCbCrSubSampling:YCbCr4:2:2 (2 1)
+GPSLongitudeRef:West
+GimbalPitchDegree:+0.00
+ExifByteOrder:Little-endian (Intel, II)
+ISO:100
+FileSource:Digital Camera
+ExposureMode:Auto
+GPSVersionID:2.3.0.0
+DependentImage1EntryNumber:0
+LightValue:12.6
+Flash:No flash function
+CustomRendered:Normal
+GPSPosition:33 deg 52' 56.44" N, 118 deg 22' 16.14" W
+FocalLengthIn35mmFormat:24 mm
+GimbalYawDegree:+0.00
+AlreadyApplied:false
+ImageHeight:2250
+FOV:73.7 deg
+ExifToolVersion:12.62
+FileTypeExtension:jpg
+FlightYawDegree:-48.1
+GimbalReverse:0
+YCbCrPositioning:Centered
+GPSAltitude:3.2 m Above Sea Level
+XResolution:72
+CompressedBitsPerPixel:3.687878222
+MPImageLength:299523
+MPImageType:Large Thumbnail (VGA equivalent)
+FileName:DJI_0001.jpg
+ImageDescription:DCIM\100MEDIA\DJI_0001.JPG
+Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
+XPComment:Type=N, Mode=P, DE=None
+Format:image/jpg
+HasSettings:false
+MPFVersion:0010
+Make:DJI
+Roll:-2.6
+ThumbnailLength:12035
+Software:v01.43.0039
+GainControl:None
+Version:7
+Saturation:Normal
+SourceFile:../test-data/JPG-Files/DJI_0001.jpg
+FileCreateDate:2023:06:01 02:50:57-07:00
+ResolutionUnit:inches
+ExposureTime:1/800
+ApertureValue:2.8
+LightSource:Fluorescent
+SpeedY:+0.00
+SerialNumber:1SFOJ6G0AB02U2
+ImageSize:4000x2250
+GPSLongitude:118 deg 22' 16.14" W
+FileAccessDate:2023:06:01 22:27:06-07:00
+ComponentsConfiguration:Y, Cb, Cr, -
 ShutterSpeedValue:1/800
 FlashpixVersion:0100
-SubjectDistanceRange:Unknown
-MPImageFlags:Dependent child image
-ExifToolVersion:12.62
-Saturation:Normal
-FlightRollDegree:-2.6
-ImageUIDList:(Binary data 66 bytes, use -b option to extract)
-InteropVersion:0100
+SceneType:Directly photographed
+MPImageFormat:JPEG
+ScaleFactor35efl:5.3

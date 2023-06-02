@@ -57,6 +57,8 @@ func TestEXIFAnalysis(t *testing.T) {
 	suite.ExportToCSV(outputCSVFileName)
 
 	// Conversion to JSON
+	outputJSONFileName := `..\output\DJI_JPG_EXIF_OUTPUT.json`
+	suite.ExportToJSON(outputJSONFileName)
 }
 
 func RunXMPAnalysis(t *testing.T) {
