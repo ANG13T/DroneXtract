@@ -16,6 +16,7 @@ import (
 	"strings"
 	"io/ioutil"
 	"os"
+	"reflect"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)
@@ -416,39 +417,41 @@ func extractProps(childObj map[string]interface{}, pre string) []map[string]inte
 	return results
 }
 
-// func GeoJSONExtract(obj map[string]interface{}, raw bool) GeoJSONResult {
-// 	result := map[string]interface{}{
-// 		"type": "Feature",
-// 		"properties": map[string]interface{}{
-// 			"source":    "dji-srt-parser",
-// 			"timestamp": []interface{}{},
-// 			"name":      cleanFileName("test"),
-// 		},
-// 		"geometry": map[string]interface{}{
-// 			"type":        "Point",
-// 			"coordinates": []interface{}{},
-// 		},
-// 	}
+func GeoJSONExtract(obj SRT_Packet, raw bool) GeoJSONResult {
+	result := GeoJSONResult{
+		Type: "Feature",
+		Properties: map[string]interface{}{
+			"source":    "dji-srt-parser",
+			"timestamp": []interface{}{},
+			"name":      cleanFileName("test"),
+		},
+		Geometry: Geometry{
+			Type:        "Point",
+			Coordinates: []float64{0,0},
+		},
+	}
 
-// 	for key, value := range obj {
-// 		// if key == "DATE" {
-// 		// 	result.properties["timestamp"] = value
-// 		// } else if key == "GPS" {
-// 		// 	result.Geometry.Coordinates = extractCoordinates(value, raw)
-// 		// } else if subObj, ok := value.(map[string]interface{}); ok && subObj != nil {
-// 		// 	children := extractProps(subObj, key)
-// 		// 	for _, child := range children {
-// 		// 		// result.Properties[child.Name] = child.Value
-// 		// 		// TODO
-// 		// 		fmt.Println(child)
-// 		// 	}
-// 		// } else {
-// 		// 	result.Properties[key] = value
-// 		// }
-// 	}
+	for key, value := range structToMap(obj) {
+		if key == "time_stamp" {
+			result.Properties["timestamp"] = value
+		} else if key == "latitude" {
+			result.Geometry.Coordinates[0] = value
+		} else if key == "longtitude" {
+			result.Geometry.Coordinates[1] = value
+		} else if subObj, ok := value.(map[string]interface{}); ok && subObj != nil {
+			children := extractProps(subObj, key)
+			for _, child := range children {
+				result.Properties[child.Name] = child.Value
+				// TODO
+				fmt.Println(child)
+			}
+		} else {
+			result.Properties[key] = value
+		}
+	}
 
-// 	return result
-// }
+	return result
+}
 
 func createLinestring(features []map[string]interface{}, fileName string, customProperties map[string]interface{}) map[string]interface{} {
 	result := map[string]interface{}{
@@ -497,6 +500,18 @@ func containsString(slice []string, str string) bool {
 		}
 	}
 	return false
+}
+
+func structToMap(data interface{}) map[string]string {
+	result := make(map[string]string)
+	value := reflect.ValueOf(data)
+
+	for i := 0; i < value.NumField(); i++ {
+		field := value.Type().Field(i)
+		result[field.Name] = value.Field(i).String()
+	}
+
+	return result
 }
 
 func cleanFileName(fileName string) string {
