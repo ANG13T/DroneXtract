@@ -2,9 +2,7 @@ package steganography
 
 // TODO -
 
-// 2 - toGeoJSON + toCSV + toMGJSON
-
-
+// toGeoJSON
 // 0 - support all files
 // 5 - subtitle extractor from videos (MP4 to SRT)
 // 7 - comments
@@ -16,19 +14,13 @@ import (
 	"strings"
 	"io/ioutil"
 	"os"
-	"reflect"
+	"encoding/json"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)
 
 type DJI_SRT_Parser struct {
 	fileName        string
-	metadata        map[string]interface{}
-	rawMetadata     []interface{}
-	smoothened      int
-	millisecondsSample int
-	loaded          bool
-	isMultiple      bool
 	packets			[]SRT_Packet
 }
 
@@ -41,12 +33,6 @@ func NewDJI_SRT_Parser(fileName string) *DJI_SRT_Parser {
 
 	parser := DJI_SRT_Parser{
 		fileName: fileName,
-		metadata:           make(map[string]interface{}),
-		rawMetadata:        make([]interface{}, 0),
-		smoothened:         0,
-		millisecondsSample: 0,
-		loaded:             false,
-		isMultiple:         false,
 		packets:            make([]SRT_Packet, 0),
 	}
 	return &parser
@@ -71,9 +57,39 @@ type SRT_Packet struct {
 	barometer 	string
 }
 
-type GeoJSONResult struct {
+type GeoFeatureJSONResult struct {
 	Type       string                 `json:"type"`
 	Geometry   Geometry               `json:"geometry"`
+	Properties []GeoProperty          `json:"properties"`
+}
+
+type GeoJSONResult struct {
+	Type       string                 `json:"type"`
+	CRS   	   CRS                    `json:"geometry"`
+	Features   []GeoFeatureJSONResult `json:"features"`
+}
+
+type GeoProperty struct {
+	frameCount 	int64
+	diff_time   string
+	iso 		int32
+	shutter     string
+	fnum		int32
+	ev			int32
+	ct 			int64
+	color_md 	string
+	focal_len	int32
+	latitude	float64
+	longitude	float64
+	altitude	float64
+	date 		string
+	time_stamp  string
+	barometer   float64
+}
+
+
+type CRS struct {
+	Type        string    `json:"type"`
 	Properties map[string]interface{} `json:"properties"`
 }
 
@@ -84,28 +100,28 @@ type Geometry struct {
 
 
 func (packet *SRT_Packet) printSRTPacket(length string) {
-	title := "Frame " + checkEmptyField(packet.frame_count)
+	title := "FRAME " + checkEmptyField(packet.frame_count)
 	if packet.frame_count == "1" {
 		GenTableHeader(title, true)
 	} else {
 		GenTableHeaderModified(title)
 	}
 	
-	GenRowString("Frame Count", checkEmptyField(packet.frame_count))
-	GenRowString("Diff Time", checkEmptyField(packet.diff_time))
+	GenRowString("FRAME COUNT", checkEmptyField(packet.frame_count))
+	GenRowString("DIFF TIME", checkEmptyField(packet.diff_time))
 	GenRowString("ISO", checkEmptyField(packet.iso))
-	GenRowString("Shutter", checkEmptyField(packet.shutter))
+	GenRowString("SHUTTER", checkEmptyField(packet.shutter))
 	GenRowString("FNUM", checkEmptyField(packet.fnum))
 	GenRowString("EV", checkEmptyField(packet.ev))
 	GenRowString("CT", checkEmptyField(packet.ct))
-	GenRowString("Color MD", checkEmptyField(packet.color_md))
-	GenRowString("Focal Len", checkEmptyField(packet.focal_len))
-	GenRowString("Latitude", checkEmptyField(packet.latitude))
-	GenRowString("Longitude", checkEmptyField(packet.longtitude))
-	GenRowString("Altitude", checkEmptyField(packet.altitude))
-	GenRowString("Date", checkEmptyField(packet.date))
-	GenRowString("Time Stamp", checkEmptyField(packet.time_stamp))
-	GenRowString("Barometer", checkEmptyField(packet.barometer))
+	GenRowString("COLOR MD", checkEmptyField(packet.color_md))
+	GenRowString("FOCAL EN", checkEmptyField(packet.focal_len))
+	GenRowString("LATITUDE", checkEmptyField(packet.latitude))
+	GenRowString("LONGITUDE", checkEmptyField(packet.longtitude))
+	GenRowString("ALTITUDE", checkEmptyField(packet.altitude))
+	GenRowString("DATE", checkEmptyField(packet.date))
+	GenRowString("TIME STAMP", checkEmptyField(packet.time_stamp))
+	GenRowString("BAROMETER", checkEmptyField(packet.barometer))
 	
 	if packet.frame_count == length { 
 		GenTableFooter()
@@ -265,23 +281,6 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	return converted
 }
 
-func (parser *DJI_SRT_Parser) GeoJSONExtract(raw []SRT_Packet) {
-
-}
-
-func (parser *DJI_SRT_Parser) CreateGeoJSON(raw []SRT_Packet, waypoints bool) {
-	// elevationOffset := 0
-	// result := GeoJSONResult{
-	// 	Type: "Feature",
-	// 	Geometry: Geometry{
-	// 		Type:        "Point",
-	// 		Coordinates: []float64{},
-	// 	},
-	// 	Properties: make(map[string]interface{}),
-	// }
-}
-
-
 func (parser *DJI_SRT_Parser) GeneratePackets() {
 	// Check if Valid File Path
 	content, err := ioutil.ReadFile(parser.fileName)
@@ -335,11 +334,188 @@ func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	GenTableFooter()
 }
 
+
+func (parser *DJI_SRT_Parser) ExporttoJSON(outputPath string) {
+	if len(outputPath) == 0 {
+		outputPath = "../output/srt-analysis.json"
+	}
+
+	check := CheckFileFormat(outputPath, ".json")
+	if check == false {
+		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE JSON FILE")
+		return
+	}
+
+	file, err := os.Create(outputPath)
+	if err != nil {
+		PrintErrorLog("FAILED TO CREATE JSON FILE", err)
+		return
+	}
+	defer file.Close()
+
+}
+
+func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
+	if len(outputPath) == 0 {
+		outputPath = "../output/srt-analysis.geojson"
+	}
+
+	check := CheckFileFormat(outputPath, ".geojson")
+	if check == false {
+		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE GEOJSON FILE")
+		return
+	}
+
+	file, err := os.Create(outputPath)
+	if err != nil {
+		PrintErrorLog("FAILED TO CREATE GEOJSON FILE", err)
+		return
+	}
+	defer file.Close()
+
+	for in, packet := range parser.packets {
+		if in == 0 {
+
+		}
+		amount := len(parser.packets) 
+		packet.printSRTPacket(strconv.Itoa(amount))
+	}
+
+	result := GeoJSONResult{
+		Type: "FeatureCollection",
+		CRS: CRS{
+			Type: "name",
+			Properties: map[string]interface{}{
+				"name": "urn:ogc:def:crs:OGC:1.3:CRS84",
+			},
+		},
+		Features: []GeoFeatureJSONResult{},
+	}
+
+	// make all packets
+	for _, packet := range parser.packets {
+		amount := len(parser.packets) 
+		packet.printSRTPacket(strconv.Itoa(amount))
+	}
+
+	// make ending
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(result)
+
+	if err != nil {
+		PrintErrorLog("FAILED TO ENCODE JSON", err)
+		return
+	}
+
+}
+
+func (parser *DJI_SRT_Parser) ExporttoMGJSON(outputPath string) {
+	if len(outputPath) == 0 {
+		outputPath = "../output/srt-analysis.mgjson"
+	}
+
+	check := CheckFileFormat(outputPath, ".mgjson")
+	if check == false {
+		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE MGJSON FILE")
+		return
+	}
+
+	file, err := os.Create(outputPath)
+	if err != nil {
+		PrintErrorLog("FAILED TO CREATE MGJSON FILE", err)
+		return
+	}
+	defer file.Close()
+
+}
+
+func (parser *DJI_SRT_Parser) ExporttoCSV(outputPath string) {
+	if len(outputPath) == 0 {
+		outputPath = "../output/srt-analysis.csv"
+	}
+
+	check := CheckFileFormat(outputPath, ".csv")
+	if check == false {
+		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE CSV FILE")
+		return
+	}
+
+	file, err := os.Create(outputPath)
+	if err != nil {
+		PrintErrorLog("FAILED TO CREATE CSV FILE", err)
+		return
+	}
+	defer file.Close()
+
+}
+
+
 // Helpers
 
 func isNum(d string) bool {
 	_, err := strconv.ParseFloat(d, 64)
 	return err == nil
+}
+
+func PacketToGeoFeatureJSON(packet SRT_Packet) GeoFeatureJSONResult {
+	result := GeoFeatureJSONResult{
+		Type: "Feature",
+		Geometry: Geometry{
+			Type: "Point",
+			Coordinates: []float64{strconv.ParseFloat(packet.longitude, 64), strconv.ParseFloat(packet.latitude, 64)},
+		},
+		Properties: []GeoProperty{
+			frameCount: func() int64 {
+				val, _ := strconv.ParseInt(packet.frame_count, 10, 32)
+				return val
+			}(),
+			diff_time:   packet.diff_time,
+			iso: 		 func() int32 {
+				val, _ := strconv.ParseInt(packet.iso, 10, 32)
+				return int32(val)
+			}(),
+			shutter:     packet.shutter,
+			fnum:		 func() int32 {
+				val, _ := strconv.ParseInt(packet.fnum, 10, 32)
+				return int32(val)
+			}(),
+			ev:			 func() int32 {
+				val, _ := strconv.ParseInt(packet.ev, 10, 32)
+				return int32(val)
+			}(),
+			ct: 	     func() int64 {
+				val, _ := strconv.ParseInt(packet.ct, 10, 64)
+				return val
+			}(),
+			color_md: 	 packet.color_md,
+			focal_len:	 func() int32 {
+				val, _ := strconv.ParseInt(packet.focal_len, 10, 32)
+				return int32(val)
+			}(),
+			latitude:	func() `float64` {
+				val, _ := strconv.ParseFloat(packet.latitude, 64)
+				return val
+			}(),
+			longitude:	func() float64 {
+				val, _ := strconv.ParseFloat(packet.longtitude, 64)
+				return val
+			}(),
+			altitude:	func() float64 {
+				val, _ := strconv.ParseFloat(packet.altitude, 64)
+				return val
+			}(),
+			date: 		packet.date,
+			time_stamp: packet.time_stamp,
+			barometer:  func() float64 {
+				val, _ := strconv.ParseFloat(packet.barometer, 64)
+				return val
+			}(),
+		},
+		
+	}
+	return result
 }
 
 
@@ -399,180 +575,4 @@ func checkValidFileContents(fileContent string) bool {
 
 func checkNullPacket(packet SRT_Packet) bool {
 	return (packet.diff_time == "" && packet.iso == "" && packet.shutter == "" && packet.fnum == "" && packet.ev == "" && packet.ct == "" && packet.color_md == "" && packet.focal_len == "" && packet.latitude == "" && packet.longtitude == "" && packet.altitude == "" && packet.date == "" && packet.time_stamp == "")
-}
-
-// toGeoJSON Helpers
-func extractProps(childObj map[string]interface{}, pre string) []map[string]interface{} {
-	var results []map[string]interface{}
-	for child, value := range childObj {
-		if childValue, ok := value.(map[string]interface{}); ok && childValue != nil {
-			children := extractProps(childValue, pre+"_"+child)
-			for _, child := range children {
-				results = append(results, child)
-			}
-		} else {
-			results = append(results, map[string]interface{}{"name": pre + "_" + child, "value": value})
-		}
-	}
-	return results
-}
-
-func GeoJSONExtract(obj SRT_Packet, raw bool) GeoJSONResult {
-	result := GeoJSONResult{
-		Type: "Feature",
-		Properties: map[string]interface{}{
-			"source":    "dji-srt-parser",
-			"timestamp": []interface{}{},
-			"name":      cleanFileName("test"),
-		},
-		Geometry: Geometry{
-			Type:        "Point",
-			Coordinates: []float64{0,0},
-		},
-	}
-
-	for key, value := range structToMap(obj) {
-		if key == "time_stamp" {
-			result.Properties["timestamp"] = value
-		} else if key == "latitude" {
-			result.Geometry.Coordinates[0] = value
-		} else if key == "longtitude" {
-			result.Geometry.Coordinates[1] = value
-		} else if subObj, ok := value.(map[string]interface{}); ok && subObj != nil {
-			children := extractProps(subObj, key)
-			for _, child := range children {
-				result.Properties[child.Name] = child.Value
-				// TODO
-				fmt.Println(child)
-			}
-		} else {
-			result.Properties[key] = value
-		}
-	}
-
-	return result
-}
-
-func createLinestring(features []map[string]interface{}, fileName string, customProperties map[string]interface{}) map[string]interface{} {
-	result := map[string]interface{}{
-		"type": "Feature",
-		"properties": map[string]interface{}{
-			"source":    "dji-srt-parser",
-			"timestamp": []interface{}{},
-			"name":      cleanFileName(fileName),
-		},
-		"geometry": map[string]interface{}{
-			"type":        "LineString",
-			"coordinates": []interface{}{},
-		},
-	}
-
-	props := features[0]["properties"].(map[string]interface{})
-	for prop, value := range props {
-		if !containsString([]string{
-			"DATE",
-			"TIMECODE",
-			"GPS",
-			"timestamp",
-			"BAROMETER",
-			"DISTANCE",
-			"SPEED_THREED",
-			"SPEED_TWOD",
-			"SPEED_VERTICAL",
-			"HB",
-		}, prop) {
-			result["properties"].(map[string]interface{})[prop] = value
-		}
-	}
-
-	for _, feature := range features {
-		result["geometry"].(map[string]interface{})["coordinates"] = append(result["geometry"].(map[string]interface{})["coordinates"].([]interface{}), feature["geometry"].(map[string]interface{})["coordinates"])
-		result["properties"].(map[string]interface{})["timestamp"] = append(result["properties"].(map[string]interface{})["timestamp"].([]interface{}), feature["properties"].(map[string]interface{})["timestamp"])
-	}
-
-	return result
-}
-
-func containsString(slice []string, str string) bool {
-	for _, item := range slice {
-		if item == str {
-			return true
-		}
-	}
-	return false
-}
-
-func structToMap(data interface{}) map[string]string {
-	result := make(map[string]string)
-	value := reflect.ValueOf(data)
-
-	for i := 0; i < value.NumField(); i++ {
-		field := value.Type().Field(i)
-		result[field.Name] = value.Field(i).String()
-	}
-
-	return result
-}
-
-func cleanFileName(fileName string) string {
-	re := regexp.MustCompile(`\.[^/.]+$`) // Regular expression to match file extension
-	return re.ReplaceAllString(fileName, "") // Remove file extension
-}
-
-func notReady() interface{} {
-	fmt.Println("Data not ready")
-	return nil
-}
-
-func extractCoordinates(coordsObj map[string]interface{}, raw bool) []float64 {
-	coordResult := make([]float64, 3)
-	if raw {
-		if gps, ok := coordsObj["GPS"].([]interface{}); ok && len(gps) >= 2 {
-			if val, ok := gps[0].(float64); ok {
-				coordResult[0] = val
-			}
-			if val, ok := gps[1].(float64); ok {
-				coordResult[1] = val
-			}
-		}
-	} else {
-		if gps, ok := coordsObj["GPS"].(map[string]interface{}); ok {
-			if val, ok := gps["LONGITUDE"].(float64); ok {
-				coordResult[0] = val
-			}
-			if val, ok := gps["LATITUDE"].(float64); ok {
-				coordResult[1] = val
-			}
-			if elevation := getElevation(coordsObj); elevation != nil {
-				coordResult[2] = *elevation
-			}
-		}
-	}
-	return coordResult
-}
-
-func getElevationKey(src map[string]interface{}) string {
-	if _, ok := src["ALTITUDE"]; ok {
-		return "ALTITUDE"
-	} else if _, ok := src["BAROMETER"]; ok {
-		return "BAROMETER"
-	} else if _, ok := src["HB"]; ok {
-		return "HB"
-	}
-	return "ALTITUDE"
-}
-
-func getElevation(src map[string]interface{}) *float64 {
-	if val, ok := src["ALTITUDE"].(float64); ok {
-		return &val
-	} else if val, ok := src["BAROMETER"].(float64); ok {
-		return &val
-	} else if val, ok := src["HB"].(float64); ok {
-		return &val
-	}
-	return nil
-}
-
-func preProcess(array []SRT_Packet, fileName string) {
-	
 }
