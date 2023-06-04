@@ -57,9 +57,15 @@ type SRT_Packet struct {
 	barometer 	string
 }
 
-type GeoFeatureJSONResult struct {
+type GeoFeatureJSONPointResult struct {
 	Type       string                 `json:"type"`
-	Geometry   Geometry               `json:"geometry"`
+	Geometry   PointGeometry          `json:"geometry"`
+	Properties []interface{}          `json:"properties"`
+}
+
+type GeoFeatureJSONLineStringResult struct {
+	Type       string                 `json:"type"`
+	Geometry   LineStringGeometry     `json:"geometry"`
 	Properties []interface{}          `json:"properties"`
 }
 
@@ -69,15 +75,25 @@ type GeoJSONResult struct {
 	Features   []interface{} 		  `json:"features"`
 }
 
+type PointGeometry struct {
+	Type        string      `json:"type"`
+	Coordinates []float64 	`json:"coordinates"`
+}
+
+type LineStringGeometry struct {
+	Type        string      `json:"type"`
+	Coordinates [][]float64 	`json:"coordinates"`
+}
+
 type GeoJSONEnding struct {
 	Source        string      `json:"source"`
 	Timestamp     []int64     `json:"timestamp"`
 	Name          string      `json:"name"`
-	HomeLatitude  float64     `json:"homelatitude"`
-	HomeLongitude float64     `json:"homelongitude"`
-	ISO           int32       `json:"iso"`
-	Shutter       string      `json:"shutter"`
-	FNUM          int32       `json:"fnum"`
+	HomeLatitude  float64     `json:"HOME_LATITUDE"`
+	HomeLongitude float64     `json:"HOME_LONGITUDE"`
+	ISO           int32       `json:"ISO"`
+	Shutter       string      `json:"SHUTTER"`
+	FNUM          int32       `json:"FNUM"`
 }
 
 type GPS struct {
@@ -92,32 +108,27 @@ type GPSPoint struct {
 }
 
 type GeoProperty struct {
-	frameCount 	int64
-	diff_time   string
-	iso 		int32
-	shutter     string
-	fnum		int32
-	ev			int32
-	ct 			int64
-	color_md 	string
-	focal_len	int32
-	latitude	float64
-	longitude	float64
-	altitude	float64
-	date 		string
-	time_stamp  string
-	barometer   float64
+	frameCount 	int64	`json:"FRAMECOUNT"`
+	diff_time   string	`json:"DIFF_TIME"`
+	iso 		int32	`json:"ISO"`
+	shutter     string	`json:"SHUTTER"`
+	fnum		int32	`json:"FNUM"`
+	ev			int32	`json:"EV"`
+	ct 			int64	`json:"CT"`
+	color_md 	string	`json:"COLOR_MD"`
+	focal_len	int32	`json:"FOCAL_LEN"`
+	latitude	float64	`json:"LATITUDE"`
+	longitude	float64	`json:"LONGITUDE"`
+	altitude	float64	`json:"ALTITUDE"`
+	date 		string	`json:"DATE"`
+	time_stamp  string	`json:"timestamp"`
+	barometer   float64	`json:"BAROMETER"`
 }
 
 
 type CRS struct {
 	Type        string    `json:"type"`
 	Properties map[string]interface{} `json:"properties"`
-}
-
-type Geometry struct {
-	Type        string    `json:"type"`
-	Coordinates []interface{} `json:"coordinates"`
 }
 
 
@@ -428,14 +439,14 @@ func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
 		FNUM: initial_packet.fnum,
 	}
 
-	ending := GeoFeatureJSONResult{
+	ending := GeoFeatureJSONLineStringResult{
 		Type: "Feature",
 		Properties: []interface{}{
 			geo_features,
 		},
-		Geometry: Geometry{
+		Geometry: LineStringGeometry{
 			Type: "LineString",
-			Coordinates: []interface{}{},
+			Coordinates: [][]float64{},
 		},
 	}
 
@@ -445,10 +456,10 @@ func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
 		result.Features = append(result.Features, conv)
 		endData := CastToGeoJSONEnding(ending.Properties[0])
 		endData.Timestamp = append(endData.Timestamp, strToInt64(packet.time_stamp))
-		geoArr := GPS{
-			latitude: convGeoProp.latitude, 
-			longitude: convGeoProp.longitude, 
-			altitude: convGeoProp.altitude,
+		geoArr := []float64{
+			convGeoProp.latitude, 
+			convGeoProp.longitude, 
+			convGeoProp.altitude,
 		}
 		ending.Geometry.Coordinates = append(ending.Geometry.Coordinates, geoArr)
 	}
@@ -514,7 +525,7 @@ func isNum(d string) bool {
 	return err == nil
 }
 
-func PacketToGeoFeatureJSON(packet SRT_Packet) GeoFeatureJSONResult {
+func PacketToGeoFeatureJSON(packet SRT_Packet) GeoFeatureJSONPointResult {
 	converted_long, _ := strconv.ParseFloat(packet.longtitude, 64)
 	converted_lat, _ := strconv.ParseFloat(packet.latitude, 64)
 
@@ -536,17 +547,13 @@ func PacketToGeoFeatureJSON(packet SRT_Packet) GeoFeatureJSONResult {
 		barometer:  strToFloat64(packet.barometer),
 	}
 
-	gps_point := GPSPoint{
-		longitude: converted_long, 
-		latitude: converted_lat,
-	}
-
-	result := GeoFeatureJSONResult{
+	result := GeoFeatureJSONPointResult{
 		Type: "Feature",
-		Geometry: Geometry{
+		Geometry: PointGeometry{
 			Type: "Point",
-			Coordinates: []interface{}{
-				gps_point,
+			Coordinates: []float64{
+				converted_long, 
+				converted_lat,
 			},
 		},
 		Properties: []interface{}{

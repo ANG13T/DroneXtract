@@ -30,6 +30,7 @@ func TestSRTAnalysis(t *testing.T) {
 	}
 
 	// Testing Conversion
+	suite.ExporttoGeoJSON(`..\output\DJI_SRT_GEOJSON_OUTPUT.geojson`)
 }
 
 

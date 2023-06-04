@@ -1,0 +1,57 @@
+{
+  "type": "FeatureCollection",
+  "geometry": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          {}
+        ]
+      },
+      "properties": [
+        {}
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          {}
+        ]
+      },
+      "properties": [
+        {}
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          {},
+          {}
+        ]
+      },
+      "properties": [
+        {
+          "source": "dji-srt-parser",
+          "timestamp": [],
+          "name": "..\\test-data\\SRT-Files\\mavic_air.SRT",
+          "HOME_LATITUDE": 0,
+          "HOME_LONGITUDE": 0,
+          "ISO": 100,
+          "SHUTTER": "1/240.0",
+          "FNUM": 280
+        }
+      ]
+    }
+  ]
+}
