@@ -7,7 +7,7 @@ import (
 )
 
 func TestSRTAnalysis(t *testing.T) {
-	t.Logf("Running Steganography  Test Unit - SRT Files")
+	t.Logf("Running Steganography Test Unit - SRT Files")
 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - SRT Files"))
 
 	// Testing Parsing

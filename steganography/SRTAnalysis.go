@@ -60,13 +60,35 @@ type SRT_Packet struct {
 type GeoFeatureJSONResult struct {
 	Type       string                 `json:"type"`
 	Geometry   Geometry               `json:"geometry"`
-	Properties []GeoProperty          `json:"properties"`
+	Properties []interface{}          `json:"properties"`
 }
 
 type GeoJSONResult struct {
 	Type       string                 `json:"type"`
 	CRS   	   CRS                    `json:"geometry"`
-	Features   []GeoFeatureJSONResult `json:"features"`
+	Features   []interface{} 		  `json:"features"`
+}
+
+type GeoJSONEnding struct {
+	Source        string      `json:"source"`
+	Timestamp     []int64     `json:"timestamp"`
+	Name          string      `json:"name"`
+	HomeLatitude  float64     `json:"homelatitude"`
+	HomeLongitude float64     `json:"homelongitude"`
+	ISO           int32       `json:"iso"`
+	Shutter       string      `json:"shutter"`
+	FNUM          int32       `json:"fnum"`
+}
+
+type GPS struct {
+	latitude       float64           `json:"latitude"`
+	longitude      float64           `json:"longitude"`
+	altitude   	   float64  		   `json:"altitude"`
+}
+
+type GPSPoint struct {
+	latitude 	   float64			`json:"latitude"`
+	longitude      float64          `json:"longitude"`
 }
 
 type GeoProperty struct {
@@ -95,7 +117,7 @@ type CRS struct {
 
 type Geometry struct {
 	Type        string    `json:"type"`
-	Coordinates []float64 `json:"coordinates"`
+	Coordinates []interface{} `json:"coordinates"`
 }
 
 
@@ -355,6 +377,7 @@ func (parser *DJI_SRT_Parser) ExporttoJSON(outputPath string) {
 
 }
 
+// TODO: match format more closely
 func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "../output/srt-analysis.geojson"
@@ -389,23 +412,55 @@ func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
 				"name": "urn:ogc:def:crs:OGC:1.3:CRS84",
 			},
 		},
-		Features: []GeoFeatureJSONResult{},
+		Features: nil,
 	}
 
-	// make all packets
+	initial_packet := CastToPacket(PacketToGeoFeatureJSON(parser.packets[0]).Properties[0])
+	
+	geo_features := GeoJSONEnding{
+		Source: "dji-srt-parser",
+		Timestamp: []int64{},
+		Name: parser.fileName,
+		HomeLatitude: initial_packet.latitude,
+		HomeLongitude: initial_packet.longitude,
+		ISO: initial_packet.iso,
+		Shutter: initial_packet.shutter,
+		FNUM: initial_packet.fnum,
+	}
+
+	ending := GeoFeatureJSONResult{
+		Type: "Feature",
+		Properties: []interface{}{
+			geo_features,
+		},
+		Geometry: Geometry{
+			Type: "LineString",
+			Coordinates: []interface{}{},
+		},
+	}
+
 	for _, packet := range parser.packets {
-		amount := len(parser.packets) 
-		packet.printSRTPacket(strconv.Itoa(amount))
+		conv := PacketToGeoFeatureJSON(packet)
+		convGeoProp := CastToGeoProperty(conv.Properties[0])
+		result.Features = append(result.Features, conv)
+		endData := CastToGeoJSONEnding(ending.Properties[0])
+		endData.Timestamp = append(endData.Timestamp, strToInt64(packet.time_stamp))
+		geoArr := GPS{
+			latitude: convGeoProp.latitude, 
+			longitude: convGeoProp.longitude, 
+			altitude: convGeoProp.altitude,
+		}
+		ending.Geometry.Coordinates = append(ending.Geometry.Coordinates, geoArr)
 	}
 
-	// make ending
+	result.Features = append(result.Features, ending)
 
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
 	err = encoder.Encode(result)
 
 	if err != nil {
-		PrintErrorLog("FAILED TO ENCODE JSON", err)
+		PrintErrorLog("FAILED TO ENCODE GEOJSON", err)
 		return
 	}
 
@@ -481,18 +536,25 @@ func PacketToGeoFeatureJSON(packet SRT_Packet) GeoFeatureJSONResult {
 		barometer:  strToFloat64(packet.barometer),
 	}
 
+	gps_point := GPSPoint{
+		longitude: converted_long, 
+		latitude: converted_lat,
+	}
+
 	result := GeoFeatureJSONResult{
 		Type: "Feature",
 		Geometry: Geometry{
 			Type: "Point",
-			Coordinates: []float64{converted_long, converted_lat},
+			Coordinates: []interface{}{
+				gps_point,
+			},
 		},
-		Properties: []GeoProperty{
+		Properties: []interface{}{
 			geo_prop,
 		},
 		
 	}
-	
+
 	return result
 }
 
@@ -568,4 +630,28 @@ func strToInt64(input string) int64 {
 func strToFloat64(input string) float64 {
 	val, _ := strconv.ParseFloat(input, 64)
 	return val
+}
+
+func CastToPacket (input interface{}) GeoProperty {
+	prop, ok := input.(GeoProperty)
+	if !ok {
+		PrintError("FAILED TO CAST GEOPROPERTY")
+	}
+	return prop
+}
+
+func CastToGeoJSONEnding (input interface{}) GeoJSONEnding {
+	prop, ok := input.(GeoJSONEnding)
+	if !ok {
+		PrintError("FAILED TO CAST GEOJSONENDING")
+	}
+	return prop
+}
+
+func CastToGeoProperty (input interface{}) GeoProperty {
+	prop, ok := input.(GeoProperty)
+	if !ok {
+		PrintError("FAILED TO CAST GEOPROPERTY")
+	}
+	return prop
 }
