@@ -15,6 +15,7 @@ import (
 	"io/ioutil"
 	"os"
 	"encoding/json"
+	"encoding/csv"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)
@@ -507,10 +508,9 @@ func (parser *DJI_SRT_Parser) ExporttoMGJSON(outputPath string) {
 		return
 	}
 	defer file.Close()
-
 }
 
-func (parser *DJI_SRT_Parser) ExporttoCSV(outputPath string) {
+func (parser *DJI_SRT_Parser) ExportToCSV(outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "../output/srt-analysis.csv"
 	}
@@ -527,6 +527,23 @@ func (parser *DJI_SRT_Parser) ExporttoCSV(outputPath string) {
 		return
 	}
 	defer file.Close()
+
+	data := [][]string{
+		{"TIMESTAMP", "HOME.LATITUDE", "HOME.LONGITUDE", "DATE", "GPS.LATITUDE", "GPS.LONGITUDE", "GPS.ALTITUDE", "BAROMETER", "FRAME COUNT", "DIFF TIME", "ISO", "SHUTTER", "FNUM", "EV", "CT", "COLOR MD", "FOCAL LEN", "NAME"},
+	}
+
+	writer := csv.NewWriter(file)
+
+	err = writer.WriteAll(data)
+	if err != nil {
+		PrintErrorLog("ERROR WRITING TO CSV FILE", err)
+	}
+
+	writer.Flush()
+
+	if err := writer.Error(); err != nil {
+		PrintErrorLog("ERROR WRITING TO CSV FILE", err)
+	}
 
 }
 
