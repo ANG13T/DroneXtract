@@ -460,61 +460,39 @@ func isNum(d string) bool {
 }
 
 func PacketToGeoFeatureJSON(packet SRT_Packet) GeoFeatureJSONResult {
+	converted_long, _ := strconv.ParseFloat(packet.longtitude, 64)
+	converted_lat, _ := strconv.ParseFloat(packet.latitude, 64)
+
+	geo_prop := GeoProperty{
+		shutter:     packet.shutter,
+		frameCount:  strToInt64(packet.frame_count),
+		diff_time:   packet.diff_time,
+		iso: 		 strToInt32(packet.iso),
+		fnum: 		 strToInt32(packet.fnum),
+		ev:			 strToInt32(packet.ev),
+		ct: 	     strToInt64(packet.ct),
+		color_md: 	 packet.color_md,
+		focal_len:	 strToInt32(packet.focal_len),
+		latitude:	converted_lat,
+		longitude:	converted_long,
+		altitude:	strToFloat64(packet.altitude),
+		date: 		packet.date,
+		time_stamp: packet.time_stamp,
+		barometer:  strToFloat64(packet.barometer),
+	}
+
 	result := GeoFeatureJSONResult{
 		Type: "Feature",
 		Geometry: Geometry{
 			Type: "Point",
-			Coordinates: []float64{strconv.ParseFloat(packet.longitude, 64), strconv.ParseFloat(packet.latitude, 64)},
+			Coordinates: []float64{converted_long, converted_lat},
 		},
 		Properties: []GeoProperty{
-			frameCount: func() int64 {
-				val, _ := strconv.ParseInt(packet.frame_count, 10, 32)
-				return val
-			}(),
-			diff_time:   packet.diff_time,
-			iso: 		 func() int32 {
-				val, _ := strconv.ParseInt(packet.iso, 10, 32)
-				return int32(val)
-			}(),
-			shutter:     packet.shutter,
-			fnum:		 func() int32 {
-				val, _ := strconv.ParseInt(packet.fnum, 10, 32)
-				return int32(val)
-			}(),
-			ev:			 func() int32 {
-				val, _ := strconv.ParseInt(packet.ev, 10, 32)
-				return int32(val)
-			}(),
-			ct: 	     func() int64 {
-				val, _ := strconv.ParseInt(packet.ct, 10, 64)
-				return val
-			}(),
-			color_md: 	 packet.color_md,
-			focal_len:	 func() int32 {
-				val, _ := strconv.ParseInt(packet.focal_len, 10, 32)
-				return int32(val)
-			}(),
-			latitude:	func() `float64` {
-				val, _ := strconv.ParseFloat(packet.latitude, 64)
-				return val
-			}(),
-			longitude:	func() float64 {
-				val, _ := strconv.ParseFloat(packet.longtitude, 64)
-				return val
-			}(),
-			altitude:	func() float64 {
-				val, _ := strconv.ParseFloat(packet.altitude, 64)
-				return val
-			}(),
-			date: 		packet.date,
-			time_stamp: packet.time_stamp,
-			barometer:  func() float64 {
-				val, _ := strconv.ParseFloat(packet.barometer, 64)
-				return val
-			}(),
+			geo_prop,
 		},
 		
 	}
+	
 	return result
 }
 
@@ -575,4 +553,19 @@ func checkValidFileContents(fileContent string) bool {
 
 func checkNullPacket(packet SRT_Packet) bool {
 	return (packet.diff_time == "" && packet.iso == "" && packet.shutter == "" && packet.fnum == "" && packet.ev == "" && packet.ct == "" && packet.color_md == "" && packet.focal_len == "" && packet.latitude == "" && packet.longtitude == "" && packet.altitude == "" && packet.date == "" && packet.time_stamp == "")
+}
+
+func strToInt32(input string) int32 {
+	val, _ := strconv.ParseInt(input, 10, 32)
+	return int32(val)
+}
+
+func strToInt64(input string) int64 {
+	val, _ := strconv.ParseInt(input, 10, 64)
+	return val
+}
+
+func strToFloat64(input string) float64 {
+	val, _ := strconv.ParseFloat(input, 64)
+	return val
 }
