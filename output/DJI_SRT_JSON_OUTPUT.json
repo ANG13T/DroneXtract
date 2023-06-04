@@ -1,0 +1,39 @@
+{
+  "fileName": "..\\test-data\\SRT-Files\\mavic_air.SRT",
+  "packets": [
+    {
+      "FRAMECOUNT": 1,
+      "DIFF_TIME": "39ms",
+      "ISO": 100,
+      "SHUTTER": "1/240.0",
+      "FNUM": 280,
+      "EV": 0,
+      "CT": 5627,
+      "COLOR_MD": "",
+      "FOCAL_LEN": 0,
+      "LATITUDE": 0,
+      "LONGITUDE": 0,
+      "ALTITUDE": 0,
+      "DATE": "2018-02-19 08:04:51:265.847",
+      "timestamp": "00:00:00",
+      "BAROMETER": 0
+    },
+    {
+      "FRAMECOUNT": 2,
+      "DIFF_TIME": "40ms",
+      "ISO": 100,
+      "SHUTTER": "1/240.0",
+      "FNUM": 280,
+      "EV": 0,
+      "CT": 5627,
+      "COLOR_MD": "",
+      "FOCAL_LEN": 0,
+      "LATITUDE": 0,
+      "LONGITUDE": 0,
+      "ALTITUDE": 0,
+      "DATE": "2018-02-19 08:04:51:305.846",
+      "timestamp": "00:00:00",
+      "BAROMETER": 0
+    }
+  ]
+}

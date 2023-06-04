@@ -107,6 +107,11 @@ type GPSPoint struct {
 	Longitude      float64          `json:"longitude"`
 }
 
+type JSONResult struct {
+	FileName 	 string			`json:"fileName"`
+	Packets      []GeoProperty  `json:"packets"`
+}
+
 type GeoProperty struct {
 	FrameCount 	int64	`json:"FRAMECOUNT"`
 	DiffTime   string	`json:"DIFF_TIME"`
@@ -368,7 +373,7 @@ func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 }
 
 
-func (parser *DJI_SRT_Parser) ExporttoJSON(outputPath string) {
+func (parser *DJI_SRT_Parser) ExportToJSON(outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "../output/srt-analysis.json"
 	}
@@ -386,10 +391,28 @@ func (parser *DJI_SRT_Parser) ExporttoJSON(outputPath string) {
 	}
 	defer file.Close()
 
+	result := JSONResult{
+		FileName: parser.fileName,
+		Packets: []GeoProperty{},
+	}
+
+	for _, packet := range parser.packets {
+		conv := parser.PacketToGeoFeatureJSON(packet)
+		result.Packets = append(result.Packets, conv.Properties)
+	}
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(result)
+
+	if err != nil {
+		PrintErrorLog("FAILED TO ENCODE GEOJSON", err)
+		return
+	}
+
 }
 
-// TODO: match format more closely
-func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
+func (parser *DJI_SRT_Parser) ExportToGeoJSON(outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "../output/srt-analysis.geojson"
 	}
@@ -406,14 +429,6 @@ func (parser *DJI_SRT_Parser) ExporttoGeoJSON(outputPath string) {
 		return
 	}
 	defer file.Close()
-
-	for in, packet := range parser.packets {
-		if in == 0 {
-
-		}
-		amount := len(parser.packets) 
-		packet.printSRTPacket(strconv.Itoa(amount))
-	}
 
 	result := GeoJSONResult{
 		Type: "FeatureCollection",
@@ -514,7 +529,6 @@ func (parser *DJI_SRT_Parser) ExporttoCSV(outputPath string) {
 	defer file.Close()
 
 }
-
 
 // Helpers
 
