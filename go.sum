@@ -11,6 +11,8 @@ github.com/huandu/xstrings v1.3.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq
 github.com/imdario/mergo v0.3.9/go.mod h1:2EnlNZ0deacrJVfApfmtdGgDfMuh/nq6Ok1EcJh5FfA=
 github.com/iskaa02/qalam v0.3.0 h1:yA7+MXkXbkP0HRDpkODC3bgQG0e5mjsYOsawwYP2v5k=
 github.com/iskaa02/qalam v0.3.0/go.mod h1:BRa4ht8cMjl27tNzhtuach90dBTma5seOzjpMGA5MY4=
+github.com/juanirache/tomgjson v0.4.9 h1:8l8ROCmW0Ho43Wbq8zHdNqSNQ6y1e2+FMlZkVgtTu3A=
+github.com/juanirache/tomgjson v0.4.9/go.mod h1:nnJeeqLOGh8LmnlKo/zo/iay3d8DI9xMpT94vGOyvWA=
 github.com/lucasb-eyer/go-colorful v1.0.3 h1:QIbQXiugsb+q10B+MI+7DI1oQLdmnep86tWFlaaUAac=
 github.com/lucasb-eyer/go-colorful v1.0.3/go.mod h1:R4dSotOR9KMtayYi1e77YzuveK+i7ruzyGqttikkLy0=
 github.com/mazznoer/colorgrad v0.8.1 h1:Bw/ks+KujOOg9E6YQvPqSqTLryiFnwliAH5VMZarSTI=

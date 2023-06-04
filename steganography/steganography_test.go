@@ -35,6 +35,12 @@ func TestSRTAnalysis(t *testing.T) {
 
 	// SRT to JSON
 	suite.ExportToJSON(`..\output\DJI_SRT_JSON_OUTPUT.json`)
+
+	// SRT to CSV
+	suite.ExportToCSV(`..\output\DJI_SRT_CSV_OUTPUT.csv`)
+
+	// SRT to MGJSON
+	// suite.ExportToMGJSON(`..\output\DJI_SRT_MGJSON_OUTPUT.mgjson`)
 }
 
 

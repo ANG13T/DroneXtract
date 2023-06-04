@@ -2,7 +2,6 @@ package steganography
 
 // TODO -
 
-// toGeoJSON
 // 0 - support all files
 // 5 - subtitle extractor from videos (MP4 to SRT)
 // 7 - comments
@@ -16,6 +15,7 @@ import (
 	"os"
 	"encoding/json"
 	"encoding/csv"
+	// "github.com/juanirache/tomgjson"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)
@@ -491,25 +491,42 @@ func (parser *DJI_SRT_Parser) ExportToGeoJSON(outputPath string) {
 
 }
 
-func (parser *DJI_SRT_Parser) ExporttoMGJSON(outputPath string) {
-	if len(outputPath) == 0 {
-		outputPath = "../output/srt-analysis.mgjson"
-	}
+// TODO: ExportToMGJSON
+// func (parser *DJI_SRT_Parser) ExportToMGJSON(outputPath string) {
+// 	if len(outputPath) == 0 {
+// 		outputPath = "../output/srt-analysis.mgjson"
+// 	}
 
-	check := CheckFileFormat(outputPath, ".mgjson")
-	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE MGJSON FILE")
-		return
-	}
+// 	check := CheckFileFormat(outputPath, ".mgjson")
+// 	if check == false {
+// 		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE MGJSON FILE")
+// 		return
+// 	}
 
-	file, err := os.Create(outputPath)
-	if err != nil {
-		PrintErrorLog("FAILED TO CREATE MGJSON FILE", err)
-		return
-	}
-	defer file.Close()
-}
+// 	file, err := os.Create(outputPath)
+// 	if err != nil {
+// 		PrintErrorLog("FAILED TO CREATE MGJSON FILE", err)
+// 		return
+// 	}
+// 	defer file.Close()
 
+// 	parser.ExportToCSV("../output/srt-analysis.csv")
+
+// 	src, _ := ioutil.ReadFile("../output/srt-analysis.csv")
+// 	converted, err1 := tomgjson.FromCSV(src, 0)
+// 	doc, err2 := tomgjson.ToMgjson(converted, "Angelina Tsuboi")
+
+// 	if err1 != nil {
+// 		PrintErrorLog("ERROR WRITING TO MGJSON FILE", err1)
+// 	} else if err2 != nil {
+// 		PrintErrorLog("ERROR WRITING TO MGJSON FILE", err2)
+// 	}
+
+// 	file.Write(doc)
+// 	file.Close()
+// }
+
+// TODO: clean up some SRT empty
 func (parser *DJI_SRT_Parser) ExportToCSV(outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "../output/srt-analysis.csv"
@@ -529,7 +546,14 @@ func (parser *DJI_SRT_Parser) ExportToCSV(outputPath string) {
 	defer file.Close()
 
 	data := [][]string{
-		{"TIMESTAMP", "HOME.LATITUDE", "HOME.LONGITUDE", "DATE", "GPS.LATITUDE", "GPS.LONGITUDE", "GPS.ALTITUDE", "BAROMETER", "FRAME COUNT", "DIFF TIME", "ISO", "SHUTTER", "FNUM", "EV", "CT", "COLOR MD", "FOCAL LEN", "NAME"},
+		{"TIMESTAMP", "HOME.LATITUDE", "HOME.LONGITUDE", "DATE", "GPS.LATITUDE", "GPS.LONGITUDE", "GPS.ALTITUDE", "BAROMETER", "FRAME_COUNT", "DIFF_TIME", "ISO", "SHUTTER", "FNUM", "EV", "CT", "COLOR_MD", "FOCAL_LEN", "NAME"},
+	}
+
+	initial_packet := parser.packets[0]
+
+	for _, packet := range parser.packets {
+		val := []string{packet.time_stamp, initial_packet.latitude, initial_packet.longtitude, packet.date, packet.latitude, packet.longtitude, packet.altitude, packet.barometer, packet.frame_count, packet.diff_time, packet.iso, packet.shutter, packet.fnum, packet.ev, packet.ct, packet.color_md, packet.focal_len, parser.fileName}
+		data = append(data, val)
 	}
 
 	writer := csv.NewWriter(file)
