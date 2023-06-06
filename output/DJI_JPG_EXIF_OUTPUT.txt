@@ -1,128 +1,128 @@
-MIMEType:image/jpeg
-ExifImageHeight:2250
-EncodingProcess:Baseline DCT, Huffman coding
+ZoneIdentifier:Exists
+SubjectDistance:0 m
+FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
+Directory:../test-data/JPG-Files
+FilePermissions:-rw-rw-rw-
+ColorSpace:sRGB
+HasSettings:false
+MPImageFormat:JPEG
 ThumbnailImage:(Binary data 12035 bytes, use -b option to extract)
+GPSLongitude:118 deg 22' 16.14" W
+Flash:No flash function
+Roll:-2.6
+ThumbnailOffset:18432
+FlightPitchDegree:-1.2
+ImageHeight:2250
+BitsPerSample:8
+GPSAltitude:3.2 m Above Sea Level
+SourceFile:../test-data/JPG-Files/DJI_0001.jpg
+Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
+GPSLatitudeRef:North
+FlightRollDegree:-2.6
+FileSize:4.5 MB
+FileType:JPEG
+GimbalReverse:0
+TotalFrames:1
+Software:v01.43.0039
+ExposureCompensation:0
+ShutterSpeed:1/800
+FileAccessDate:2023:06:05 22:31:59-07:00
+SpeedZ:+0.00
+ExposureProgram:Program AE
+SpeedY:+0.00
+WhiteBalance:Auto
+RelativeAltitude:+2.40
+CamReverse:0
+FileModifyDate:2023:06:01 02:48:46-07:00
+ExposureTime:1/800
+GPSVersionID:2.3.0.0
+GimbalYawDegree:+0.00
+ExposureMode:Auto
+SceneCaptureType:Standard
+FOV:73.7 deg
 ExifVersion:0230
-CreateDate:2021:10:09 17:33:50
+DigitalZoomRatio:1
+Orientation:Horizontal (normal)
+ModifyDate:2021:10:09 17:33:50
+ISO:100
+MPImageStart:4.187666e+06
+Aperture:2.8
+ImageSize:4000x2250
+FileTypeExtension:jpg
+ImageDescription:DCIM\100MEDIA\DJI_0001.JPG
+MPImageFlags:Dependent child image
+LightSource:Fluorescent
+ThumbnailLength:12035
+FileSource:Digital Camera
+GPSPosition:33 deg 52' 56.44" N, 118 deg 22' 16.14" W
+GimbalRollDegree:+0.00
+ApertureValue:2.8
+ExifImageWidth:4000
+CompressedBitsPerPixel:3.687878222
+InteropIndex:R98 - DCF basic file (sRGB)
+ImageUIDList:(Binary data 66 bytes, use -b option to extract)
+ExifToolVersion:12.62
+DateTimeOriginal:2021:10:09 17:33:50
+ExposureIndex:undef
+ColorComponents:3
+MaxApertureValue:2.8
+MeteringMode:Center-weighted average
+FocalLengthIn35mmFormat:24 mm
+DependentImage2EntryNumber:0
+Saturation:Normal
+XPComment:Type=N, Mode=P, DE=None
+GimbalPitchDegree:+0.00
+AlreadyApplied:false
+ImageWidth:4000
+YCbCrSubSampling:YCbCr4:2:2 (2 1)
+GPSLatitude:33 deg 52' 56.44" N
+XResolution:72
+SpeedX:+0.00
+DependentImage1EntryNumber:0
+PreviewImage:(Binary data 299523 bytes, use -b option to extract)
+YCbCrPositioning:Centered
+MPFVersion:0010
+CircleOfConfusion:0.006 mm
+XPKeywords:v01.43.0039;0.0.1;v1.0.0
+NumberOfImages:2
+ExifByteOrder:Little-endian (Intel, II)
+ShutterSpeedValue:1/800
 HasCrop:false
 YResolution:72
-ExposureIndex:undef
-GPSLatitudeRef:North
-Orientation:Horizontal (normal)
-FNumber:2.8
-SceneCaptureType:Standard
-XPKeywords:v01.43.0039;0.0.1;v1.0.0
-GimbalRollDegree:+0.00
-MPImageFlags:Dependent child image
-BitsPerSample:8
-Directory:../test-data/JPG-Files
-MaxApertureValue:2.8
-FocalLength:4.5 mm
-InteropVersion:0100
-Aperture:2.8
-FilePermissions:-rw-rw-rw-
-ExposureProgram:Program AE
-ExposureCompensation:0
-SpeedZ:+0.00
-ThumbnailOffset:18432
-FlightRollDegree:-2.6
-GPSLatitude:33 deg 52' 56.44" N
-SpeedX:+0.00
-Sharpness:Normal
-DependentImage2EntryNumber:0
-CircleOfConfusion:0.006 mm
-ZoneIdentifier:Exists
 GPSAltitudeRef:Above Sea Level
-CamReverse:0
-ShutterSpeed:1/800
-Model:FC7303
-ColorSpace:sRGB
-WhiteBalance:Auto
+GainControl:None
+FocalLength:4.5 mm
+Yaw:-48.1
+Pitch:-1.2
+CustomRendered:Normal
+MIMEType:image/jpeg
+Make:DJI
+SubjectDistanceRange:Unknown
+GPSLongitudeRef:West
+InteropVersion:0100
+SceneType:Directly photographed
 AbsoluteAltitude:+3.26
-ColorComponents:3
+MPImageLength:299523
 Megapixels:9
 HyperfocalDistance:1.28 m
-ModifyDate:2021:10:09 17:33:50
-DateTimeOriginal:2021:10:09 17:33:50
-SubjectDistance:0 m
-MeteringMode:Center-weighted average
-TotalFrames:1
-Pitch:-1.2
-Contrast:Normal
-ImageUIDList:(Binary data 66 bytes, use -b option to extract)
-ExifImageWidth:4000
-Compression:JPEG (old-style)
-MPImageStart:4.187666e+06
-FileType:JPEG
-SubjectDistanceRange:Unknown
-NumberOfImages:2
-PreviewImage:(Binary data 299523 bytes, use -b option to extract)
-FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
-Yaw:-48.1
-RelativeAltitude:+2.40
-FlightPitchDegree:-1.2
-ImageWidth:4000
-FileSize:4.5 MB
-FileModifyDate:2023:06:01 02:48:46-07:00
-InteropIndex:R98 - DCF basic file (sRGB)
-DigitalZoomRatio:1
 About:DJI Meta Data
-YCbCrSubSampling:YCbCr4:2:2 (2 1)
-GPSLongitudeRef:West
-GimbalPitchDegree:+0.00
-ExifByteOrder:Little-endian (Intel, II)
-ISO:100
-FileSource:Digital Camera
-ExposureMode:Auto
-GPSVersionID:2.3.0.0
-DependentImage1EntryNumber:0
-LightValue:12.6
-Flash:No flash function
-CustomRendered:Normal
-GPSPosition:33 deg 52' 56.44" N, 118 deg 22' 16.14" W
-FocalLengthIn35mmFormat:24 mm
-GimbalYawDegree:+0.00
-AlreadyApplied:false
-ImageHeight:2250
-FOV:73.7 deg
-ExifToolVersion:12.62
-FileTypeExtension:jpg
-FlightYawDegree:-48.1
-GimbalReverse:0
-YCbCrPositioning:Centered
-GPSAltitude:3.2 m Above Sea Level
-XResolution:72
-CompressedBitsPerPixel:3.687878222
-MPImageLength:299523
-MPImageType:Large Thumbnail (VGA equivalent)
-FileName:DJI_0001.jpg
-ImageDescription:DCIM\100MEDIA\DJI_0001.JPG
-Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
-XPComment:Type=N, Mode=P, DE=None
 Format:image/jpg
-HasSettings:false
-MPFVersion:0010
-Make:DJI
-Roll:-2.6
-ThumbnailLength:12035
-Software:v01.43.0039
-GainControl:None
+SerialNumber:1SFOJ6G0AB02U2
+FlightYawDegree:-48.1
 Version:7
-Saturation:Normal
-SourceFile:../test-data/JPG-Files/DJI_0001.jpg
+ScaleFactor35efl:5.3
+FileName:DJI_0001.jpg
+FlashpixVersion:0100
+CreateDate:2021:10:09 17:33:50
+ComponentsConfiguration:Y, Cb, Cr, -
+Sharpness:Normal
 FileCreateDate:2023:06:01 02:50:57-07:00
 ResolutionUnit:inches
-ExposureTime:1/800
-ApertureValue:2.8
-LightSource:Fluorescent
-SpeedY:+0.00
-SerialNumber:1SFOJ6G0AB02U2
-ImageSize:4000x2250
-GPSLongitude:118 deg 22' 16.14" W
-FileAccessDate:2023:06:01 22:27:06-07:00
-ComponentsConfiguration:Y, Cb, Cr, -
-ShutterSpeedValue:1/800
-FlashpixVersion:0100
-SceneType:Directly photographed
-MPImageFormat:JPEG
-ScaleFactor35efl:5.3
+ExifImageHeight:2250
+MPImageType:Large Thumbnail (VGA equivalent)
+Model:FC7303
+FNumber:2.8
+EncodingProcess:Baseline DCT, Huffman coding
+LightValue:12.6
+Contrast:Normal
+Compression:JPEG (old-style)

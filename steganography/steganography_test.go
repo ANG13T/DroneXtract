@@ -44,75 +44,75 @@ func TestSRTAnalysis(t *testing.T) {
 }
 
 
-// func TestEXIFAnalysis(t *testing.T) {
-// 	t.Logf("Running Steganography  Test Unit - EXIF Files")
-// 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - SRT Files"))
+func TestEXIFAnalysis(t *testing.T) {
+	t.Logf("Running Steganography  Test Unit - EXIF Files")
+	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - SRT Files"))
 
-// 	filename := `..\test-data\JPG-Files\DJI_0001.jpg`
-// 	suite := NewDJI_EXIF_Parser(filename)
+	filename := `..\test-data\JPG-Files\DJI_0001.jpg`
+	suite := NewDJI_EXIF_Parser(filename)
 
-// 	// Parsing
-// 	suite.Read()
+	// Parsing
+	suite.Read()
 
-// 	// Conversion to TXT
-// 	outputTXTFileName := `..\output\DJI_JPG_EXIF_OUTPUT.txt`
-// 	suite.ExportToTXT(outputTXTFileName)
+	// Conversion to TXT
+	outputTXTFileName := `..\output\DJI_JPG_EXIF_OUTPUT.txt`
+	suite.ExportToTXT(outputTXTFileName)
 
-// 	// Conversion to CSV
-// 	outputCSVFileName := `..\output\DJI_JPG_EXIF_OUTPUT.csv`
-// 	suite.ExportToCSV(outputCSVFileName)
+	// Conversion to CSV
+	outputCSVFileName := `..\output\DJI_JPG_EXIF_OUTPUT.csv`
+	suite.ExportToCSV(outputCSVFileName)
 
-// 	// Conversion to JSON
-// 	outputJSONFileName := `..\output\DJI_JPG_EXIF_OUTPUT.json`
-// 	suite.ExportToJSON(outputJSONFileName)
-// }
+	// Conversion to JSON
+	outputJSONFileName := `..\output\DJI_JPG_EXIF_OUTPUT.json`
+	suite.ExportToJSON(outputJSONFileName)
+}
 
-// func RunXMPAnalysis(t *testing.T) {
-// 	t.Logf("Running Steganography  Test Unit - XMP Files")
-// 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - XMP Files"))
+func RunXMPAnalysis(t *testing.T) {
+	t.Logf("Running Steganography  Test Unit - XMP Files")
+	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - XMP Files"))
 
-// 	filename := `..\test-data\JPG-Files\DJI_0001.jpg`
-// 	suite := NewDJI_XMP_Parser(filename)
+	filename := `..\test-data\JPG-Files\DJI_0001.jpg`
+	suite := NewDJI_XMP_Parser(filename)
 
-// 	// Parsing
-// 	suite.Read()
+	// Parsing
+	suite.Read()
 
-// 	// Conversion to TXT
-// 	outputTXTFileName := `..\output\DJI_JPG_XMP_OUTPUT.txt`
-// 	suite.ExportToTXT(outputTXTFileName)
+	// Conversion to TXT
+	outputTXTFileName := `..\output\DJI_JPG_XMP_OUTPUT.txt`
+	suite.ExportToTXT(outputTXTFileName)
 
-// 	// Conversion to CSV
-// 	outputCSVFileName := `..\output\DJI_JPG_XMP_OUTPUT.csv`
-// 	suite.ExportToCSV(outputCSVFileName)
+	// Conversion to CSV
+	outputCSVFileName := `..\output\DJI_JPG_XMP_OUTPUT.csv`
+	suite.ExportToCSV(outputCSVFileName)
 
-// 	// Conversion to JSON
-// 	outputJSONFileName := `..\output\DJI_JPG_XMP_OUTPUT.json`
-// 	suite.ExportToJSON(outputJSONFileName)
-// }
+	// Conversion to JSON
+	outputJSONFileName := `..\output\DJI_JPG_XMP_OUTPUT.json`
+	suite.ExportToJSON(outputJSONFileName)
+}
 
-// func RunDNGAnalysis(t *testing.T) {
-// 	t.Logf("Running Steganography  Test Unit - DNG Files")
-// 	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - DNG Files"))
+func RunDNGAnalysis(t *testing.T) {
+	t.Logf("Running Steganography  Test Unit - DNG Files")
+	fmt.Println(color.Ize(color.Cyan, "Running Steganography  Test Unit - DNG Files"))
 
-// 	filename := `..\test-data\DNG-Files\DJI_0234.dng`
-// 	suite := NewDJI_DNG_Parser(filename)
+	filename := `..\test-data\DNG-Files\DJI_0234.dng`
+	suite := NewDJI_DNG_Parser(filename)
 
-// 	// Parsing
-// 	suite.Read()
+	// Parsing
+	suite.Read()
 
-// 	// Conversion to PNG
-// 	output := `..\output\DJI_0234.png`
-// 	suite.DNGtoPNG(output)
+	// Conversion to PNG
+	output := `..\output\DJI_0234.png`
+	suite.DNGtoPNG(output)
 
-// 	// Conversion to TXT
-// 	outputTXTFileName := `..\output\DJI_JPG_DNG_OUTPUT.txt`
-// 	suite.ExportToTXT(outputTXTFileName)
+	// Conversion to TXT
+	outputTXTFileName := `..\output\DJI_JPG_DNG_OUTPUT.txt`
+	suite.ExportToTXT(outputTXTFileName)
 
-// 	// Conversion to CSV
-// 	outputCSVFileName := `..\output\DJI_JPG_DNG_OUTPUT.csv`
-// 	suite.ExportToCSV(outputCSVFileName)
+	// Conversion to CSV
+	outputCSVFileName := `..\output\DJI_JPG_DNG_OUTPUT.csv`
+	suite.ExportToCSV(outputCSVFileName)
 
-// 	// Conversion to JSON
-// 	outputJSONFileName := `..\output\DJI_JPG_DNG_OUTPUT.json`
-// 	suite.ExportToJSON(outputJSONFileName)
-// }
+	// Conversion to JSON
+	outputJSONFileName := `..\output\DJI_JPG_DNG_OUTPUT.json`
+	suite.ExportToJSON(outputJSONFileName)
+}

@@ -1,128 +1,128 @@
-FileType,JPEG
-XPKeywords,v01.43.0039;0.0.1;v1.0.0
-FileTypeExtension,jpg
-ExposureTime,1/800
-ApertureValue,2.8
-ExposureCompensation,0
-Yaw,-48.1
-Compression,JPEG (old-style)
-ThumbnailImage,"(Binary data 12035 bytes, use -b option to extract)"
-MaxApertureValue,2.8
-FocalLength35efl,4.5 mm (35 mm equivalent: 24.0 mm)
-SubjectDistance,0 m
-ExifImageWidth,4000
-ExifToolVersion,12.62
-HasCrop,false
-Saturation,Normal
-ISO,100
-YCbCrPositioning,Centered
-SerialNumber,1SFOJ6G0AB02U2
-GimbalPitchDegree,+0.00
-CamReverse,0
-MPImageFlags,Dependent child image
-ThumbnailOffset,18432
-FlightRollDegree,-2.6
-Pitch,-1.2
-FileSize,4.5 MB
-Software,v01.43.0039
-LightSource,Fluorescent
-XPComment,"Type=N, Mode=P, DE=None"
-GimbalYawDegree,+0.00
-ShutterSpeed,1/800
-YResolution,72
-FNumber,2.8
-Make,DJI
-WhiteBalance,Auto
-BitsPerSample,8
-Megapixels,9
-Flash,No flash function
-CustomRendered,Normal
-AbsoluteAltitude,+3.26
-NumberOfImages,2
-Model,FC7303
-InteropIndex,R98 - DCF basic file (sRGB)
-ImageWidth,4000
-YCbCrSubSampling,YCbCr4:2:2 (2 1)
-RelativeAltitude,+2.40
-MPImageStart,4.187666e+06
-ImageUIDList,"(Binary data 66 bytes, use -b option to extract)"
-Aperture,2.8
-FileName,DJI_0001.jpg
-FocalLength,4.5 mm
-Roll,-2.6
-InteropVersion,0100
-FlightYawDegree,-48.1
-GPSLatitude,"33 deg 52' 56.44"" N"
-GPSLongitude,"118 deg 22' 16.14"" W"
-ExifVersion,0230
-FlashpixVersion,0100
+DigitalZoomRatio,1
+FlightPitchDegree,-1.2
+HyperfocalDistance,1.28 m
 Sharpness,Normal
-GPSLongitudeRef,West
-About,DJI Meta Data
-ScaleFactor35efl,5.3
+SerialNumber,1SFOJ6G0AB02U2
+NumberOfImages,2
+FilePermissions,-rw-rw-rw-
 MIMEType,image/jpeg
-FocalLengthIn35mmFormat,24 mm
-SceneCaptureType,Standard
-GimbalRollDegree,+0.00
+SubjectDistance,0 m
+FileSource,Digital Camera
+AlreadyApplied,false
+MPImageStart,4.187666e+06
+Software,v01.43.0039
+SpeedY,+0.00
+AbsoluteAltitude,+3.26
 MPImageFormat,JPEG
-DependentImage1EntryNumber,0
-CircleOfConfusion,0.006 mm
-FileAccessDate,2023:06:01 22:27:06-07:00
-Warning,[minor] Possibly incorrect maker notes offsets (fix by 1783?)
-TotalFrames,1
-MPImageType,Large Thumbnail (VGA equivalent)
+FileTypeExtension,jpg
+YResolution,72
+WhiteBalance,Auto
+FNumber,2.8
+ColorSpace,sRGB
 ImageSize,4000x2250
-ComponentsConfiguration,"Y, Cb, Cr, -"
-Format,image/jpg
+PreviewImage,"(Binary data 299523 bytes, use -b option to extract)"
+MPImageFlags,Dependent child image
+FileName,DJI_0001.jpg
+FileSize,4.5 MB
+FocalLength,4.5 mm
+ThumbnailLength,12035
+FileType,JPEG
+ExposureCompensation,0
+ExifImageHeight,2250
+HasCrop,false
+FocalLengthIn35mmFormat,24 mm
+MPImageType,Large Thumbnail (VGA equivalent)
+Megapixels,9
+InteropIndex,R98 - DCF basic file (sRGB)
+GimbalYawDegree,+0.00
+DependentImage1EntryNumber,0
+ExifToolVersion,12.62
+ImageDescription,DCIM\100MEDIA\DJI_0001.JPG
+ModifyDate,2021:10:09 17:33:50
+DateTimeOriginal,2021:10:09 17:33:50
+Directory,../test-data/JPG-Files
+ResolutionUnit,inches
+InteropVersion,0100
+About,DJI Meta Data
+ImageUIDList,"(Binary data 66 bytes, use -b option to extract)"
 ColorComponents,3
-GPSVersionID,2.3.0.0
-MPImageLength,299523
+ScaleFactor35efl,5.3
 ZoneIdentifier,Exists
 FileCreateDate,2023:06:01 02:50:57-07:00
-CreateDate,2021:10:09 17:33:50
-GainControl,None
-FOV,73.7 deg
-LightValue,12.6
-Directory,../test-data/JPG-Files
-SpeedX,+0.00
-Contrast,Normal
-GPSLatitudeRef,North
-FlightPitchDegree,-1.2
-HasSettings,false
-SourceFile,../test-data/JPG-Files/DJI_0001.jpg
+Flash,No flash function
+RelativeAltitude,+2.40
+Aperture,2.8
+ShutterSpeed,1/800
+LightSource,Fluorescent
+Pitch,-1.2
+XPComment,"Type=N, Mode=P, DE=None"
+GimbalPitchDegree,+0.00
+ExifImageWidth,4000
+FocalLength35efl,4.5 mm (35 mm equivalent: 24.0 mm)
+GPSAltitude,3.2 m Above Sea Level
+FileAccessDate,2023:06:05 22:31:59-07:00
+ExposureMode,Auto
+MPFVersion,0010
+BitsPerSample,8
+Yaw,-48.1
 SceneType,Directly photographed
-GPSAltitudeRef,Above Sea Level
-GimbalReverse,0
-ImageHeight,2250
-EncodingProcess,"Baseline DCT, Huffman coding"
-FileModifyDate,2023:06:01 02:48:46-07:00
-ResolutionUnit,inches
-ExposureProgram,Program AE
+DependentImage2EntryNumber,0
+Model,FC7303
+Orientation,Horizontal (normal)
+CompressedBitsPerPixel,3.687878222
 ShutterSpeedValue,1/800
 MeteringMode,Center-weighted average
-PreviewImage,"(Binary data 299523 bytes, use -b option to extract)"
+CircleOfConfusion,0.006 mm
 ExifByteOrder,"Little-endian (Intel, II)"
-CompressedBitsPerPixel,3.687878222
-AlreadyApplied,false
-ModifyDate,2021:10:09 17:33:50
-ExposureMode,Auto
-SubjectDistanceRange,Unknown
-ThumbnailLength,12035
-MPFVersion,0010
+ExposureTime,1/800
+ComponentsConfiguration,"Y, Cb, Cr, -"
+ThumbnailOffset,18432
 XResolution,72
-DateTimeOriginal,2021:10:09 17:33:50
-ExposureIndex,undef
-HyperfocalDistance,1.28 m
-ImageDescription,DCIM\100MEDIA\DJI_0001.JPG
-ColorSpace,sRGB
-ExifImageHeight,2250
-DigitalZoomRatio,1
+Make,DJI
+SubjectDistanceRange,Unknown
+ImageWidth,4000
+SceneCaptureType,Standard
+ISO,100
+GPSLatitudeRef,North
+Format,image/jpg
 GPSPosition,"33 deg 52' 56.44"" N, 118 deg 22' 16.14"" W"
-GPSAltitude,3.2 m Above Sea Level
-FilePermissions,-rw-rw-rw-
-Orientation,Horizontal (normal)
-SpeedY,+0.00
-SpeedZ,+0.00
-FileSource,Digital Camera
+Roll,-2.6
+GPSLongitudeRef,West
+GPSLongitude,"118 deg 22' 16.14"" W"
+Contrast,Normal
+GimbalRollDegree,+0.00
+HasSettings,false
+YCbCrSubSampling,YCbCr4:2:2 (2 1)
+SourceFile,../test-data/JPG-Files/DJI_0001.jpg
+ExifVersion,0230
+GPSVersionID,2.3.0.0
+Compression,JPEG (old-style)
 Version,7
-DependentImage2EntryNumber,0
+GPSLatitude,"33 deg 52' 56.44"" N"
+YCbCrPositioning,Centered
+ApertureValue,2.8
+Warning,[minor] Possibly incorrect maker notes offsets (fix by 1783?)
+GainControl,None
+FlightRollDegree,-2.6
+FlightYawDegree,-48.1
+CamReverse,0
+TotalFrames,1
+ExposureProgram,Program AE
+CreateDate,2021:10:09 17:33:50
+MaxApertureValue,2.8
+GPSAltitudeRef,Above Sea Level
+FOV,73.7 deg
+SpeedZ,+0.00
+ImageHeight,2250
+LightValue,12.6
+FlashpixVersion,0100
+XPKeywords,v01.43.0039;0.0.1;v1.0.0
+GimbalReverse,0
+MPImageLength,299523
+CustomRendered,Normal
+Saturation,Normal
+EncodingProcess,"Baseline DCT, Huffman coding"
+FileModifyDate,2023:06:01 02:48:46-07:00
+SpeedX,+0.00
+ExposureIndex,undef
+ThumbnailImage,"(Binary data 12035 bytes, use -b option to extract)"
