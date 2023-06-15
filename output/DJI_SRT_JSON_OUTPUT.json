@@ -1,5 +1,5 @@
 {
-  "fileName": "..\\test-data\\SRT-Files\\mavic_air.SRT",
+  "fileName": "../test-data/SRT-Files/mavic_air.SRT",
   "packets": [
     {
       "FRAMECOUNT": 1,

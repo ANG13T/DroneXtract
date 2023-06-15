@@ -83,7 +83,7 @@
       "properties": {
         "source": "dji-srt-parser",
         "timestamp": [],
-        "name": "..\\test-data\\SRT-Files\\mavic_air.SRT",
+        "name": "../test-data/SRT-Files/mavic_air.SRT",
         "HOME_LATITUDE": 0,
         "HOME_LONGITUDE": 0,
         "ISO": 100,
