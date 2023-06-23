@@ -20,6 +20,8 @@ import (
 	// "github.com/twpayne/go-kml/v3"
 )
 
+var category_banners []string = {""} 
+
 func Banner() {
 	banner, _ := ioutil.ReadFile("txt/banner.txt")
 	info, _ := ioutil.ReadFile("txt/info.txt")

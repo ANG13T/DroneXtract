@@ -1,17 +1,21 @@
 
     ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗                                                          
-    ║                                            DJI Drone Digital Forensics Toolkit                                         ║
+    ║                                           Flight and Integrity Analysis                                                ║
     ╠════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
     ║                                                                                                                        ║
-    ║     [ 1 ] Drone File Parsing                                                                                           ║
+    ║     [ 1 ] Firmware Integrity                                                                                           ║
     ║                                                                                                                        ║
-    ║     [ 2 ] Telemetry Mapping                                                                                            ║
+    ║     [ 2 ] Command Verification                                                                                         ║
     ║                                                                                                                        ║
-    ║     [ 3 ] Steganography Suite                                                                                          ║
+    ║     [ 3 ] Trajectory Analysis                                                                                          ║
     ║                                                                                                                        ║
-    ║     [ 4 ] Firmware and Binary Reader                                                                                   ║
+    ║     [ 4 ] Timeline Analysis                                                                                            ║
     ║                                                                                                                        ║
-    ║     [ 5 ] Flight and Integrity Analysis                                                                                ║
+    ║     [ 5 ] Error Analysis                                                                                               ║
+    ║                                                                                                                        ║
+    ║     [ 6 ] Anti-Forensics Detection                                                                                     ║
+    ║                                                                                                                        ║
+    ║     [ 7 ] Back to Main Menu                                                                                            ║
     ║                                                                                                                        ║
     ╠════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣                                                          
     ║     [ 0 ] Exit DroneXtract                                                                                             ║
