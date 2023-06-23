@@ -2,7 +2,7 @@ package steganography
 
 import (
 	"github.com/barasher/go-exiftool"
-	"github.com/ANG13T/DroneXtract/forensics"
+	"github.com/ANG13T/DroneXtract/helpers"
 	"fmt"
 	"os"
 	"encoding/csv"
@@ -42,12 +42,12 @@ func (parser *DJI_EXIF_Parser) Read() {
 			continue
 		}
 
-		forensics.GenTableHeader("EXIF Analysis");
+		helpers.GenTableHeader("EXIF Analysis");
 		for k, v := range fileInfo.Fields {
 			formattedValue := fmt.Sprintf("%v", v)
-			forensics.GenRowString(k, formattedValue)
+			helpers.GenRowString(k, formattedValue)
 		}
-		forensics.GenTableFooter();
+		helpers.GenTableFooter();
 	}
 }
 

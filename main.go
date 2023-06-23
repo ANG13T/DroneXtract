@@ -2,6 +2,13 @@ package main
 
 // OSINT, DAT File parsing, other file format parsing, crystal web server, TUI and GUI 
 
+// 4 categories
+// 1- Firmware
+// 2- Analysis
+// 3- File Parsing
+// 4- Telemetry
+// 5- Stegenagraphy
+
 import (
 	"fmt"
 	"io/ioutil"
@@ -10,7 +17,6 @@ import (
 	"strconv"
 	// "github.com/ANG13T/DroneXtract/forensics"
 	"os"
-	"github.com/ANG13T/DroneXtract/steganography"
 	// "github.com/twpayne/go-kml/v3"
 )
 
@@ -49,11 +55,8 @@ func DisplayOption(x int) {
 	} else if (x == 1) {
 		Banner()
 		// Option()
-		steganography.ExampleExiftool_Read()
 	} else if (x == 2) {
 		Banner()
-	
-		steganography.DNGtoPNG()
 	} else if (x == 3) {
 		Banner()
 		Option()
