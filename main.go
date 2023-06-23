@@ -27,7 +27,7 @@ func Banner() {
 	g,_:=gradient.NewGradient("#1179ef", "cyan")	
 	g.Print("\n" + string(banner))
 	fmt.Println(color.Ize(color.Cyan, string(info)))
-	fmt.Println(color.Ize(color.Cyan, "\n" + string(options) + "\n"))
+	fmt.Println(color.Ize(color.Cyan,  string(options) + "\n"))
 }
 
 func Option() {
