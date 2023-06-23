@@ -15,6 +15,9 @@ go get github.com/twpayne/go-kml/v3
 https://exiftool.org/install.html
 
 
+- firmware + telemetry + article updated
+- parsing + analysis + article updated
+- README + crystal web server
 
 # steganography
 - exif (txt)
