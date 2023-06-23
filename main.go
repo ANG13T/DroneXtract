@@ -2,12 +2,12 @@ package main
 
 // OSINT, DAT File parsing, other file format parsing, crystal web server, TUI and GUI 
 
-// 4 categories
-// 1- Firmware
-// 2- Analysis
-// 3- File Parsing
-// 4- Telemetry
-// 5- Stegenagraphy
+// 5 categories
+// 1- Drone File Parsing
+// 2- Telemetry Toolkit
+// 3- Steganography Suite
+// 4- Firmware and Binary Reader
+// 5- Flight and Integrity Analysis
 
 import (
 	"fmt"
@@ -15,12 +15,12 @@ import (
 	"github.com/iskaa02/qalam/gradient"
 	"github.com/TwiN/go-color"
 	"strconv"
-	// "github.com/ANG13T/DroneXtract/forensics"
+	"github.com/ANG13T/DroneXtract/helpers"
 	"os"
 	// "github.com/twpayne/go-kml/v3"
 )
 
-var category_banners []string = {""} 
+var category_banners = []string{"fileparsing.txt", "telemetrymapping.txt", "steganography.txt", "firmwarereader.txt", "flightanalysis.txt"} 
 
 func Banner() {
 	banner, _ := ioutil.ReadFile("txt/banner.txt")
@@ -54,18 +54,21 @@ func DisplayOption(x int) {
 	if (x == 0) {
 		fmt.Println(color.Ize(color.Blue, " Farewell and fly high!"))
 		os.Exit(1)
-	} else if (x == 1) {
-		Banner()
-		// Option()
-	} else if (x == 2) {
-		Banner()
-	} else if (x == 3) {
+	} else if (x == 5) {
 		Banner()
 		Option()
-	}else if (x == 4) {
-		Banner()
+	} else if (x > 0 && x < 5) {
+		DisplayOptionInformation(x)
+	} else {
+		helpers.PrintError("INVALID INPUT")
 		Option()
 	}
+}
+
+func DisplayOptionInformation(option int) {
+	contents, _ := ioutil.ReadFile("txt/" + category_banners[option - 1])
+	fmt.Println(color.Ize(color.Cyan, string(contents)))
+	// use cateh=gory banner value to discern what tool to use
 }
 
 func main() {	
