@@ -6,6 +6,7 @@ import (
 	"github.com/ANG13T/DroneXtract/helpers"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"os"
+	"strconv"
 )
 
 type DJI_CSV_Parser struct {
@@ -49,34 +50,13 @@ func (parser *DJI_CSV_Parser) ParseContents() {
 
 	columns := records[0]
 
-	tableValue.AppendHeader(ArrayToRow(columns))
-
-	tableBody := []table.Row{}
-
 	// Print each record
-	for _, record := range records {
-		row := []string{}
-		for _, value := range record {
-			row = append(row, value)
+	for count, record := range records {
+		row_out := "Row " + strconv.Itoa(count)
+		GenTableHeader(row_out, count == 0)
+		for in, value := range record {
+			GenRowString(columns[in], value)
 		}
-		tableBody = append(tableBody, ArrayToRow(row))
-		fmt.Println()
+		GenTableFooter()
 	}
-
-	tableValue.AppendRows(tableBody)
-	fmt.Printf("Table without any customizations:\n%s", tableValue.Render())
 }
-
-func ArrayToRow(input []string) table.Row {
-	row := make(table.Row, len(input))
-	for i, value := range input {
-		row[i] = value
-	}
-	return row
-}
-
-func (parser *DJI_CSV_Parser) PrintContents() {
-
-}
-
-
