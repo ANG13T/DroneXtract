@@ -5,13 +5,11 @@
     ║                                                                                                                        ║
     ║     [ 1 ] Parse CSV File                                                                                               ║
     ║                                                                                                                        ║
-    ║     [ 2 ] Parse DAT File                                                                                               ║
+    ║     [ 2 ] Parse KML File                                                                                               ║
     ║                                                                                                                        ║
-    ║     [ 3 ] Parse KML File                                                                                               ║
+    ║     [ 3 ] Parse GPX File                                                                                               ║
     ║                                                                                                                        ║
-    ║     [ 4 ] Parse TXT File                                                                                               ║
-    ║                                                                                                                        ║
-    ║     [ 5 ] Back to Main Menu                                                                                            ║
+    ║     [ 4 ] Back to Main Menu                                                                                            ║
     ║                                                                                                                        ║
     ╠════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣                                                          
     ║     [ 0 ] Exit DroneXtract                                                                                             ║

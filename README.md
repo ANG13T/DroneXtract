@@ -27,3 +27,7 @@ https://exiftool.org/install.html
 # fuck this shit
 - preProcess
 - GeoJSONExtract
+
+# Upcoming
+- DUML parser for firmware integrity checking
+
