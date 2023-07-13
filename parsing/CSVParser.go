@@ -2,9 +2,7 @@ package parsing
 
 import (
 	"encoding/csv"
-	"fmt"
 	"github.com/ANG13T/DroneXtract/helpers"
-	"github.com/jedib0t/go-pretty/v6/table"
 	"os"
 	"strconv"
 )
@@ -27,12 +25,9 @@ func NewDJI_CSV_Parser(fileName string) *DJI_CSV_Parser {
 }
 
 func (parser *DJI_CSV_Parser) ParseContents() {
-	tableValue := table.NewWriter()
-    tableValue.SetOutputMirror(os.Stdout)
-
 	file, err := os.Open(parser.fileName)
 	if err != nil {
-		fmt.Println("Error:", err)
+		helpers.PrintErrorLog("INVALID FILE. UNABLE TO OPEN", err)
 		return
 	}
 	defer file.Close()
@@ -44,7 +39,7 @@ func (parser *DJI_CSV_Parser) ParseContents() {
 	records, err := reader.ReadAll()
 	
 	if err != nil {
-		fmt.Println("Error:", err)
+		helpers.PrintErrorLog("INVALID FILE. UNABLE TO OPEN", err)
 		return
 	}
 

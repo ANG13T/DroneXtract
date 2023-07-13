@@ -14,7 +14,10 @@ require (
 	github.com/mazznoer/csscolorparser v0.1.0 // indirect
 	github.com/mdouchement/dng v0.0.0-20170415183926-292bb2b0015a // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/tkrajina/gpxgo v1.3.0 // indirect
 	github.com/twpayne/go-kml v1.5.2 // indirect
 	github.com/twpayne/go-kml/v3 v3.1.0 // indirect
+	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
 )
