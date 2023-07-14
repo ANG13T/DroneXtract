@@ -3,10 +3,8 @@ package parsing
 import (
 	"github.com/ANG13T/DroneXtract/helpers"
 	"github.com/tkrajina/gpxgo/gpx"
-	"encoding/xml"
+	"path/filepath"
 	"fmt"
-	"io/ioutil"
-	"log"
 )
 
 type DJI_GPX_Parser struct {
@@ -34,22 +32,9 @@ func (parser *DJI_GPX_Parser) ParseContents() {
 		return
 	}
 
-	gpxPath, _ := filepath.Abs(gpxFileArg)
+	gpxPath, _ := filepath.Abs(parser.fileName)
 
 	fmt.Print("File: ", gpxPath, "\n")
 
 	fmt.Println(gpxFile.GetGpxInfo())
-}
-
-func formatXML(content []byte) ([]byte, error) {
-	// Create a buffer to store the formatted XML
-	formatted := &bytes.Buffer{}
-
-	// Indent the XML content
-	err := xml.Indent(formatted, content, "", "  ")
-	if err != nil {
-		return nil, err
-	}
-
-	return formatted.Bytes(), nil
 }
