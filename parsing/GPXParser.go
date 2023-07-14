@@ -4,6 +4,7 @@ import (
 	"github.com/ANG13T/DroneXtract/helpers"
 	"github.com/tkrajina/gpxgo/gpx"
 	"path/filepath"
+	"github.com/TwiN/go-color"
 	"fmt"
 )
 
@@ -28,13 +29,18 @@ func (parser *DJI_GPX_Parser) ParseContents() {
 	gpxFile, err := gpx.ParseFile(parser.fileName)
 
 	if err != nil {
-		fmt.Println("Error opening gpx file: ", err)
+		helpers.PrintErrorLog("INVALID FILE. ERROR READING CONTENTS", err)
 		return
 	}
 
-	gpxPath, _ := filepath.Abs(parser.fileName)
+	gpxPath, err2 := filepath.Abs(parser.fileName)
 
-	fmt.Print("File: ", gpxPath, "\n")
+	if err2 != nil {
+		helpers.PrintErrorLog("INVALID FILE. ERROR READING CONTENTS", err)
+		return
+	}
 
-	fmt.Println(gpxFile.GetGpxInfo())
+	fmt.Println(color.Ize(color.Blue, string("File: " +  gpxPath + "\n")))
+
+	fmt.Println(color.Ize(color.Blue, gpxFile.GetGpxInfo()))
 }
