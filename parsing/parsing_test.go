@@ -6,19 +6,19 @@ import (
 	"fmt"
 )
 
-// func TestCSVAnalysis(t *testing.T) {
-// 	t.Logf("Running Parsing Test Unit - CSV File")
-// 	fmt.Println(color.Ize(color.Cyan, "Running Parsing Test Unit - CSV Files"))
+func TestCSVAnalysis(t *testing.T) {
+	t.Logf("Running Parsing Test Unit - CSV File")
+	fmt.Println(color.Ize(color.Cyan, "Running Parsing Test Unit - CSV Files"))
 
-// 	// Testing Parsing
-// 	filename := `../test-data/Airdata-Files/AirdataCSV.csv`
+	// Testing Parsing
+	filename := `../test-data/Airdata-Files/AirdataCSV.csv`
 
-// 	suite := NewDJI_CSV_Parser(filename)
+	suite := NewDJI_CSV_Parser(filename)
 
-// 	suite.ParseContents()
+	suite.ParseContents()
 
-// 	t.Logf("[Parsing #1] CSV Parsing Case - PASS")
-// }
+	t.Logf("[Parsing #1] CSV Parsing Case - PASS")
+}
 
 func TestGPXAnalysis(t *testing.T) {
 	t.Logf("Running Parsing Test Unit - GPX File")
@@ -35,16 +35,16 @@ func TestGPXAnalysis(t *testing.T) {
 }
 
 
-// func TestKMLAnalysis(t *testing.T) {
-// 	t.Logf("Running Parsing Test Unit - KML File")
-// 	fmt.Println(color.Ize(color.Cyan, "Running Parsing Test Unit - KML Files"))
+func TestKMLAnalysis(t *testing.T) {
+	t.Logf("Running Parsing Test Unit - KML File")
+	fmt.Println(color.Ize(color.Cyan, "Running Parsing Test Unit - KML Files"))
 
-// 	// Testing Parsing
-// 	filename := `../test-data/Airdata-Files/AirdataKML.kml`
+	// Testing Parsing
+	filename := `../test-data/Airdata-Files/AirdataKML.kml`
 
-// 	suite := NewDJI_KML_Parser(filename)
+	suite := NewDJI_KML_Parser(filename)
 
-// 	suite.ParseContents()
+	suite.ParseContents()
 
-// 	t.Logf("[Parsing #2] KML Parsing Case - PASS")
-// }
+	t.Logf("[Parsing #2] KML Parsing Case - PASS")
+}

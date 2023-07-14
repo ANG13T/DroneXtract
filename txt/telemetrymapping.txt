@@ -5,11 +5,9 @@
     ║                                                                                                                        ║
     ║     [ 1 ] Flight Path Analysis                                                                                         ║
     ║                                                                                                                        ║
-    ║     [ 2 ] GPS Analysis                                                                                                 ║
+    ║     [ 2 ] Telemetry Visualizations                                                                                     ║
     ║                                                                                                                        ║
-    ║     [ 3 ] Sensor Visualizations                                                                                        ║
-    ║                                                                                                                        ║
-    ║     [ 4 ] Back to Main Menu                                                                                            ║
+    ║     [ 3 ] Back to Main Menu                                                                                            ║
     ║                                                                                                                        ║
     ╠════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣                                                          
     ║     [ 0 ] Exit DroneXtract                                                                                             ║
