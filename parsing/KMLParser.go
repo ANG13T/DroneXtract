@@ -3,7 +3,6 @@ package parsing
 import (
 	"github.com/ANG13T/DroneXtract/helpers"
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"strconv"
 	"strings"
@@ -68,7 +67,7 @@ func (parser *DJI_KML_Parser) ParseContents() {
 	}
 
 	// Process the placemarks
-	for index, placemark := range kml.Placemarks {
+	for _, placemark := range kml.Placemarks {
 
 		if placemark.Point.Coordinates != "" {
 			coorValues := strings.Split(placemark.Point.Coordinates, ",")
@@ -79,18 +78,18 @@ func (parser *DJI_KML_Parser) ParseContents() {
 		}
 
 		if placemark.LineString.Coordinates != "" {
-			fmt.Println("LineString Coordinates:", placemark.LineString.Coordinates)
+
 			lines := strings.Split(placemark.LineString.Coordinates, "\n")
 
-			for _, coor := range lines {
+			for cIndex, coor := range lines {
 				coorValues := strings.Split(coor, ",")
-				GenTableHeader("Coordinate Point " + strconv.Itoa(index), true)
-				GenRowString("Coordinates", "(" + coorValues[0] + "," + coorValues[1] + ")")
-				GenRowString("Altitude", coorValues[2] + " ft")
-				GenTableFooter()
+				if len(coor) > 0 && len(coorValues) > 1 {
+					GenTableHeader("Coordinate Point " + strconv.Itoa(cIndex + 1), false)
+					GenRowString("Coordinates", "(" + coorValues[0] + ", " + coorValues[1] + ")")
+					GenRowString("Altitude", coorValues[2] + " ft")
+					GenTableFooter()
+				}
 			}
 		}
-
-		fmt.Println()
 	}
 }
