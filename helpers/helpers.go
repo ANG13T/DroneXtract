@@ -22,6 +22,8 @@ func Option(min int, max int) int {
 			fmt.Println(color.Ize(color.Blue, " Farewell and fly high!"))
 			os.Exit(1)
 			return 0
+		} else if (num == max - 1) {
+			return -1
 		} else if (num > min  && num < max + 1) {
 			return num
 		} else {

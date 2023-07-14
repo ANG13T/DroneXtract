@@ -20,7 +20,8 @@ import (
 	// "github.com/twpayne/go-kml/v3"
 )
 
-var category_banners = []string{"fileparsing.txt", "telemetrymapping.txt", "steganography.txt", "firmwarereader.txt", "flightanalysis.txt"} 
+var category_banners = []string{"fileparsing.txt", "telemetrymapping.txt", "steganography.txt"}
+var option_values = []int{5, 4, 6} 
 
 func Banner() {
 	banner, _ := ioutil.ReadFile("txt/banner.txt")
@@ -67,8 +68,18 @@ func DisplayOption(x int) {
 
 func DisplayOptionInformation(option int) {
 	contents, _ := ioutil.ReadFile("txt/" + category_banners[option - 1])
-	fmt.Println(color.Ize(color.Cyan, string(contents)))
-	// use cateh=gory banner value to discern what tool to use
+	returnVal := 0
+	if (option == 4) {
+
+	} else {
+		fmt.Println(color.Ize(color.Cyan, string(contents)))
+		returnVal = helpers.Option(0, option_values[option - 1])
+	}
+
+	if (returnVal == -1) {
+		Banner()
+		Option()
+	}
 }
 
 func main() {	
