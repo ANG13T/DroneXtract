@@ -5,7 +5,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
-	"log"
+	"strconv"
+	"strings"
 )
 
 type DJI_KML_Parser struct {
@@ -18,7 +19,6 @@ type KML struct {
 
 type Placemark struct {
 	Name        string       `xml:"name"`
-	ExtendedData ExtendedData `xml:"ExtendedData"`
 	Point       Point        `xml:"Point"`
 	LineString  LineString   `xml:"LineString"`
 }
@@ -57,34 +57,38 @@ func NewDJI_KML_Parser(fileName string) *DJI_KML_Parser {
 func (parser *DJI_KML_Parser) ParseContents() {
 	content, err := ioutil.ReadFile(parser.fileName)
 	if err != nil {
-		log.Fatal(err)
+		helpers.PrintErrorLog("INVALID FILE. ERROR READING CONTENTS", err)
 	}
 
 	// Parse the KML data
 	var kml KML
 	err = xml.Unmarshal(content, &kml)
 	if err != nil {
-		log.Fatal(err)
+		helpers.PrintErrorLog("INVALID FILE. ERROR READING CONTENTS", err)
 	}
 
 	// Process the placemarks
-	for _, placemark := range kml.Placemarks {
-		fmt.Println("Name:", placemark.Name)
-
-		if len(placemark.ExtendedData.Data) > 0 {
-			fmt.Println("Extended Data:")
-			for _, data := range placemark.ExtendedData.Data {
-				fmt.Println("  - Name:", data.Name)
-				fmt.Println("    Value:", data.Value)
-			}
-		}
+	for index, placemark := range kml.Placemarks {
 
 		if placemark.Point.Coordinates != "" {
-			fmt.Println("Point Coordinates:", placemark.Point.Coordinates)
+			coorValues := strings.Split(placemark.Point.Coordinates, ",")
+			GenTableHeader("Home Point Information", true)
+			GenRowString("Coordinates", "(" + coorValues[0] + "," + coorValues[1] + ")")
+			GenRowString("Altitude", coorValues[2] + " ft")
+			GenTableFooter()
 		}
 
 		if placemark.LineString.Coordinates != "" {
 			fmt.Println("LineString Coordinates:", placemark.LineString.Coordinates)
+			lines := strings.Split(placemark.LineString.Coordinates, "\n")
+
+			for _, coor := range lines {
+				coorValues := strings.Split(coor, ",")
+				GenTableHeader("Coordinate Point " + strconv.Itoa(index), true)
+				GenRowString("Coordinates", "(" + coorValues[0] + "," + coorValues[1] + ")")
+				GenRowString("Altitude", coorValues[2] + " ft")
+				GenTableFooter()
+			}
 		}
 
 		fmt.Println()
