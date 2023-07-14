@@ -17,6 +17,7 @@ import (
 	"strconv"
 	"github.com/ANG13T/DroneXtract/helpers"
 	"os"
+	"github.com/ANG13T/DroneXtract/parsing"
 	// "github.com/twpayne/go-kml/v3"
 )
 
@@ -79,6 +80,14 @@ func DisplayOptionInformation(option int) {
 	if (returnVal == -1) {
 		Banner()
 		Option()
+	} else {
+		if (option == 1) {
+			parsing.ExecuteParser(returnVal)
+		} else if (option == 2) {
+
+		} else {
+
+		}
 	}
 }
 

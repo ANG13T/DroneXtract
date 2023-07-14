@@ -7,6 +7,28 @@ import (
 	"fmt"
 )
 
+func ExecuteParser(index int) {
+	filePath := FileInputString()
+	switch in := index; in {
+		case 1:
+			suite := NewDJI_CSV_Parser(filePath)
+			suite.ParseContents()
+		case 2:
+			suite := NewDJI_KML_Parser(filePath)
+			suite.ParseContents()
+		case 3:
+			suite := NewDJI_GPX_Parser(filePath)
+			suite.ParseContents()
+	}
+}
+
+func FileInputString() string {
+	fmt.Print("\n ENTER FILE PATH > ")
+	var selection string
+	fmt.Scanln(&selection)
+	return selection
+}
+
 func CheckFileFormat(path string, exten string) bool {
 	extension := strings.ToLower(filepath.Ext(path))
 	return (extension == exten)
