@@ -19,7 +19,6 @@ type Coordinate struct {
 	Longitude float64
 }
 
-
 type DJI_Flight_Path_Map struct {
 	fileName        string
 	outputPath		string
