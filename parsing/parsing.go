@@ -5,10 +5,11 @@ import (
 	"path/filepath"
 	"github.com/TwiN/go-color"
 	"fmt"
+	"github.com/ANG13T/DroneXtract/helpers"
 )
 
 func ExecuteParser(index int) {
-	filePath := FileInputString()
+	filePath := helpers.FileInputString()
 	switch in := index; in {
 		case 1:
 			suite := NewDJI_CSV_Parser(filePath)
@@ -20,13 +21,6 @@ func ExecuteParser(index int) {
 			suite := NewDJI_GPX_Parser(filePath)
 			suite.ParseContents()
 	}
-}
-
-func FileInputString() string {
-	fmt.Print("\n ENTER FILE PATH > ")
-	var selection string
-	fmt.Scanln(&selection)
-	return selection
 }
 
 func CheckFileFormat(path string, exten string) bool {

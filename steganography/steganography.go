@@ -6,7 +6,25 @@ import (
 	"strings"
 	"log"
 	"path/filepath"
+	"github.com/ANG13T/DroneXtract/helpers"
 )
+
+// TODO: steg UI
+
+func ExecuteSteganography(index int) {
+	filePath := helpers.FileInputString()
+	switch in := index; in {
+		case 1:
+			suite := NewDJI_EXIF_Parser(filePath)
+			suite.ParseContents()
+		case 2:
+			suite := NewDJI_KML_Parser(filePath)
+			suite.ParseContents()
+		case 3:
+			suite := NewDJI_GPX_Parser(filePath)
+			suite.ParseContents()
+	}
+}
 
 func GenTableHeader(name string, containBreak bool) {
 	if containBreak {

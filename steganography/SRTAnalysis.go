@@ -15,7 +15,6 @@ import (
 	"os"
 	"encoding/json"
 	"encoding/csv"
-	// "github.com/juanirache/tomgjson"
 )
 
 var isoDateRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z`)

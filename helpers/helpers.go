@@ -9,6 +9,13 @@ import (
 	"log"
 )
 
+func FileInputString() string {
+	fmt.Print("\n ENTER FILE PATH > ")
+	var selection string
+	fmt.Scanln(&selection)
+	return selection
+}
+
 func Option(min int, max int) int {
 	fmt.Print("\n ENTER INPUT > ")
 	var selection string
