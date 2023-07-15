@@ -21,6 +21,22 @@ func NewDJI_EXIF_Parser(fileName string) *DJI_EXIF_Parser {
 	return &parser
 }
 
+func (parser *DJI_EXIF_Parser) ExecuteEXIFAnalysis(input int) {
+	switch in := input; in {
+		case 1:
+			parser.Read()
+		case 2:
+			outputPath := helpers.FileInputString()
+			parser.ExportToTXT(outputPath)
+		case 3:
+			outputPath := helpers.FileInputString()
+			parser.ExportToCSV(outputPath)
+		case 4:
+			outputPath := helpers.FileInputString()
+			parser.ExportToJSON(outputPath)
+	}
+}
+
 func (parser *DJI_EXIF_Parser) Read() {
 	et, err := exiftool.NewExiftool()
 	if err != nil {

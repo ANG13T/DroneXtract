@@ -4,7 +4,7 @@ import (
 	"image"
 	"image/png"
 	"os"
-
+	"github.com/ANG13T/DroneXtract/helpers"
 	_ "github.com/mdouchement/dng"
 )
 
@@ -23,6 +23,25 @@ func NewDJI_DNG_Parser(fileName string) *DJI_DNG_Parser {
 		fileName: fileName,
 	}
 	return &parser
+}
+
+func (parser *DJI_DNG_Parser) ExecuteDNGAnalysis(input int) {
+	switch in := input; in {
+		case 1:
+			parser.Read()
+		case 2:
+			outputPath := helpers.FileInputString()
+			parser.DNGtoPNG(outputPath)
+		case 3:
+			outputPath := helpers.FileInputString()
+			parser.ExportToTXT(outputPath)
+		case 4:
+			outputPath := helpers.FileInputString()
+			parser.ExportToCSV(outputPath)
+		case 5:
+			outputPath := helpers.FileInputString()
+			parser.ExportToJSON(outputPath)
+	}
 }
 
 func (parser *DJI_DNG_Parser) Read() { 

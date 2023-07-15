@@ -7,23 +7,36 @@ import (
 	"log"
 	"path/filepath"
 	"github.com/ANG13T/DroneXtract/helpers"
+	"io/ioutil"
 )
 
 // TODO: steg UI
 
 func ExecuteSteganography(index int) {
+	output := PrintParsingOptions(index)
 	filePath := helpers.FileInputString()
 	switch in := index; in {
 		case 1:
 			suite := NewDJI_EXIF_Parser(filePath)
-			suite.ParseContents()
+			suite.ExecuteEXIFAnalysis(output)
 		case 2:
-			suite := NewDJI_KML_Parser(filePath)
-			suite.ParseContents()
+			suite := NewDJI_DNG_Parser(filePath)
+			suite.ExecuteDNGAnalysis(output)
 		case 3:
-			suite := NewDJI_GPX_Parser(filePath)
-			suite.ParseContents()
+			suite := NewDJI_SRT_Parser(filePath)
+			suite.ExecuteSRTAnalysis(output)
+		case 4:
+			suite := NewDJI_XMP_Parser(filePath)
+			suite.ExecuteXMPAnalysis(output)
 	}
+}
+
+func PrintParsingOptions(index int) int {
+	var parsing_banners = []string{"exif.txt", "kml.txt", "gpx.txt", "xmp.txt"}
+	contents, _ := ioutil.ReadFile("txt/steganography/" + parsing_banners[index - 1])
+	fmt.Println(color.Ize(color.Cyan, string(contents)))
+	result := helpers.Option(0, 5)
+	return result
 }
 
 func GenTableHeader(name string, containBreak bool) {

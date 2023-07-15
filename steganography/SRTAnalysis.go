@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"github.com/ANG13T/DroneXtract/helpers"
 	"io/ioutil"
 	"os"
 	"encoding/json"
@@ -36,6 +37,24 @@ func NewDJI_SRT_Parser(fileName string) *DJI_SRT_Parser {
 		packets:            make([]SRT_Packet, 0),
 	}
 	return &parser
+}
+
+func (parser *DJI_SRT_Parser) ExecuteSRTAnalysis(input int) {
+	switch in := input; in {
+		case 1:
+			parser.PrintFileMetadata()
+			parser.GeneratePackets()
+			parser.PrintAllPackets()
+		case 2:
+			outputPath := helpers.FileInputString()
+			parser.ExportToJSON(outputPath)
+		case 3:
+			outputPath := helpers.FileInputString()
+			parser.ExportToGeoJSON(outputPath)
+		case 4:
+			outputPath := helpers.FileInputString()
+			parser.ExportToCSV(outputPath)
+	}
 }
 
 

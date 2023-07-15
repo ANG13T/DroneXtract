@@ -18,6 +18,7 @@ import (
 	"github.com/ANG13T/DroneXtract/helpers"
 	"os"
 	"github.com/ANG13T/DroneXtract/parsing"
+	"github.com/ANG13T/DroneXtract/steganography"
 	// "github.com/twpayne/go-kml/v3"
 )
 
@@ -84,9 +85,9 @@ func DisplayOptionInformation(option int) {
 		if (option == 1) {
 			parsing.ExecuteParser(returnVal)
 		} else if (option == 2) {
-
+			
 		} else {
-
+			steganography.ExecuteSteganography(returnVal)
 		}
 	}
 }
