@@ -11,6 +11,7 @@ import (
   sm "github.com/flopp/go-staticmaps"
   "github.com/fogleman/gg"
   "github.com/golang/geo/s2"
+  // "fmt"
 )
 
 
@@ -79,7 +80,7 @@ func (parser *DJI_Flight_Path_Map) PrintGPSCoordinates() {
 			}
 		}
 
-		if (lat_val > 0.0 && lon_val > 0.0) {
+		if (lat_val != 0.0 && lon_val != 0.0) {
 			coor_val := Coordinate{Latitude: lat_val, Longitude: lon_val}
 			coors = append(coors, coor_val)
 		}
@@ -93,8 +94,8 @@ func GenerateMapOutput(coors []Coordinate, outputPath string) {
 		outputPath = "flight-path-map.png"
 	}
 
-	if len(coors) > 40 {
-		coors = downsampleCoordinates(coors, 40)
+	if len(coors) > 10 {
+		coors = downsampleCoordinates(coors, 10)
 	}
 
 	check := helpers.CheckFileFormat(outputPath, ".png")
