@@ -5,6 +5,11 @@ go 1.20
 require (
 	github.com/TwiN/go-color v1.4.0 // indirect
 	github.com/barasher/go-exiftool v1.9.0 // indirect
+	github.com/flopp/go-coordsparser v0.0.0-20201115094714-8baaeb7062d5 // indirect
+	github.com/flopp/go-staticmaps v0.0.0-20220221183018-c226716bec53 // indirect
+	github.com/fogleman/gg v1.3.0 // indirect
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/golang/geo v0.0.0-20230421003525-6adc56603217 // indirect
 	github.com/guptarohit/asciigraph v0.5.6 // indirect
 	github.com/iskaa02/qalam v0.3.0 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.4.6 // indirect
@@ -18,7 +23,8 @@ require (
 	github.com/tkrajina/gpxgo v1.3.0 // indirect
 	github.com/twpayne/go-kml v1.5.2 // indirect
 	github.com/twpayne/go-kml/v3 v3.1.0 // indirect
-	golang.org/x/net v0.8.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/image v0.9.0 // indirect
+	golang.org/x/net v0.12.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 )

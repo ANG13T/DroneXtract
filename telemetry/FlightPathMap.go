@@ -4,7 +4,13 @@ import (
 	"encoding/csv"
 	"github.com/ANG13T/DroneXtract/helpers"
 	"os"
-	"fmt"
+	"strconv"
+
+	"image/color"
+
+  sm "github.com/flopp/go-staticmaps"
+  "github.com/fogleman/gg"
+  "github.com/golang/geo/s2"
 )
 
 // Disploay flight path GPS coordinates and corresponding map
@@ -45,14 +51,42 @@ func (parser *DJI_Flight_Path_Map) PrintGPSCoordinates() {
 
 	columns := records[0]
 
+	lats := []float64{}
+	longs := []float64{}
+
 	// Print each record
 	for _, record := range records {
 		for in, value := range record {
-			fmt.Println(columns[in], value)
+			if (columns[in] == "latitude") {
+				lat_val, _  := strconv.ParseFloat(value, 64)
+				lats = append(lats, lat_val)
+			}
+
+			if (columns[in] == "longitude") {
+				lon_val, _  := strconv.ParseFloat(value, 64)
+				longs = append(longs, lon_val)
+			}
 		}
 	}
 }
 
-func GenerateMapOutput(outputPath string) {
-
+func GenerateMapOutput(lats []float64, longs []float64, outputPath string) {
+	ctx := sm.NewContext()
+	ctx.SetSize(400, 300)
+	ctx.AddObject(
+	  sm.NewMarker(
+		s2.LatLngFromDegrees(52.514536, 13.350151),
+		color.RGBA{0xff, 0, 0, 0xff},
+		16.0,
+	  ),
+	)
+  
+	img, err := ctx.Render()
+	if err != nil {
+	  panic(err)
+	}
+  
+	if err := gg.SavePNG("my-map.png", img); err != nil {
+	  panic(err)
+	}
 }
