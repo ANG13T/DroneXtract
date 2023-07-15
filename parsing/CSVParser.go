@@ -55,3 +55,4 @@ func (parser *DJI_CSV_Parser) ParseContents() {
 		GenTableFooter()
 	}
 }
+

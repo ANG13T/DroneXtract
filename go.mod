@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/TwiN/go-color v1.4.0 // indirect
 	github.com/barasher/go-exiftool v1.9.0 // indirect
+	github.com/guptarohit/asciigraph v0.5.6 // indirect
 	github.com/iskaa02/qalam v0.3.0 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.4.6 // indirect
 	github.com/juanirache/tomgjson v0.4.9 // indirect

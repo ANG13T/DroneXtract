@@ -5,6 +5,7 @@ import (
 	"os"
 	"github.com/TwiN/go-color"
 	"strconv"
+	"path/filepath"
 	"strings"
 	"log"
 )
@@ -45,6 +46,11 @@ func GenTableHeader(name string) {
 	var amount = (78 - len(name)) / 2
 	fmt.Println(color.Ize(color.Blue, "    ║" +  strings.Repeat(" ", amount) + name + strings.Repeat(" ", amount + 1) + "║"))
 	fmt.Println(color.Ize(color.Blue, "    ╠══════════════════════════════════════════════════════════════════════════════╣"))
+}
+
+func CheckFileFormat(path string, exten string) bool {
+	extension := strings.ToLower(filepath.Ext(path))
+	return (extension == exten)
 }
 
 func GenRowString(intro string, input string) {
