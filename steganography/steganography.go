@@ -14,6 +14,9 @@ import (
 
 func ExecuteSteganography(index int) {
 	output := PrintParsingOptions(index)
+	if (output == -1) {
+		return
+	}
 	filePath := helpers.FileInputString()
 	switch in := index; in {
 		case 1:

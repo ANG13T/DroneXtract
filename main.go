@@ -84,12 +84,17 @@ func DisplayOptionInformation(option int) {
 	} else {
 		if (option == 1) {
 			parsing.ExecuteParser(returnVal)
+			Banner()
+			Option()
 		} else if (option == 2) {
 			
 		} else {
 			steganography.ExecuteSteganography(returnVal)
+			Banner()
+			Option()
 		}
 	}
+	
 }
 
 func main() {	

@@ -78,6 +78,13 @@ var print_indicators = []string{
 	"Flyc State Raw",
 }
 
+func (parser *DJI_TelemetryVisualizations) ExecuteTelemetryVisualizations() {
+	value := GenerateOptions()
+	if (value == -1) {
+		return
+	}
+}
+
 func (parser *DJI_TelemetryVisualizations) GenerateGraph(index int) {
 	file, err := os.Open(parser.fileName)
 	if err != nil {
@@ -146,4 +153,16 @@ func downsampleArray(data []float64, targetLength int) []float64 {
 	result[0] = data[0]
 
 	return result
+}
+
+func GenerateOptions() int {
+	for index, record := range print_indicators {
+		print := string("[" + strconv.Itoa(index + 1) + "] " + record)
+		fmt.Println(color.Ize(color.Blue, print))
+	}
+	back := string("[" + strconv.Itoa(len(print_indicators) + 1) + "] Back to Main Menu")
+	fmt.Println(color.Ize(color.Blue, back))
+	exit := "[ 0 ] Exit DroneXtract"
+	fmt.Println(color.Ize(color.Blue, exit))
+	return helpers.Option(0, len(print_indicators))
 }
