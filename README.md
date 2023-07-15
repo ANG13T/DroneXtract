@@ -17,7 +17,7 @@ https://exiftool.org/install.html
 
 - firmware + telemetry + article updated
 - parsing + analysis + article updated
-- README + crystal web server
+- README
 
 # steganography
 - exif (txt)
@@ -32,4 +32,5 @@ https://exiftool.org/install.html
 - DUML parser for firmware integrity checking
 
 # Env Variables
-- downsampling number
+- downsampling number for graph visualizations
+- downsampling number for flight path markers

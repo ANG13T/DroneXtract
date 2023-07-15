@@ -11,8 +11,13 @@ import (
   sm "github.com/flopp/go-staticmaps"
   "github.com/fogleman/gg"
   "github.com/golang/geo/s2"
-  "fmt"
 )
+
+
+type Coordinate struct {
+	Latitude  float64
+	Longitude float64
+}
 
 // Disploay flight path GPS coordinates and corresponding map
 
@@ -54,30 +59,42 @@ func (parser *DJI_Flight_Path_Map) PrintGPSCoordinates() {
 
 	columns := records[0]
 
-	lats := []float64{}
-	longs := []float64{}
+	coors := []Coordinate{}
 
 	// Print each record
 	for _, record := range records {
+
+		lat_val := 0.0
+		lon_val := 0.0
+
 		for in, value := range record {
 			val, _  := strconv.ParseFloat(value, 64)
 
 			if (columns[in] == "latitude" && val != 0) {
-				lats = append(lats, val)
+				lat_val = val
 			}
 
 			if (columns[in] == "longitude" && val != 0) {
-				longs = append(longs, val)
+				lon_val = val
 			}
+		}
+
+		if (lat_val > 0.0 && lon_val > 0.0) {
+			coor_val := Coordinate{Latitude: lat_val, Longitude: lon_val}
+			coors = append(coors, coor_val)
 		}
 	}
 
-	GenerateMapOutput(lats, longs, parser.outputPath)
+	GenerateMapOutput(coors, parser.outputPath)
 }
 
-func GenerateMapOutput(lats []float64, longs []float64, outputPath string) {
+func GenerateMapOutput(coors []Coordinate, outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "flight-path-map.png"
+	}
+
+	if len(coors) > 40 {
+		coors = downsampleCoordinates(coors, 40)
 	}
 
 	check := helpers.CheckFileFormat(outputPath, ".png")
@@ -87,32 +104,27 @@ func GenerateMapOutput(lats []float64, longs []float64, outputPath string) {
 	}
 	ctx := sm.NewContext()
 	ctx.SetSize(400, 300)
-	ctx.AddObject(
-	  sm.NewMarker(
-		s2.LatLngFromDegrees(lats[0], longs[0]),
-		color.RGBA{0xff, 0, 0, 0xff},
-		16.0,
-	  ),
-	)
 
-	ctx.AddObject(
-		sm.NewMarker(
-		  s2.LatLngFromDegrees(lats[1], longs[1]),
-		  color.RGBA{0xff, 0, 0, 0xff},
-		  16.0,
-		),
-	  )
+	for index, coor := range coors {
+		ctx.AddObject(
+			sm.NewMarker(
+			  s2.LatLngFromDegrees(coor.Latitude, coor.Longitude),
+			  color.RGBA{0xff, 0, 0, 0xff},
+			  16.0,
+			),
+		)
 
-	point1 := s2.LatLngFromDegrees(lats[0], longs[0])
-	point2 := s2.LatLngFromDegrees(lats[1], longs[1])
-
-	fmt.Println(lats[0], longs[0])
-
-	pos := []s2.LatLng{point1, point2}
-
-	path := sm.NewPath(pos, color.RGBA{0xff, 0, 0, 0xff}, 6.0)
-
-	ctx.AddObject(path)
+		if (index < len(coors) - 1) {
+			point1 := s2.LatLngFromDegrees(coors[index].Latitude, coors[index].Longitude)
+			point2 := s2.LatLngFromDegrees(coors[index + 1].Latitude, coors[index + 1].Longitude)
+	
+			pos := []s2.LatLng{point1, point2}
+	
+			path := sm.NewPath(pos, color.RGBA{0xff, 0, 0, 0xff}, 6.0)
+	
+			ctx.AddObject(path)
+		}
+	} 
   
 	img, err := ctx.Render()
 	if err != nil {
@@ -122,6 +134,40 @@ func GenerateMapOutput(lats []float64, longs []float64, outputPath string) {
 	if err := gg.SavePNG(outputPath, img); err != nil {
 	  panic(err)
 	}
+}
+
+func downsampleCoordinates(coordinates []Coordinate, targetLength int) []Coordinate {
+	length := len(coordinates)
+	if targetLength >= length {
+		return coordinates
+	}
+
+	ratio := float64(length) / float64(targetLength)
+	result := make([]Coordinate, targetLength)
+	resultIndex := 0
+
+	for i := 0; i < targetLength; i++ {
+		rangeStart := int(float64(i) * ratio)
+		rangeEnd := int(float64(i+1) * ratio)
+
+		// Calculate the average of latitude and longitude within the range
+		sumLat := 0.0
+		sumLon := 0.0
+		for j := rangeStart; j < rangeEnd; j++ {
+			sumLat += coordinates[j].Latitude
+			sumLon += coordinates[j].Longitude
+		}
+		averageLat := sumLat / float64(rangeEnd-rangeStart)
+		averageLon := sumLon / float64(rangeEnd-rangeStart)
+
+		result[resultIndex] = Coordinate{
+			Latitude:  averageLat,
+			Longitude: averageLon,
+		}
+		resultIndex++
+	}
+
+	return result
 }
 
 // .\test-data\Airdata-Files\AirdataCSV.csv
