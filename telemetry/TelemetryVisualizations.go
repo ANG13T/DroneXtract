@@ -87,6 +87,7 @@ func (parser *DJI_TelemetryVisualizations) ExecuteTelemetryVisualizations() {
 }
 
 func (parser *DJI_TelemetryVisualizations) GenerateGraph(index int) {
+	index = index - 1
 	file, err := os.Open(parser.fileName)
 	if err != nil {
 		helpers.PrintErrorLog("INVALID FILE. UNABLE TO OPEN", err)
@@ -157,13 +158,12 @@ func downsampleArray(data []float64, targetLength int) []float64 {
 }
 
 func GenerateOptions() int {
+	helpers.GenTableHeader("Select Value to Visualize")
 	for index, record := range print_indicators {
-		print := string("[" + strconv.Itoa(index + 1) + "] " + record)
-		fmt.Println(color.Ize(color.Blue, print))
+		helpers.GenRowString(strconv.Itoa(index + 1), record)
 	}
-	back := string("[" + strconv.Itoa(len(print_indicators) + 1) + "] Back to Main Menu")
-	fmt.Println(color.Ize(color.Blue, back))
-	exit := "[ 0 ] Exit DroneXtract"
-	fmt.Println(color.Ize(color.Blue, exit))
+	helpers.GenRowString(strconv.Itoa(len(print_indicators) + 1), "Back to Main Menu")
+	helpers.GenRowString("0", "Exit DroneXtract")
+	helpers.GenTableFooter()
 	return helpers.Option(0, len(print_indicators))
 }
