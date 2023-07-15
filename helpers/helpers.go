@@ -75,6 +75,10 @@ func GenTableFooter() {
 	fmt.Println(color.Ize(color.Blue, "    ╚══════════════════════════════════════════════════════════════════════════════╝"))
 }
 
+func PrintLog(message string) {
+	fmt.Println(color.Ize(color.Cyan, message))
+}
+
 func PrintError(message string) {
 	fmt.Println(color.Ize(color.Red, "[ERROR] " + message))
 }

@@ -14,13 +14,11 @@ import (
   // "fmt"
 )
 
-
 type Coordinate struct {
 	Latitude  float64
 	Longitude float64
 }
 
-// Disploay flight path GPS coordinates and corresponding map
 
 type DJI_Flight_Path_Map struct {
 	fileName        string
@@ -126,6 +124,8 @@ func GenerateMapOutput(coors []Coordinate, outputPath string) {
 			ctx.AddObject(path)
 		}
 	} 
+
+	PrintCoordinates(coors, len(coors) <= 10)
   
 	img, err := ctx.Render()
 	if err != nil {
@@ -135,6 +135,24 @@ func GenerateMapOutput(coors []Coordinate, outputPath string) {
 	if err := gg.SavePNG(outputPath, img); err != nil {
 	  panic(err)
 	}
+
+	helpers.PrintLog("Created Flight Path Map at " + outputPath)
+}
+
+func PrintCoordinates(coordinates []Coordinate, downsampled bool) {
+	if (downsampled) {
+		helpers.GenTableHeader("Downsampled GPS Coordinates");
+	} else {
+		helpers.GenTableHeader("GPS Coordinates");
+	}
+
+	for in, coor := range coordinates {
+		str_lat := strconv.FormatFloat(coor.Latitude, 'f', -1, 64)
+		str_lon := strconv.FormatFloat(coor.Longitude, 'f', -1, 64)
+		helpers.GenRowString("Coordinate " + strconv.Itoa(in + 1), "(" + str_lat + ", " + str_lon + ")")
+	}
+
+	helpers.GenTableFooter();
 }
 
 func downsampleCoordinates(coordinates []Coordinate, targetLength int) []Coordinate {
@@ -170,8 +188,3 @@ func downsampleCoordinates(coordinates []Coordinate, targetLength int) []Coordin
 
 	return result
 }
-
-// .\test-data\Airdata-Files\AirdataCSV.csv
-// 
-// 
-//
