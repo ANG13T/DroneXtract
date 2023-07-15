@@ -31,3 +31,5 @@ https://exiftool.org/install.html
 # Upcoming
 - DUML parser for firmware integrity checking
 
+# Env Variables
+- downsampling number

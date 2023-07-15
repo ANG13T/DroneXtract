@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/ANG13T/DroneXtract/helpers"
 	"encoding/csv"
+	"github.com/TwiN/go-color"
 	"os"
 	"strconv"
 )
@@ -108,7 +109,41 @@ func (parser *DJI_TelemetryVisualizations) GenerateGraph(index int) {
 		}
 	}
 
-	graph := asciigraph.Plot(output)
+	if (len(output) > 40) {
+		output = downsampleArray(output, 40)
+	}
 
-    fmt.Println(graph)
+	graph := asciigraph.Plot(output, asciigraph.Height(10), asciigraph.Width(100), asciigraph.Caption(print_indicators[index]))
+
+    fmt.Println(color.Ize(color.Cyan,graph))
+}
+
+func downsampleArray(data []float64, targetLength int) []float64 {
+	length := len(data)
+	if targetLength >= length {
+		return data
+	}
+
+	ratio := float64(length) / float64(targetLength)
+	result := make([]float64, targetLength)
+	resultIndex := 0
+
+	for i := 0; i < targetLength; i++ {
+		rangeStart := int(float64(i) * ratio)
+		rangeEnd := int(float64(i+1) * ratio)
+
+		// Calculate the average within the range
+		sum := 0.0
+		for j := rangeStart; j < rangeEnd; j++ {
+			sum += data[j]
+		}
+		average := sum / float64(rangeEnd-rangeStart)
+
+		result[resultIndex] = average
+		resultIndex++
+	}
+
+	result[0] = data[0]
+
+	return result
 }
