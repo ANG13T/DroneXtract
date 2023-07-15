@@ -17,6 +17,14 @@ func FileInputString() string {
 	return selection
 }
 
+func OutputPathString() string {
+	fmt.Print("\n ENTER OUTPUT PATH > ")
+	var selection string
+	fmt.Scanln(&selection)
+	return selection
+}
+
+
 func Option(min int, max int) int {
 	fmt.Print("\n ENTER INPUT > ")
 	var selection string
