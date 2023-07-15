@@ -89,6 +89,8 @@ func DisplayOptionInformation(option int) {
 			Option()
 		} else if (option == 2) {
 			telemetry.ExecuteTelemetry(returnVal)
+			Banner()
+			Option()
 		} else {
 			steganography.ExecuteSteganography(returnVal)
 			Banner()
