@@ -10,8 +10,6 @@ import (
 	"io/ioutil"
 )
 
-// TODO: steg UI
-
 func ExecuteSteganography(index int) {
 	output := PrintParsingOptions(index)
 	if (output == -1) {

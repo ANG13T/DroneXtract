@@ -19,6 +19,7 @@ import (
 	"os"
 	"github.com/ANG13T/DroneXtract/parsing"
 	"github.com/ANG13T/DroneXtract/steganography"
+	"github.com/ANG13T/DroneXtract/telemetry"
 	// "github.com/twpayne/go-kml/v3"
 )
 
@@ -87,7 +88,7 @@ func DisplayOptionInformation(option int) {
 			Banner()
 			Option()
 		} else if (option == 2) {
-			
+			telemetry.ExecuteTelemetry(returnVal)
 		} else {
 			steganography.ExecuteSteganography(returnVal)
 			Banner()

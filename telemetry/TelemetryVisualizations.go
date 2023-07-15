@@ -83,6 +83,7 @@ func (parser *DJI_TelemetryVisualizations) ExecuteTelemetryVisualizations() {
 	if (value == -1) {
 		return
 	}
+	parser.GenerateGraph(value)
 }
 
 func (parser *DJI_TelemetryVisualizations) GenerateGraph(index int) {
