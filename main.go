@@ -20,7 +20,7 @@ import (
 	"github.com/ANG13T/DroneXtract/parsing"
 	"github.com/ANG13T/DroneXtract/steganography"
 	"github.com/ANG13T/DroneXtract/telemetry"
-	// "github.com/twpayne/go-kml/v3"
+	"github.com/ANG13T/DroneXtract/analysis"
 )
 
 var category_banners = []string{"fileparsing.txt", "telemetrymapping.txt", "steganography.txt"}
@@ -73,7 +73,9 @@ func DisplayOptionInformation(option int) {
 	contents, _ := ioutil.ReadFile("txt/" + category_banners[option - 1])
 	returnVal := 0
 	if (option == 4) {
-
+		analysis.ExecuteAnalysis(returnVal)
+		Banner()
+		Option()
 	} else {
 		fmt.Println(color.Ize(color.Cyan, string(contents)))
 		returnVal = helpers.Option(0, option_values[option - 1])
