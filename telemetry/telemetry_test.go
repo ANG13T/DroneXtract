@@ -16,4 +16,6 @@ func TestTelemetryVisualizations(t *testing.T) {
 	suite := NewDJI_TelemetryVisualizations(filename)
 
 	suite.GenerateGraph(0)
+
+	t.Logf("[Telemetry Visualizations #1] Graph Display Case - PASS")
 }
