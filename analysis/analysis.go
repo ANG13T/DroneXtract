@@ -4,27 +4,17 @@ import (
 	"github.com/ANG13T/DroneXtract/helpers"
 	"strconv"
 	"os"
+	"fmt"
 	"encoding/csv"
 )
-
-var indicators = []string{"height_above_takeoff(feet)", "height_above_ground_at_drone_location(feet)", "ground_elevation_at_drone_location(feet)", "ground_elevation_at_drone_location(feet)", "altitude_above_seaLevel(feet)", "height_sonar(feet)", "speed(mph)", "distance(feet)", "mileage(feet)", "satellites", "gpslevel", "voltage(v)", "max_altitude(feet)", "max_ascent(feet)", "max_speed(mph)", "max_distance(feet)", "xSpeed(mph)", "ySpeed(mph)", "zSpeed(mph)", "compass_heading(degrees)", "pitch(degrees)", "roll(degrees)", "rc_elevator", "rc_aileron", "rc_throttle", "rc_rudder", "rc_elevator(percent)", "rc_aileron(percent)", "rc_throttle(percent)", "rc_rudder(percent)", "gimbal_heading(degrees)", "gimbal_pitch(degrees)", "gimbal_roll(degrees)", "battery_percent", "voltageCell1", "voltageCell2", "voltageCell3", "voltageCell4", "voltageCell5", "voltageCell6", "current(A)", "battery_temperature(f)", "altitude(feet)", "ascent(feet)", "flycStateRaw"}
+var cooresponding_index = []int{8,9,10,11,14,18,19,20,22,23,24,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43}
+var indicators = []string{"height_sonar(feet)", "speed(mph)", "distance(feet)", "mileage(feet)", "voltage(v)", "xSpeed(mph)", "ySpeed(mph)", "zSpeed(mph)", "compass_heading(degrees)", "pitch(degrees)", "roll(degrees)", "rc_elevator", "rc_aileron", "rc_throttle", "rc_rudder", "rc_elevator(percent)", "rc_aileron(percent)", "rc_throttle(percent)", "rc_rudder(percent)", "gimbal_heading(degrees)", "gimbal_pitch(degrees)", "gimbal_roll(degrees)", "battery_percent", "current(A)", "battery_temperature(f)", "altitude(feet)", "ascent(feet)"}
 var print_indicators = []string{
-	"Height Above Takeoff (feet)",
-	"Height Above Ground at Drone Location (feet)",
-	"Ground Elevation at Drone Location (feet)",
-	"Ground Elevation at Drone Location (feet)",
-	"Altitude Above Sea Level (feet)",
 	"Height Sonar (feet)",
 	"Speed (mph)",
 	"Distance (feet)",
 	"Mileage (feet)",
-	"Satellites",
-	"GPS Level",
 	"Voltage (V)",
-	"Max Altitude (feet)",
-	"Max Ascent (feet)",
-	"Max Speed (mph)",
-	"Max Distance (feet)",
 	"X Speed (mph)",
 	"Y Speed (mph)",
 	"Z Speed (mph)",
@@ -43,65 +33,40 @@ var print_indicators = []string{
 	"Gimbal Pitch (degrees)",
 	"Gimbal Roll (degrees)",
 	"Battery Percent",
-	"Voltage Cell 1",
-	"Voltage Cell 2",
-	"Voltage Cell 3",
-	"Voltage Cell 4",
-	"Voltage Cell 5",
-	"Voltage Cell 6",
 	"Current (A)",
 	"Battery Temperature (F)",
 	"Altitude (feet)",
 	"Ascent (feet)",
-	"Flyc State Raw",
 }
 
 var max_variance = []float64{
-		50,   // Height Above Takeoff (feet)
-		20,   // Height Above Ground at Drone Location (feet)
-		100,  // Ground Elevation at Drone Location (feet)
-		100,  // Ground Elevation at Drone Location (feet)
-		500,  // Altitude Above Sea Level (feet)
-		5,    // Height Sonar (feet)
-		10,   // Speed (mph)
+		300,    // Height Sonar (feet)
+		90,   // Speed (mph)
 		100,  // Distance (feet)
 		1000, // Mileage (feet)
-		5,    // Satellites
-		1,    // GPS Level
-		0.5,  // Voltage (V)
-		500,  // Max Altitude (feet)
-		10,   // Max Ascent (feet)
-		20,   // Max Speed (mph)
-		5000, // Max Distance (feet)
-		10,   // X Speed (mph)
-		10,   // Y Speed (mph)
-		10,   // Z Speed (mph)
-		5,    // Compass Heading (degrees)
-		5,    // Pitch (degrees)
-		5,    // Roll (degrees)
-		2,    // RC Elevator
-		2,    // RC Aileron
-		2,    // RC Throttle
-		2,    // RC Rudder
-		2,    // RC Elevator (percent)
-		2,    // RC Aileron (percent)
-		2,    // RC Throttle (percent)
-		2,    // RC Rudder (percent)
-		5,    // Gimbal Heading (degrees)
-		5,    // Gimbal Pitch (degrees)
-		5,    // Gimbal Roll (degrees)
-		1,    // Battery Percent
-		0.2,  // Voltage Cell 1
-		0.2,  // Voltage Cell 2
-		0.2,  // Voltage Cell 3
-		0.2,  // Voltage Cell 4
-		0.2,  // Voltage Cell 5
-		0.2,  // Voltage Cell 6
-		5,    // Current (A)
+		120,  // Voltage (V)
+		100,   // X Speed (mph)
+		30,   // Y Speed (mph)
+		30,   // Z Speed (mph)
+		360,  // Compass Heading (degrees)
+		40,    // Pitch (degrees)
+		25,    // Roll (degrees)
+		1684,    // RC Elevator
+		1684,    // RC Aileron
+		1684,    // RC Throttle
+		1684,    // RC Rudder
+		1684,    // RC Elevator (percent)
+		1684,    // RC Aileron (percent)
+		1684,    // RC Throttle (percent)
+		1684,    // RC Rudder (percent)
+		360,    // Gimbal Heading (degrees)
+		180,    // Gimbal Pitch (degrees)
+		180,    // Gimbal Roll (degrees)
+		100,   // Battery Percent
+		20,    // Current (A)
 		5,    // Battery Temperature (F)
 		500,  // Altitude (feet)
 		50,   // Ascent (feet)
-		10,   // Flyc State Raw
 }
 
 type DJI_Analysis struct {
@@ -154,12 +119,13 @@ func (parser *DJI_Analysis) RunAnalysis() {
 	valid_count := 0
 
 	for index, _ := range indicators {
-		valid := parser.IsValidValue(index, records)
-		if (valid == false) {
-			helpers.PrintValidLog("[√] " + print_indicators[index])
+		variance := parser.GetVariance(index, records)
+		valid := variance <= float64(max_variance[index])
+		if (valid) {
+			helpers.PrintValidLog("[√] " + print_indicators[index] + " > " +  fmt.Sprintf("%.2f", variance))
 			valid_count++
 		} else {
-			helpers.PrintInvalidLog("[X] " + print_indicators[index])
+			helpers.PrintInvalidLog("[X] " + print_indicators[index] + " > " +  fmt.Sprintf("%.2f", variance) + " " + fmt.Sprintf("%.2f", max_variance[index]))
 			invalid_count++
 		}
 	}
@@ -185,7 +151,7 @@ func GetMax(numbers []float64) float64 {
 	return maxValue
 }
 
-func (parser *DJI_Analysis) IsValidValue(value int, records [][]string) bool {
+func (parser *DJI_Analysis) GetVariance(value int, records [][]string) float64 {
 	result := parser.GetCSVValues(value, records)
 
 	max := GetMax(result)
@@ -194,7 +160,7 @@ func (parser *DJI_Analysis) IsValidValue(value int, records [][]string) bool {
 
 	variance := max - min
 
-	return variance < max_variance[value]
+	return variance
 }
 
 func GetMin(numbers []float64) float64 {
@@ -218,7 +184,7 @@ func (parser *DJI_Analysis) GetCSVValues(index int, records [][]string) []float6
 	// Print each record
 	for _, record := range records {
 		for in, value := range record {
-			if (in == index) {
+			if (in == cooresponding_index[index]) {
 				val, _ :=  strconv.ParseFloat(value, 64)
 				output = append(output, val)
 			}
