@@ -41,7 +41,7 @@ type LineString struct {
 
 
 func NewDJI_KML_Parser(fileName string) *DJI_KML_Parser {
-	check := CheckFileFormat(fileName, ".kml")
+	check := helpers.CheckFileFormat(fileName, ".kml")
 	if check == false {
 		helpers.PrintError("INVALID FILE FORMAT. MUST BE KML FILE")
 		return nil
@@ -72,9 +72,9 @@ func (parser *DJI_KML_Parser) ParseContents() {
 		if placemark.Point.Coordinates != "" {
 			coorValues := strings.Split(placemark.Point.Coordinates, ",")
 			GenTableHeader("Home Point Information", true)
-			GenRowString("Coordinates", "(" + coorValues[0] + "," + coorValues[1] + ")")
-			GenRowString("Altitude", coorValues[2] + " ft")
-			GenTableFooter()
+			helpers.GenRowString("Coordinates", "(" + coorValues[0] + "," + coorValues[1] + ")")
+			helpers.GenRowString("Altitude", coorValues[2] + " ft")
+			helpers.GenTableFooter()
 		}
 
 		if placemark.LineString.Coordinates != "" {
@@ -85,9 +85,9 @@ func (parser *DJI_KML_Parser) ParseContents() {
 				coorValues := strings.Split(coor, ",")
 				if len(coor) > 0 && len(coorValues) > 1 {
 					GenTableHeader("Coordinate Point " + strconv.Itoa(cIndex + 1), false)
-					GenRowString("Coordinates", "(" + coorValues[0] + ", " + coorValues[1] + ")")
-					GenRowString("Altitude", coorValues[2] + " ft")
-					GenTableFooter()
+					helpers.GenRowString("Coordinates", "(" + coorValues[0] + ", " + coorValues[1] + ")")
+					helpers.GenRowString("Altitude", coorValues[2] + " ft")
+					helpers.GenTableFooter()
 				}
 			}
 		}

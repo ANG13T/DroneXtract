@@ -13,7 +13,7 @@ type DJI_GPX_Parser struct {
 }
 
 func NewDJI_GPX_Parser(fileName string) *DJI_GPX_Parser {
-	check := CheckFileFormat(fileName, ".gpx")
+	check := helpers.CheckFileFormat(fileName, ".gpx")
 	if check == false {
 		helpers.PrintError("INVALID FILE FORMAT. MUST BE GPX FILE")
 		return nil

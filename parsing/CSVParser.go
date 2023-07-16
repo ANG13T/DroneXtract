@@ -12,7 +12,7 @@ type DJI_CSV_Parser struct {
 }
 
 func NewDJI_CSV_Parser(fileName string) *DJI_CSV_Parser {
-	check := CheckFileFormat(fileName, ".csv")
+	check := helpers.CheckFileFormat(fileName, ".csv")
 	if check == false {
 		helpers.PrintError("INVALID FILE FORMAT. MUST BE CSV FILE")
 		return nil
@@ -50,9 +50,9 @@ func (parser *DJI_CSV_Parser) ParseContents() {
 		row_out := "Row " + strconv.Itoa(count)
 		GenTableHeader(row_out, count == 0)
 		for in, value := range record {
-			GenRowString(columns[in], value)
+			helpers.GenRowString(columns[in], value)
 		}
-		GenTableFooter()
+		helpers.GenTableFooter()
 	}
 }
 
