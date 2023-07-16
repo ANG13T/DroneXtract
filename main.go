@@ -1,14 +1,5 @@
 package main
 
-// OSINT, DAT File parsing, other file format parsing, crystal web server, TUI and GUI 
-
-// 5 categories
-// 1- Drone File Parsing
-// 2- Telemetry Toolkit
-// 3- Steganography Suite
-// 4- Firmware and Binary Reader
-// 5- Flight and Integrity Analysis
-
 import (
 	"fmt"
 	"io/ioutil"

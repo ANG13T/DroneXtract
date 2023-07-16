@@ -13,9 +13,9 @@ type DJI_DNG_Parser struct {
 }
 
 func NewDJI_DNG_Parser(fileName string) *DJI_DNG_Parser {
-	check := CheckFileFormat(fileName, ".dng")
+	check := helpers.CheckFileFormat(fileName, ".dng")
 	if check == false {
-		PrintError("INVALID FILE FORMAT. MUST BE DNG FILE")
+		helpers.PrintError("INVALID FILE FORMAT. MUST BE DNG FILE")
 		return nil
 	}
 	
@@ -83,6 +83,6 @@ func (parser *DJI_DNG_Parser) ExportToJSON(outputPath string) {
 
 func check(errorName string, err error) {
 	if err != nil {
-		PrintErrorLog(errorName, err)
+		helpers.PrintErrorLog(errorName, err)
 	}
 }

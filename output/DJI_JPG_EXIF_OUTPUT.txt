@@ -1,127 +1,127 @@
+Compression:JPEG (old-style)
+ExifToolVersion:12.62
+LightSource:Daylight
+About:DJI Meta Data
+ExifByteOrder:Little-endian (Intel, II)
+GPSVersionID:2.3.0.0
+CompressedBitsPerPixel:3.908617778
+Yaw:+162.50
+ExposureIndex:undef
+CustomRendered:Normal
+GimbalReverse:0
+GPSPosition:34 deg 7' 1.62" N, 118 deg 14' 45.74" W
+FileAccessDate:2023:07:16 14:13:12-07:00
+ModifyDate:2023:01:29 12:58:57
+ExposureCompensation:0
+ExifImageHeight:2250
+SceneType:Directly photographed
+FlightRollDegree:+25.90
+SourceFile:../test-data/JPG-Files/DJI_0227.JPG
+YCbCrPositioning:Centered
+ISO:100
+MeteringMode:Center-weighted average
+SerialNumber:1SFOJ1T0AB0KRQ
+XPKeywords:v01.43.0067;0.0.1;v1.0.0
+ThumbnailOffset:18432
+CamReverse:0
+Directory:../test-data/JPG-Files
+ThumbnailImage:(Binary data 9739 bytes, use -b option to extract)
+TotalFrames:1
+ExifImageWidth:4000
+GPSAltitudeRef:Above Sea Level
+ThumbnailLength:9739
+MaxApertureValue:2.8
+DependentImage2EntryNumber:0
+ShutterSpeed:1/800
+Orientation:Horizontal (normal)
+DateTimeOriginal:2023:01:29 12:58:57
+FileSource:Digital Camera
+SceneCaptureType:Standard
+XPComment:Type=N, Mode=P, DE=None
+AlreadyApplied:false
+FileCreateDate:2023:06:22 21:51:34-07:00
+BitsPerSample:8
+GPSLongitudeRef:West
+ColorSpace:sRGB
+FlightPitchDegree:-26.3
+NumberOfImages:2
+CircleOfConfusion:0.006 mm
+Roll:+25.90
+FocalLengthIn35mmFormat:24 mm
+Model:FC7303
+ExifVersion:0230
+FileTypeExtension:jpg
+FlashpixVersion:0100
+DigitalZoomRatio:1
+GPSLongitude:118 deg 14' 45.74" W
+Make:DJI
+FilePermissions:-rw-rw-rw-
+ApertureValue:2.8
+GimbalRollDegree:+0.00
+DependentImage1EntryNumber:0
+ShutterSpeedValue:1/800
+ImageHeight:2250
+FileModifyDate:2023:06:22 21:51:34-07:00
+YCbCrSubSampling:YCbCr4:2:2 (2 1)
+ExposureTime:1/800
+InteropIndex:R98 - DCF basic file (sRGB)
+InteropVersion:0100
+WhiteBalance:Auto
+PreviewImage:(Binary data 265061 bytes, use -b option to extract)
+FileName:DJI_0227.JPG
+Format:image/jpg
+AbsoluteAltitude:+199.01
+RelativeAltitude:+60.30
+GimbalYawDegree:+0.00
+MPImageLength:265061
+GPSAltitude:199 m Above Sea Level
+HyperfocalDistance:1.28 m
 FileSize:4.7 MB
 FNumber:2.8
-ISO:100
-GPSLatitudeRef:North
-Megapixels:9
-ExposureIndex:undef
-FocalLengthIn35mmFormat:24 mm
-Sharpness:Normal
-GimbalRollDegree:+0.00
-ShutterSpeedValue:1/800
-Compression:JPEG (old-style)
-EncodingProcess:Baseline DCT, Huffman coding
-GPSAltitude:199 m Above Sea Level
-FileInodeChangeDate:2023:06:14 13:16:51-07:00
-YResolution:72
 ExposureProgram:Program AE
-FOV:73.7 deg
-ExifImageWidth:4000
-GPSVersionID:2.3.0.0
-AlreadyApplied:false
-SourceFile:../test-data/JPG-Files/DJI_0227.JPG
-DateTimeOriginal:2023:01:29 12:58:57
-ComponentsConfiguration:Y, Cb, Cr, -
-XPComment:Type=N, Mode=P, DE=None
-MPImageStart:4.433702e+06
-ScaleFactor35efl:5.3
-ExposureTime:1/800
-MaxApertureValue:2.8
-NumberOfImages:2
-MPImageFlags:Dependent child image
-DependentImage1EntryNumber:0
-ThumbnailImage:(Binary data 9739 bytes, use -b option to extract)
-PreviewImage:(Binary data 265061 bytes, use -b option to extract)
-FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
-Contrast:Normal
-FlightRollDegree:+25.90
-FlightYawDegree:+162.50
-MPImageFormat:JPEG
-YCbCrSubSampling:YCbCr4:2:2 (2 1)
-CompressedBitsPerPixel:3.908617778
-ExifImageHeight:2250
-FileSource:Digital Camera
-GPSLongitudeRef:West
-LightValue:12.6
-FileModifyDate:2023:06:14 13:16:51-07:00
-ExposureCompensation:0
-XPKeywords:v01.43.0067;0.0.1;v1.0.0
-FlightPitchDegree:-26.3
-HasSettings:false
-Aperture:2.8
-ShutterSpeed:1/800
-GPSLongitude:118 deg 14' 45.74" W
-FilePermissions:-rwxrwxrwx
-MIMEType:image/jpeg
-FlashpixVersion:0100
-GimbalReverse:0
-CustomRendered:Normal
-ExposureMode:Auto
-SceneCaptureType:Standard
-ImageDescription:DCIM\100MEDIA\DJI_0227.JPG
-ModifyDate:2023:01:29 12:58:57
-ApertureValue:2.8
-MeteringMode:Center-weighted average
-DigitalZoomRatio:1
-SerialNumber:1SFOJ1T0AB0KRQ
-BitsPerSample:8
-Flash:No flash function
-ThumbnailLength:9739
-CamReverse:0
-MPFVersion:0010
-FileType:JPEG
-YCbCrPositioning:Centered
-Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
-SceneType:Directly photographed
-ExifToolVersion:12.62
-SpeedY:-2
-WhiteBalance:Auto
-MPImageType:Large Thumbnail (VGA equivalent)
-ImageWidth:4000
-GPSLatitude:34 deg 7' 1.62" N
-FileName:DJI_0227.JPG
-ExifByteOrder:Little-endian (Intel, II)
-Pitch:-26.3
-ColorSpace:sRGB
-Model:FC7303
-GainControl:None
-CircleOfConfusion:0.006 mm
-GimbalYawDegree:+0.00
-ImageUIDList:(Binary data 66 bytes, use -b option to extract)
-XResolution:72
-ThumbnailOffset:18432
-Make:DJI
-About:DJI Meta Data
-HyperfocalDistance:1.28 m
-SubjectDistanceRange:Unknown
-Directory:../test-data/JPG-Files
-SpeedX:-10
-GPSPosition:34 deg 7' 1.62" N, 118 deg 14' 45.74" W
-Software:v01.43.0067
-Yaw:+162.50
-Version:7
-HasCrop:false
-CreateDate:2023:01:29 12:58:57
-AbsoluteAltitude:+199.01
-ColorComponents:3
-InteropIndex:R98 - DCF basic file (sRGB)
-GimbalPitchDegree:+0.00
-MPImageLength:265061
-ImageHeight:2250
-InteropVersion:0100
-Format:image/jpg
-DependentImage2EntryNumber:0
-FileAccessDate:2023:06:14 13:16:53-07:00
-ResolutionUnit:inches
-LightSource:Daylight
-SpeedZ:+0.50
-Saturation:Normal
-FileTypeExtension:jpg
-Orientation:Horizontal (normal)
-ExifVersion:0230
 SubjectDistance:0 m
 FocalLength:4.5 mm
+Contrast:Normal
+FlightYawDegree:+162.50
+LightValue:12.6
+FileType:JPEG
+SubjectDistanceRange:Unknown
+HasSettings:false
+MPImageStart:4.433702e+06
+FocalLength35efl:4.5 mm (35 mm equivalent: 24.0 mm)
+SpeedX:-10
+GainControl:None
+Megapixels:9
+ImageDescription:DCIM\100MEDIA\DJI_0227.JPG
+SpeedZ:+0.50
+MPImageFlags:Dependent child image
+ImageWidth:4000
+EncodingProcess:Baseline DCT, Huffman coding
+SpeedY:-2
+MPFVersion:0010
+Pitch:-26.3
+Saturation:Normal
+ImageUIDList:(Binary data 66 bytes, use -b option to extract)
+XResolution:72
+Version:7
+YResolution:72
+Software:v01.43.0067
+GPSLatitudeRef:North
+GimbalPitchDegree:+0.00
+MPImageFormat:JPEG
+ScaleFactor35efl:5.3
+GPSLatitude:34 deg 7' 1.62" N
+MIMEType:image/jpeg
+FOV:73.7 deg
+Warning:[minor] Possibly incorrect maker notes offsets (fix by 1783?)
+CreateDate:2023:01:29 12:58:57
+Flash:No flash function
+ExposureMode:Auto
+Sharpness:Normal
+HasCrop:false
+MPImageType:Large Thumbnail (VGA equivalent)
+ResolutionUnit:inches
+ColorComponents:3
+Aperture:2.8
 ImageSize:4000x2250
-Roll:+25.90
-GPSAltitudeRef:Above Sea Level
-RelativeAltitude:+60.30
-TotalFrames:1
+ComponentsConfiguration:Y, Cb, Cr, -

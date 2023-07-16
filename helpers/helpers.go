@@ -71,6 +71,18 @@ func GenRowString(intro string, input string) {
 	fmt.Println(color.Ize(color.Blue, val))
 }
 
+func GenTableHeaderModified(name string) {
+	fmt.Println(color.Ize(color.Blue, "    ╠══════════════════════════════════════════════════════════════════════════════╣"))
+	var amount = (78 - len(name)) / 2
+	var extraPadding = 1
+	if len(name) % 2 == 0 {
+		extraPadding = 0
+	}
+	fmt.Println(color.Ize(color.Blue, "    ║" +  strings.Repeat(" ", amount) + name + strings.Repeat(" ", amount + extraPadding) + "║"))
+	fmt.Println(color.Ize(color.Blue, "    ╠══════════════════════════════════════════════════════════════════════════════╣"))
+}
+
+
 func GenTableFooter() {
 	fmt.Println(color.Ize(color.Blue, "    ╚══════════════════════════════════════════════════════════════════════════════╝"))
 }

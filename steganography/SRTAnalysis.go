@@ -26,9 +26,9 @@ type DJI_SRT_Parser struct {
 }
 
 func NewDJI_SRT_Parser(fileName string) *DJI_SRT_Parser {
-	check := CheckFileFormat(fileName, ".srt")
+	check := helpers.CheckFileFormat(fileName, ".srt")
 	if check == false {
-		PrintError("INVALID FILE FORMAT. MUST BE SRT FILE")
+		helpers.PrintError("INVALID FILE FORMAT. MUST BE SRT FILE")
 		return nil
 	}
 
@@ -159,29 +159,29 @@ type CRS struct {
 func (packet *SRT_Packet) printSRTPacket(length string) {
 	title := "FRAME " + checkEmptyField(packet.frame_count)
 	if packet.frame_count == "1" {
-		GenTableHeader(title, true)
+		helpers.GenTableHeader(title)
 	} else {
-		GenTableHeaderModified(title)
+		helpers.GenTableHeaderModified(title)
 	}
 	
-	GenRowString("FRAME COUNT", checkEmptyField(packet.frame_count))
-	GenRowString("DIFF TIME", checkEmptyField(packet.diff_time))
-	GenRowString("ISO", checkEmptyField(packet.iso))
-	GenRowString("SHUTTER", checkEmptyField(packet.shutter))
-	GenRowString("FNUM", checkEmptyField(packet.fnum))
-	GenRowString("EV", checkEmptyField(packet.ev))
-	GenRowString("CT", checkEmptyField(packet.ct))
-	GenRowString("COLOR MD", checkEmptyField(packet.color_md))
-	GenRowString("FOCAL EN", checkEmptyField(packet.focal_len))
-	GenRowString("LATITUDE", checkEmptyField(packet.latitude))
-	GenRowString("LONGITUDE", checkEmptyField(packet.longtitude))
-	GenRowString("ALTITUDE", checkEmptyField(packet.altitude))
-	GenRowString("DATE", checkEmptyField(packet.date))
-	GenRowString("TIME STAMP", checkEmptyField(packet.time_stamp))
-	GenRowString("BAROMETER", checkEmptyField(packet.barometer))
+	helpers.GenRowString("FRAME COUNT", checkEmptyField(packet.frame_count))
+	helpers.GenRowString("DIFF TIME", checkEmptyField(packet.diff_time))
+	helpers.GenRowString("ISO", checkEmptyField(packet.iso))
+	helpers.GenRowString("SHUTTER", checkEmptyField(packet.shutter))
+	helpers.GenRowString("FNUM", checkEmptyField(packet.fnum))
+	helpers.GenRowString("EV", checkEmptyField(packet.ev))
+	helpers.GenRowString("CT", checkEmptyField(packet.ct))
+	helpers.GenRowString("COLOR MD", checkEmptyField(packet.color_md))
+	helpers.GenRowString("FOCAL EN", checkEmptyField(packet.focal_len))
+	helpers.GenRowString("LATITUDE", checkEmptyField(packet.latitude))
+	helpers.GenRowString("LONGITUDE", checkEmptyField(packet.longtitude))
+	helpers.GenRowString("ALTITUDE", checkEmptyField(packet.altitude))
+	helpers.GenRowString("DATE", checkEmptyField(packet.date))
+	helpers.GenRowString("TIME STAMP", checkEmptyField(packet.time_stamp))
+	helpers.GenRowString("BAROMETER", checkEmptyField(packet.barometer))
 	
 	if packet.frame_count == length { 
-		GenTableFooter()
+		helpers.GenTableFooter()
 	} 
 
 }
@@ -331,7 +331,7 @@ func (parser *DJI_SRT_Parser) SRTToObject(srt string) []SRT_Packet {
 	}
 
 	if len(converted) < 1 || (len(converted) == 1 && checkNullPacket(converted[0])) {
-		PrintError("ERROR PARSING SRT FILE")
+		helpers.PrintError("ERROR PARSING SRT FILE")
 		return nil
 	}
 
@@ -343,7 +343,7 @@ func (parser *DJI_SRT_Parser) GeneratePackets() {
 	content, err := ioutil.ReadFile(parser.fileName)
 
 	if err != nil {
-		PrintErrorLog("INVALID FILE PATH", err)
+		helpers.PrintErrorLog("INVALID FILE PATH", err)
 	}
 
 	string_content := string(content)
@@ -365,7 +365,7 @@ func (parser *DJI_SRT_Parser) PrintAllPackets() {
 func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	file, err := os.Open(parser.fileName)
 	if err != nil {
-		PrintErrorLog("INVALID FILE", err)
+		helpers.PrintErrorLog("INVALID FILE", err)
 		return
 	}
 	defer file.Close()
@@ -373,7 +373,7 @@ func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	// Get file information
 	fileInfo, err := file.Stat()
 	if err != nil {
-		PrintErrorLog("UNABLE TO OBTAIN FILE METADATA", err)
+		helpers.PrintErrorLog("UNABLE TO OBTAIN FILE METADATA", err)
 		return
 	}
 
@@ -381,14 +381,14 @@ func (parser *DJI_SRT_Parser) PrintFileMetadata() {
 	fileSize := fileInfo.Size()
 	modTime := fileInfo.ModTime()
 
-	GenTableHeader("Parsing SRT Job", true)
+	helpers.GenTableHeader("Parsing SRT Job")
 
 	// Print metadata
-	GenRowString("File Name", fileName)
-	GenRowString("File Size (bytes)", strconv.FormatInt(fileSize, 10))
-	GenRowString("Last Modified Time", modTime.Format("2006-01-02 15:04:05"))
+	helpers.GenRowString("File Name", fileName)
+	helpers.GenRowString("File Size (bytes)", strconv.FormatInt(fileSize, 10))
+	helpers.GenRowString("Last Modified Time", modTime.Format("2006-01-02 15:04:05"))
 
-	GenTableFooter()
+	helpers.GenTableFooter()
 }
 
 
@@ -397,15 +397,15 @@ func (parser *DJI_SRT_Parser) ExportToJSON(outputPath string) {
 		outputPath = "../output/srt-analysis.json"
 	}
 
-	check := CheckFileFormat(outputPath, ".json")
+	check := helpers.CheckFileFormat(outputPath, ".json")
 	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE JSON FILE")
+		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE JSON FILE")
 		return
 	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {
-		PrintErrorLog("FAILED TO CREATE JSON FILE", err)
+		helpers.PrintErrorLog("FAILED TO CREATE JSON FILE", err)
 		return
 	}
 	defer file.Close()
@@ -425,7 +425,7 @@ func (parser *DJI_SRT_Parser) ExportToJSON(outputPath string) {
 	err = encoder.Encode(result)
 
 	if err != nil {
-		PrintErrorLog("FAILED TO ENCODE GEOJSON", err)
+		helpers.PrintErrorLog("FAILED TO ENCODE GEOJSON", err)
 		return
 	}
 
@@ -436,15 +436,15 @@ func (parser *DJI_SRT_Parser) ExportToGeoJSON(outputPath string) {
 		outputPath = "../output/srt-analysis.geojson"
 	}
 
-	check := CheckFileFormat(outputPath, ".geojson")
+	check := helpers.CheckFileFormat(outputPath, ".geojson")
 	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE GEOJSON FILE")
+		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE GEOJSON FILE")
 		return
 	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {
-		PrintErrorLog("FAILED TO CREATE GEOJSON FILE", err)
+		helpers.PrintErrorLog("FAILED TO CREATE GEOJSON FILE", err)
 		return
 	}
 	defer file.Close()
@@ -503,7 +503,7 @@ func (parser *DJI_SRT_Parser) ExportToGeoJSON(outputPath string) {
 	err = encoder.Encode(result)
 
 	if err != nil {
-		PrintErrorLog("FAILED TO ENCODE GEOJSON", err)
+		helpers.PrintErrorLog("FAILED TO ENCODE GEOJSON", err)
 		return
 	}
 
@@ -515,15 +515,15 @@ func (parser *DJI_SRT_Parser) ExportToGeoJSON(outputPath string) {
 // 		outputPath = "../output/srt-analysis.mgjson"
 // 	}
 
-// 	check := CheckFileFormat(outputPath, ".mgjson")
+// 	check := helpers.CheckFileFormat(outputPath, ".mgjson")
 // 	if check == false {
-// 		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE MGJSON FILE")
+// 		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE MGJSON FILE")
 // 		return
 // 	}
 
 // 	file, err := os.Create(outputPath)
 // 	if err != nil {
-// 		PrintErrorLog("FAILED TO CREATE MGJSON FILE", err)
+// 		helpers.PrintErrorLog("FAILED TO CREATE MGJSON FILE", err)
 // 		return
 // 	}
 // 	defer file.Close()
@@ -535,9 +535,9 @@ func (parser *DJI_SRT_Parser) ExportToGeoJSON(outputPath string) {
 // 	doc, err2 := tomgjson.ToMgjson(converted, "Angelina Tsuboi")
 
 // 	if err1 != nil {
-// 		PrintErrorLog("ERROR WRITING TO MGJSON FILE", err1)
+// 		helpers.PrintErrorLog("ERROR WRITING TO MGJSON FILE", err1)
 // 	} else if err2 != nil {
-// 		PrintErrorLog("ERROR WRITING TO MGJSON FILE", err2)
+// 		helpers.PrintErrorLog("ERROR WRITING TO MGJSON FILE", err2)
 // 	}
 
 // 	file.Write(doc)
@@ -550,15 +550,15 @@ func (parser *DJI_SRT_Parser) ExportToCSV(outputPath string) {
 		outputPath = "../output/srt-analysis.csv"
 	}
 
-	check := CheckFileFormat(outputPath, ".csv")
+	check := helpers.CheckFileFormat(outputPath, ".csv")
 	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE CSV FILE")
+		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE CSV FILE")
 		return
 	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {
-		PrintErrorLog("FAILED TO CREATE CSV FILE", err)
+		helpers.PrintErrorLog("FAILED TO CREATE CSV FILE", err)
 		return
 	}
 	defer file.Close()
@@ -578,13 +578,13 @@ func (parser *DJI_SRT_Parser) ExportToCSV(outputPath string) {
 
 	err = writer.WriteAll(data)
 	if err != nil {
-		PrintErrorLog("ERROR WRITING TO CSV FILE", err)
+		helpers.PrintErrorLog("ERROR WRITING TO CSV FILE", err)
 	}
 
 	writer.Flush()
 
 	if err := writer.Error(); err != nil {
-		PrintErrorLog("ERROR WRITING TO CSV FILE", err)
+		helpers.PrintErrorLog("ERROR WRITING TO CSV FILE", err)
 	}
 
 }
@@ -686,7 +686,7 @@ func checkEmptyField(s string) string{
 
 func checkValidFileContents(fileContent string) bool {
 	if len(fileContent) == 0 {
-		PrintError("INVALID FILE CONTENT IS EMPTY")
+		helpers.PrintError("INVALID FILE CONTENT IS EMPTY")
 		return false
 	}
 

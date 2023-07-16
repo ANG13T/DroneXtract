@@ -41,9 +41,9 @@ func (parser *DJI_EXIF_Parser) Read() {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
 		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
-			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+			helpers.PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
 		} else {
-			PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
+			helpers.PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
 		}
 		return
 	}
@@ -54,7 +54,7 @@ func (parser *DJI_EXIF_Parser) Read() {
 
 	for _, fileInfo := range fileInfos {
 		if fileInfo.Err != nil {
-			PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
+			helpers.PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
 			continue
 		}
 
@@ -72,15 +72,15 @@ func (parser *DJI_EXIF_Parser) ExportToTXT(outputPath string) {
 		outputPath = "../output/exif-analysis.txt"
 	}
 
-	check := CheckFileFormat(outputPath, ".txt")
+	check := helpers.CheckFileFormat(outputPath, ".txt")
 	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE TXT FILE")
+		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE TXT FILE")
 		return
 	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {
-		PrintErrorLog("FAILED TO CREATE TXT FILE", err)
+		helpers.PrintErrorLog("FAILED TO CREATE TXT FILE", err)
 		return
 	}
 	defer file.Close()
@@ -88,9 +88,9 @@ func (parser *DJI_EXIF_Parser) ExportToTXT(outputPath string) {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
 		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
-			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+			helpers.PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
 		} else {
-			PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
+			helpers.PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
 		}
 		return
 	}
@@ -100,7 +100,7 @@ func (parser *DJI_EXIF_Parser) ExportToTXT(outputPath string) {
 
 	for _, fileInfo := range fileInfos {
 		if fileInfo.Err != nil {
-			PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
+			helpers.PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
 			continue
 		}
 
@@ -113,7 +113,7 @@ func (parser *DJI_EXIF_Parser) ExportToTXT(outputPath string) {
 
 			
 			if err != nil {
-				PrintErrorLog("FAILED TO WRITE TO TXT FILE", err)
+				helpers.PrintErrorLog("FAILED TO WRITE TO TXT FILE", err)
 				return
 			}
 		}
@@ -126,15 +126,15 @@ func (parser *DJI_EXIF_Parser) ExportToCSV(outputPath string) {
 		outputPath = "../output/exif-analysis.csv"
 	}
 
-	check := CheckFileFormat(outputPath, ".csv")
+	check := helpers.CheckFileFormat(outputPath, ".csv")
 	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE CSV FILE")
+		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE CSV FILE")
 		return
 	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {
-		PrintErrorLog("FAILED TO CREATE CSV FILE", err)
+		helpers.PrintErrorLog("FAILED TO CREATE CSV FILE", err)
 		return
 	}
 	defer file.Close()
@@ -142,9 +142,9 @@ func (parser *DJI_EXIF_Parser) ExportToCSV(outputPath string) {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
 		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
-			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+			helpers.PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
 		} else {
-			PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
+			helpers.PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
 		}
 		return
 	}
@@ -157,7 +157,7 @@ func (parser *DJI_EXIF_Parser) ExportToCSV(outputPath string) {
 
 	for _, fileInfo := range fileInfos {
 		if fileInfo.Err != nil {
-			PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
+			helpers.PrintErrorLog("COULD NOT READ FILE", fileInfo.Err)
 			continue
 		}
 
@@ -170,7 +170,7 @@ func (parser *DJI_EXIF_Parser) ExportToCSV(outputPath string) {
 
 			
 			if err != nil {
-				PrintErrorLog("FAILED TO WRITE TO CSV FILE", err)
+				helpers.PrintErrorLog("FAILED TO WRITE TO CSV FILE", err)
 				return
 			}
 		}
@@ -182,15 +182,15 @@ func (parser *DJI_EXIF_Parser) ExportToJSON(outputPath string) {
 		outputPath = "../output/exif-analysis.json"
 	}
 
-	check := CheckFileFormat(outputPath, ".json")
+	check := helpers.CheckFileFormat(outputPath, ".json")
 	if check == false {
-		PrintError("INVALID OUTPUT FILE FORMAT. MUST BE JSON FILE")
+		helpers.PrintError("INVALID OUTPUT FILE FORMAT. MUST BE JSON FILE")
 		return
 	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {
-		PrintErrorLog("FAILED TO CREATE JSON FILE", err)
+		helpers.PrintErrorLog("FAILED TO CREATE JSON FILE", err)
 		return
 	}
 	defer file.Close()
@@ -198,9 +198,9 @@ func (parser *DJI_EXIF_Parser) ExportToJSON(outputPath string) {
 	et, err := exiftool.NewExiftool()
 	if err != nil {
 		if err.Error() == `error when executing command: exec: "exiftool.exe": executable file not found in %PATH%` {
-			PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
+			helpers.PrintError("EXIF TOOL NOT INSTALLED. VISIT https://exiftool.org/install.html FOR INSTRUCTIONS")
 		} else {
-			PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
+			helpers.PrintErrorLog("COULD NOT INITIALIZE EXIF TOOL", err)
 		}
 		return
 	}
@@ -213,7 +213,7 @@ func (parser *DJI_EXIF_Parser) ExportToJSON(outputPath string) {
 	err = encoder.Encode(fileInfos[0])
 
 	if err != nil {
-		PrintErrorLog("FAILED TO ENCODE JSON", err)
+		helpers.PrintErrorLog("FAILED TO ENCODE JSON", err)
 		return
 	}
 }

@@ -3,9 +3,6 @@ package steganography
 import (
 	"github.com/TwiN/go-color"
 	"fmt"
-	"strings"
-	"log"
-	"path/filepath"
 	"github.com/ANG13T/DroneXtract/helpers"
 	"io/ioutil"
 )
