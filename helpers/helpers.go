@@ -87,3 +87,11 @@ func PrintErrorLog(message string, err error) {
 	fmt.Println(color.Ize(color.Red, message))
 	log.Println(color.Ize(color.Red, "[ERROR]"), err)
 }
+
+func PrintValidLog(message string) {
+	fmt.Println(color.Ize(color.Green, message))
+}
+
+func PrintInvalidLog(message string) {
+	fmt.Println(color.Ize(color.Red, message))
+}

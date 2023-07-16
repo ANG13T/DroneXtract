@@ -118,16 +118,18 @@ func NewDJI_Analysis(fileName string) *DJI_Analysis {
 
 func ExecuteAnalysis() {
 	fileName := helpers.FileInputString()
+
+	check := helpers.CheckFileFormat(fileName, ".csv")
+	if check == false {
+		helpers.PrintError("INVALID FILE FORMAT. MUST BE CSV FILE")
+		return
+	}
+
 	suite := NewDJI_Analysis(fileName)
 	suite.RunAnalysis()
 }
 
 func (parser *DJI_Analysis) RunAnalysis() {
-	value := GenerateOptions()
-	if (value == -1) {
-		return
-	}
-
 	file, err := os.Open(parser.fileName)
 	if err != nil {
 		helpers.PrintErrorLog("INVALID FILE. UNABLE TO OPEN", err)
@@ -146,25 +148,26 @@ func (parser *DJI_Analysis) RunAnalysis() {
 		return
 	}
 
+	helpers.PrintLog("==== RUNNING FLIGHT ANALYSIS ====")
+
+	invalid_count := 0
+	valid_count := 0
+
 	for index, _ := range indicators {
 		valid := parser.IsValidValue(index, records)
 		if (valid == false) {
-			helpers.PrintLog(print_indicators[index] + " IS VALID")
+			helpers.PrintValidLog("[√] " + print_indicators[index])
+			valid_count++
 		} else {
-			helpers.PrintLog(print_indicators[index] + " NOT VALID")
+			helpers.PrintInvalidLog("[X] " + print_indicators[index])
+			invalid_count++
 		}
 	}
-}
 
-func GenerateOptions() int {
-	helpers.GenTableHeader("Select Value to Analyze")
-	for index, record := range print_indicators {
-		helpers.GenRowString(strconv.Itoa(index + 1), record)
-	}
-	helpers.GenRowString(strconv.Itoa(len(print_indicators) + 1), "Back to Main Menu")
-	helpers.GenRowString("0", "Exit DroneXtract")
-	helpers.GenTableFooter()
-	return helpers.Option(0, len(print_indicators))
+	helpers.PrintLog("==== FINISHED FLIGHT ANALYSIS ====")
+	helpers.PrintValidLog("[√] " + strconv.Itoa(valid_count) + " VALID VARIANCE")
+	helpers.PrintInvalidLog("[X] " + strconv.Itoa(invalid_count) + " INVALID VARIANCE")
+	helpers.PrintLog("==================================")
 }
 
 func GetMax(numbers []float64) float64 {

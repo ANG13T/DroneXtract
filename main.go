@@ -70,13 +70,13 @@ func DisplayOption(x int) {
 }
 
 func DisplayOptionInformation(option int) {
-	contents, _ := ioutil.ReadFile("txt/" + category_banners[option - 1])
 	returnVal := 0
 	if (option == 4) {
-		analysis.ExecuteAnalysis(returnVal)
+		analysis.ExecuteAnalysis()
 		Banner()
 		Option()
 	} else {
+		contents, _ := ioutil.ReadFile("txt/" + category_banners[option - 1])
 		fmt.Println(color.Ize(color.Cyan, string(contents)))
 		returnVal = helpers.Option(0, option_values[option - 1])
 	}
