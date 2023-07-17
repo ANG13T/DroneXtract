@@ -4,6 +4,7 @@
 
 
 ## About
+DroneXtract is a comprehensive digital forensics suite for DJI drones made with Golang. It can be used to analyze drone sensor values and telemetry data, visualize drone flight maps, audit for criminal activity, and extract pertinent data within multiple file formats. 
 
 ## Preview
 
@@ -12,13 +13,13 @@
 ## Features
 DroneXtract features for main suites for drone forensics and auditing. They include the following:
 
-#### DJI File Parsing
+### DJI File Parsing
 
-#### Steganography
+### Steganography
 
-#### Telemetry Visualization
+### Telemetry Visualization
 
-#### Flight and Integrity Analysis
+### Flight and Integrity Analysis
 
 
 ## Usage
