@@ -34,9 +34,9 @@ There are a set of environment variables utilized in DroneXtract. In order to ta
 # Env Variables
 All environment variables can be found and modified in the `.env` file 
 
-`TELEMETRY_VIS_DOWNSAMPLE` = 40
-`FLIGHT_MAP_DOWNSAMPLE` = 10
-`ANALYSIS_DOWNSAMPLE` = 40
+`TELEMETRY_VIS_DOWNSAMPLE`
+`FLIGHT_MAP_DOWNSAMPLE` 
+`ANALYSIS_DOWNSAMPLE` 
 `ANALYSIS_MAX_VARIANCE`
 
 
