@@ -7,6 +7,8 @@
 
 ## Preview
 
+<img alt="DroneXtract logo" width="600" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/Preview.png">
+
 ## Features
 DroneXtract features for main suites for drone forensics and auditing. They include the following:
 
@@ -31,12 +33,15 @@ $ go run main.go
 ## Configuration
 There are a set of environment variables utilized in DroneXtract. In order to tailor the values to your specfic drone / investigation scenario, you can go to the `env.txt` file and adjust the following values:
 
-# Env Variables
+### Environment Variables
 All environment variables can be found and modified in the `.env` file 
 
 `TELEMETRY_VIS_DOWNSAMPLE`
+
 `FLIGHT_MAP_DOWNSAMPLE` 
+
 `ANALYSIS_DOWNSAMPLE` 
+
 `ANALYSIS_MAX_VARIANCE`
 
 
