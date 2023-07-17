@@ -6,9 +6,9 @@ import (
 
 func ExecuteTelemetry(index int) {
 	filePath := helpers.FileInputString()
-	output := helpers.OutputPathString()
 	switch in := index; in {
 		case 1:
+			output := helpers.OutputPathString()
 			suite := NewDJI_Flight_Path_Map(filePath, output)
 			suite.ExecuteFlightPathAnalysis()
 		case 2:
