@@ -11,8 +11,9 @@ import (
   sm "github.com/flopp/go-staticmaps"
   "github.com/fogleman/gg"
   "github.com/golang/geo/s2"
-  // "fmt"
 )
+
+var downsample_number_map = helpers.GetEnvVariable("FLIGHT_MAP_DOWNSAMPLE")
 
 type Coordinate struct {
 	Latitude  float64
@@ -91,8 +92,8 @@ func GenerateMapOutput(coors []Coordinate, outputPath string) {
 		outputPath = "flight-path-map.png"
 	}
 
-	if len(coors) > 10 {
-		coors = downsampleCoordinates(coors, 10)
+	if len(coors) > downsample_number_map {
+		coors = downsampleCoordinates(coors, downsample_number_map)
 	}
 
 	check := helpers.CheckFileFormat(outputPath, ".png")

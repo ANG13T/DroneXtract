@@ -5,6 +5,7 @@ import (
 	"os"
 	"github.com/TwiN/go-color"
 	"strconv"
+	"github.com/joho/godotenv"
 	"path/filepath"
 	"strings"
 	"log"
@@ -106,4 +107,46 @@ func PrintValidLog(message string) {
 
 func PrintInvalidLog(message string) {
 	fmt.Println(color.Ize(color.Red, message))
+}
+
+func GetEnvVariable(key string) int {
+	err := godotenv.Load(".env")
+  
+	if err != nil {
+		PrintError("FAILED TO LOAD .env FILE")
+	}
+
+	val, err2 := strconv.Atoi(os.Getenv(key))
+
+	if err2 != nil {
+		PrintError("INVALID ENV VARIABLE: " + key)
+	}
+  
+	return val
+}
+
+func GetEnvVariances() []float64 {
+	err := godotenv.Load(".env")
+  
+	if err != nil {
+		PrintError("FAILED TO LOAD .env FILE")
+	}
+
+	return stringToFloat64Array(os.Getenv("ANALYSIS_MAX_VARIANCE"))
+}
+
+func stringToFloat64Array(input string) []float64 {
+	strValues := strings.Fields(input)
+	values := make([]float64, len(strValues))
+
+	for i, strValue := range strValues {
+		value, err := strconv.ParseFloat(strValue, 64)
+		if err != nil {
+			fmt.Printf("Error parsing value at index %d: %v\n", i, err)
+			return nil
+		}
+		values[i] = value
+	}
+
+	return values
 }

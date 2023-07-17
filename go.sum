@@ -29,6 +29,8 @@ github.com/jedib0t/go-pretty/v6 v6.4.6 h1:v6aG9h6Uby3IusSSEjHaZNXpHFhzqMmjXcPq1R
 github.com/jedib0t/go-pretty/v6 v6.4.6/go.mod h1:Ndk3ase2CkQbXLLNf5QDHoYb6J9WtVfmHZu9n8rk2xs=
 github.com/jessevdk/go-flags v1.5.0/go.mod h1:Fw0T6WPc1dYxT4mKEZRfG5kJhaTDP9pj1c2EWnYs/m4=
 github.com/joeshaw/gengen v0.0.0-20190604015154-c77d87825f5a/go.mod h1:v2qvRL8Xwk4OlARK6gPlf2JreZXzv0dYp/8+kUJ0y7Q=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/juanirache/tomgjson v0.4.9 h1:8l8ROCmW0Ho43Wbq8zHdNqSNQ6y1e2+FMlZkVgtTu3A=
 github.com/juanirache/tomgjson v0.4.9/go.mod h1:nnJeeqLOGh8LmnlKo/zo/iay3d8DI9xMpT94vGOyvWA=
 github.com/lucasb-eyer/go-colorful v1.0.3 h1:QIbQXiugsb+q10B+MI+7DI1oQLdmnep86tWFlaaUAac=

@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"encoding/csv"
 )
+
+var downsample_number_analysis = helpers.GetEnvVariable("ANALYSIS_DOWNSAMPLE")
+
 var cooresponding_index = []int{8,9,10,11,14,18,19,20,22,23,24,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43}
 var indicators = []string{"height_sonar(feet)", "speed(mph)", "distance(feet)", "mileage(feet)", "voltage(v)", "xSpeed(mph)", "ySpeed(mph)", "zSpeed(mph)", "compass_heading(degrees)", "pitch(degrees)", "roll(degrees)", "rc_elevator", "rc_aileron", "rc_throttle", "rc_rudder", "rc_elevator(percent)", "rc_aileron(percent)", "rc_throttle(percent)", "rc_rudder(percent)", "gimbal_heading(degrees)", "gimbal_pitch(degrees)", "gimbal_roll(degrees)", "battery_percent", "current(A)", "battery_temperature(f)", "altitude(feet)", "ascent(feet)"}
 var print_indicators = []string{
@@ -39,35 +42,7 @@ var print_indicators = []string{
 	"Ascent (feet)",
 }
 
-var max_variance = []float64{
-		300,    // Height Sonar (feet)
-		90,   // Speed (mph)
-		100,  // Distance (feet)
-		1000, // Mileage (feet)
-		120,  // Voltage (V)
-		100,   // X Speed (mph)
-		30,   // Y Speed (mph)
-		30,   // Z Speed (mph)
-		360,  // Compass Heading (degrees)
-		40,    // Pitch (degrees)
-		25,    // Roll (degrees)
-		1684,    // RC Elevator
-		1684,    // RC Aileron
-		1684,    // RC Throttle
-		1684,    // RC Rudder
-		1684,    // RC Elevator (percent)
-		1684,    // RC Aileron (percent)
-		1684,    // RC Throttle (percent)
-		1684,    // RC Rudder (percent)
-		360,    // Gimbal Heading (degrees)
-		180,    // Gimbal Pitch (degrees)
-		180,    // Gimbal Roll (degrees)
-		100,   // Battery Percent
-		20,    // Current (A)
-		5,    // Battery Temperature (F)
-		500,  // Altitude (feet)
-		50,   // Ascent (feet)
-}
+var max_variance = helpers.GetEnvVariances()
 
 type DJI_Analysis struct {
 	fileName        string
@@ -191,8 +166,8 @@ func (parser *DJI_Analysis) GetCSVValues(index int, records [][]string) []float6
 		}
 	}
 
-	if (len(output) > 40) {
-		output = downsampleArray(output, 40)
+	if (len(output) > downsample_number_analysis) {
+		output = downsampleArray(output, downsample_number_analysis)
 	}
 
 	return output

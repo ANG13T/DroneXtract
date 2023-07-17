@@ -1,7 +1,5 @@
 package telemetry
 
-// Take in CSV data and make line graphs of values over time
-
 import (
 	"github.com/guptarohit/asciigraph"
 	"fmt"
@@ -11,6 +9,8 @@ import (
 	"os"
 	"strconv"
 )
+
+var downsample_number_telemetry = helpers.GetEnvVariable("TELEMETRY_VIS_DOWNSAMPLE")
 
 type DJI_TelemetryVisualizations struct {
 	fileName        string
@@ -118,8 +118,8 @@ func (parser *DJI_TelemetryVisualizations) GenerateGraph(index int) {
 		}
 	}
 
-	if (len(output) > 40) {
-		output = downsampleArray(output, 40)
+	if (len(output) > downsample_number_telemetry) {
+		output = downsampleArray(output, downsample_number_telemetry)
 	}
 
 	graph := asciigraph.Plot(output, asciigraph.Height(10), asciigraph.Width(100), asciigraph.Caption(print_indicators[index]))
