@@ -4,19 +4,22 @@
 
 
 ## About
+DroneXtract is a comprehensive digital forensics suite for DJI drones made with Golang. It can be used to analyze drone sensor values and telemetry data, visualize drone flight maps, audit for criminal activity, and extract pertinent data within multiple file formats. 
 
 ## Preview
+
+<img alt="DroneXtract logo" width="600" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/Preview.png">
 
 ## Features
 DroneXtract features for main suites for drone forensics and auditing. They include the following:
 
-#### DJI File Parsing
+### DJI File Parsing
 
-#### Steganography
+### Steganography
 
-#### Telemetry Visualization
+### Telemetry Visualization
 
-#### Flight and Integrity Analysis
+### Flight and Integrity Analysis
 
 
 ## Usage
@@ -31,12 +34,15 @@ $ go run main.go
 ## Configuration
 There are a set of environment variables utilized in DroneXtract. In order to tailor the values to your specfic drone / investigation scenario, you can go to the `env.txt` file and adjust the following values:
 
-# Env Variables
+### Environment Variables
 All environment variables can be found and modified in the `.env` file 
 
 `TELEMETRY_VIS_DOWNSAMPLE`
+
 `FLIGHT_MAP_DOWNSAMPLE` 
+
 `ANALYSIS_DOWNSAMPLE` 
+
 `ANALYSIS_MAX_VARIANCE`
 
 
