@@ -18,24 +18,29 @@ You can visualize and extract information from DJI file formats such as CSV, KML
 The parsed information can be saved into an alternative file format when inputted an output file path.
 The image below includes an example of a parsed file output and the type of data extracted from the file.
 
+<img alt="DroneXtract logo" height="300" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/demo-1.png">
+
 
 ### Steganography
 Steganography refers to the process of revealing information stored within files.
 The DroneXtract steganography suite allows you to extract telemetry and valuable data from image and video formats.
 Additionally, the extracted data can be exported to four different file formats.
 
+<img alt="DroneXtract logo" height="300" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/demo-2.png">
 
 ### Telemetry Visualization
 The telemetry visualization suite contains a flight path mapping generator and a telemetry graph visualizer.
 The flight path mapping generator creates an image of a map indicating the locations the drone traveled to enroute and the path it took.
 The telemetry graph visualizer plots a graph for each of the relevant telemetry or sensor values to be used for auditing purposes. 
 
+<img alt="DroneXtract logo" width="600" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/demo-3.png">
 
 ### Flight and Integrity Analysis
 The flight and integrity analysis tool iterates through all the telemetry values the drone logged during its flight.
 Once the values are collected, it calculates the maximum variance assumed by the value and checks for suspicious data gaps.
 This tool can be used to check for anomalous data or any file corruption that may have taken place/
 
+<img alt="DroneXtract logo" height="300" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/demo-4.png">
 
 ## Usage
 To build from source, you will need Go installed.
@@ -47,36 +52,39 @@ $ go run main.go
 ```
 
 ## Configuration
-There are a set of environment variables utilized in DroneXtract. In order to tailor the values to your specific drone / investigation scenario, you can go to the `env.txt` file and adjust the following values:
+There are a set of environment variables utilized in DroneXtract. In order to tailor the values to your specific drone / investigation scenario, you can go to the `.env` file and adjust the following values:
 
-### Environment Variables
-All environment variables can be found and modified in the `.env` file 
+`TELEMETRY_VIS_DOWNSAMPLE` downsampling number for values to be used for telemetry visualization
 
-`TELEMETRY_VIS_DOWNSAMPLE`
+`FLIGHT_MAP_DOWNSAMPLE` downsampling number for values to be used for flight path mapping
 
-`FLIGHT_MAP_DOWNSAMPLE` 
+`ANALYSIS_DOWNSAMPLE` downsampling number for values to be used for integrity analysis
 
-`ANALYSIS_DOWNSAMPLE` 
-
-`ANALYSIS_MAX_VARIANCE`
+`ANALYSIS_MAX_VARIANCE` maximum variance allowed between max and min value for analysis values
 
 
 ## Learning and Resources
+To learn more about DJI drone digital forensics and the features of DroneXtract, refer to this article.
 
 ## Contributing
+DroneXtract is open to any contributions. Please fork the repository and make a pull request with the features or fixes you want to be implemented.
+
 ### Testing
+DroneXtract contains testing files for all four suites. 
 An example command set for testing the steganography suite
 ```bash
 $ cd steganography
 $ go test
 ```
-Example files and output directory
+Example files for testing are included in the `test-data` directory.
+If a specific test case includes an output such as a file or image, it will be stored within the `output` directory.
+There are already some files contained in the `output` for reference purposes.
 
 ## Upcoming
 - DUML parser for firmware integrity checking
-- FLIGHT LOG TXT parsing
-- GEOJSON parsing output for SRT files
+- DJI Flight Log TXT parsing for the parsing suite
+- GEOJSON parsing output for SRT files in the steganography suite
 
 ## Support
-- donations
-- github
+If you enjoyed DroneXtract, please consider [donating](https://cash.app/$G4LXY) in order to fund my future projects. 
+To check out my other works, visit my [GitHub profile](https://github.com/ANG13T).
