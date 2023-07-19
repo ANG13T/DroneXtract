@@ -11,7 +11,7 @@ DroneXtract is a comprehensive digital forensics suite for DJI drones made with 
 <img alt="DroneXtract logo" width="600" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/Preview.png">
 
 ## Features
-DroneXtract features for main suites for drone forensics and auditing. They include the following:
+DroneXtract features four main suites for drone forensics and auditing. They include the following:
 
 ### DJI File Parsing
 You can visualize and extract information from DJI file formats such as CSV, KML, and GPX using the parsing tool.
@@ -38,7 +38,7 @@ The telemetry graph visualizer plots a graph for each of the relevant telemetry 
 ### Flight and Integrity Analysis
 The flight and integrity analysis tool iterates through all the telemetry values the drone logged during its flight.
 Once the values are collected, it calculates the maximum variance assumed by the value and checks for suspicious data gaps.
-This tool can be used to check for anomalous data or any file corruption that may have taken place/
+This tool can be used to check for anomalous data or any file corruption that may have taken place.
 
 <img alt="DroneXtract logo" height="300" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/demo-4.png">
 
