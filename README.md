@@ -1,5 +1,5 @@
 <p align="center">
-  <img align="center" alt="DroneXtract logo" width="600" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/logo.png">
+  <img align="center" alt="DroneXtract logo" width="600" src="https://github.com/ANG13T/DroneXtract/blob/main/assets/graphic.png">
 </p>
 
 
