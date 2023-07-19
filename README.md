@@ -51,6 +51,12 @@ $ go get ./...
 $ go run main.go
 ```
 
+## Airdata Usage
+In order to parse out DJI flight .TXT logs, please use [Airdata's Flight Data Analysis tool](https://app.airdata.com/main?a=upload).
+- Airdata CSV output file can be used for the CSV parser, flight path map, and telemetry visualizations
+- Airdata KML output file can be used for the KML parser
+- Airdata GPX output file can be used for GPX parser 
+
 ## Configuration
 There are a set of environment variables utilized in DroneXtract. In order to tailor the values to your specific drone / investigation scenario, you can go to the `.env` file and adjust the following values:
 
@@ -64,7 +70,7 @@ There are a set of environment variables utilized in DroneXtract. In order to ta
 
 
 ## Learning and Resources
-To learn more about DJI drone digital forensics and the features of DroneXtract, refer to this article.
+To learn more about DJI drone digital forensics and the features of DroneXtract, refer to [this article](https://medium.com/@angelinatsuboi/a-comprehensive-guide-to-digital-forensics-with-dji-drones-fd7ef5af2891).
 
 ## Contributing
 DroneXtract is open to any contributions. Please fork the repository and make a pull request with the features or fixes you want to be implemented.
@@ -86,5 +92,6 @@ There are already some files contained in the `output` for reference purposes.
 - GEOJSON parsing output for SRT files in the steganography suite
 
 ## Support
-If you enjoyed DroneXtract, please consider [donating](https://cash.app/$G4LXY) in order to fund my future projects. 
+If you enjoyed DroneXtract, please consider [becoming a sponsor](https://github.com/sponsors/ANG13T) in order to fund my future projects. 
+
 To check out my other works, visit my [GitHub profile](https://github.com/ANG13T).
