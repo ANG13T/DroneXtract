@@ -87,6 +87,39 @@ func (parser *DJI_Flight_Path_Map) PrintGPSCoordinates() {
 	GenerateMapOutput(coors, parser.outputPath)
 }
 
+func getBoundsFromCoordinates(coors []Coordinate) *s2.Rect {
+	if len(coors) == 0 {
+		return nil
+	}
+
+	minLat := coors[0].Latitude
+	maxLat := coors[0].Latitude
+	minLon := coors[0].Longitude
+	maxLon := coors[0].Longitude
+
+	for _, c := range coors {
+		if c.Latitude < minLat {
+			minLat = c.Latitude
+		}
+		if c.Latitude > maxLat {
+			maxLat = c.Latitude
+		}
+		if c.Longitude < minLon {
+			minLon = c.Longitude
+		}
+		if c.Longitude > maxLon {
+			maxLon = c.Longitude
+		}
+	}
+
+	sw := s2.LatLngFromDegrees(minLat, minLon)
+	ne := s2.LatLngFromDegrees(maxLat, maxLon)
+	rect := s2.RectFromLatLng(sw)
+	rect = rect.AddPoint(ne)
+
+	return &rect
+}
+
 func GenerateMapOutput(coors []Coordinate, outputPath string) {
 	if len(outputPath) == 0 {
 		outputPath = "flight-path-map.png"
@@ -103,6 +136,7 @@ func GenerateMapOutput(coors []Coordinate, outputPath string) {
 	}
 	ctx := sm.NewContext()
 	ctx.SetSize(400, 300)
+	ctx.SetTileProvider(sm.NewTileProviderOpenStreetMaps())
 
 	for index, coor := range coors {
 		ctx.AddObject(
@@ -126,7 +160,14 @@ func GenerateMapOutput(coors []Coordinate, outputPath string) {
 	} 
 
 	PrintCoordinates(coors, len(coors) <= 10)
-  
+        
+        ctx.SetMaxZoom(18)
+        rect := getBoundsFromCoordinates(coors)
+        if rect != nil {
+          ctx.SetBoundingBox(*rect)
+        }
+         
+        
 	img, err := ctx.Render()
 	if err != nil {
 	  panic(err)
